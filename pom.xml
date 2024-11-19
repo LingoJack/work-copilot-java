@@ -32,7 +32,7 @@
         </dependency>
     </dependencies>
 
-     <!-- 构建配置 -->
+    <!-- 构建配置 -->
     <build>
         <plugins>
             <!-- Spring Boot插件 -->

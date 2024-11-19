@@ -114,6 +114,7 @@ public class YamlConfig {
         LogUtil.log("添加顶级键值对: " + key + " = " + value);
         config.setProperty(key, value);
         propertyCache.put(key, value);
+        propertiesMapCache.clear();
         saveConfig();
     }
 
@@ -123,6 +124,7 @@ public class YamlConfig {
         LogUtil.log("添加嵌套键值对: " + fullKey + " = " + value);
         config.setProperty(fullKey, value);
         propertyCache.put(fullKey, value);
+        propertiesMapCache.clear();
         saveConfig();
     }
 
@@ -144,6 +146,7 @@ public class YamlConfig {
         if (config.containsKey(key)) {
             config.clearProperty(key); // 删除指定的键值对
             propertyCache.remove(key);
+            propertiesMapCache.clear();
             saveConfig();             // 保存更改
         }
     }

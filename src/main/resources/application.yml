@@ -76,3 +76,5 @@ storage:
     type: mysql
     username:
     password:
+script:
+  depot: F:\work_copilot_java\script\

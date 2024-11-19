@@ -76,6 +76,7 @@ public class Constant {
     public static final String MODE = "mode";
     public static final String MODE_VERBOSE = "verbose";
     public static final String MODE_CONCISE = "concise";
+    public static final String DEPOT = "depot";
 
     public static final String CATEGORY_BROWSER = "browser";
     public static final String CATEGORY_EDITOR = "editor";

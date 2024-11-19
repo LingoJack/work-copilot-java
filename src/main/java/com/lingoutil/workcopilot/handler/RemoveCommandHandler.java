@@ -16,9 +16,8 @@ public class RemoveCommandHandler extends CommandHandler {
 
     @Override
     protected void process(String[] argv) {
-        Map<String, String> pathMap = YamlConfig.getPropertiesMap(PATH);
         String alias = argv[2];
-        if (pathMap.containsKey(alias)) {
+        if (YamlConfig.containProperty(PATH, alias)) {
             YamlConfig.removeNestedProperty(PATH, alias);
             YamlConfig.removeNestedProperty(EDITOR, alias);
             YamlConfig.removeNestedProperty(VPN, alias);
@@ -40,8 +39,6 @@ public class RemoveCommandHandler extends CommandHandler {
                 LogUtil.error("Alias %s does not exist", alias);
             }
         }
-
-
     }
 
     @Override
