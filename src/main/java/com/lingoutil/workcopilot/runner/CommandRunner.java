@@ -16,11 +16,12 @@ public class CommandRunner {
         String alias = argv[1];
         int length = argv.length;
 
-        if (YamlConfig.getProperty(PATH, alias) == null) {
+        if (!YamlConfig.containProperty(PATH, alias)) {
             LogUtil.error("Path corresponding to alias {%s} can not be found", alias);
+            return;
         }
 
-        if (YamlConfig.getProperty(BROWSER, alias) != null) {
+        if (YamlConfig.containProperty(BROWSER, alias)) {
             if (length != 3) {
                 open(alias);
             }
@@ -40,7 +41,7 @@ public class CommandRunner {
                 open(alias, url);
             }
         }
-        else if (YamlConfig.getProperty(EDITOR, alias) != null) {
+        else if (YamlConfig.containProperty(EDITOR, alias)) {
             if (length != 3) {
                 open(alias);
             }
@@ -49,7 +50,7 @@ public class CommandRunner {
                 open(alias, filePath);
             }
         }
-        else if (YamlConfig.getProperty(VPN, alias) != null) {
+        else if (YamlConfig.containProperty(VPN, alias)) {
             open(alias);
         }
         else {

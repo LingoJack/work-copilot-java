@@ -82,7 +82,7 @@ public class Constant {
     public static final String CATEGORY_VPN = "vpn";
     public static final String CATEGORY_OUTER_URL = "outer-url";
 
-    public static String LOG_MODE = YamlConfig.getProperty(LOG, MODE);
+    public static String LOG_MODE = YamlConfig.initializeProperty(LOG, MODE);
 
     public static String STRATEGY = "strategy";
     public static String NORMAL = "normal";

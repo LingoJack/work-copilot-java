@@ -19,30 +19,24 @@ public class RenameCommandHandler extends CommandHandler {
         String alias = argv[2];
         String newAlias = argv[3];
 
-        String path = YamlConfig.getProperty(PATH, alias);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(script)
-                .append(" ")
-                .append(removeCommands.get(0))
-                .append(" ")
-                .append(alias);
-
-        String[] removeArgv = stringBuilder.toString().split(" ");
-        CommandHandler.execute(removeArgv);
-
-        stringBuilder.setLength(0);
-        stringBuilder.append(script)
-                .append(" ")
-                .append(addCommands.get(0))
-                .append(" ")
-                .append(newAlias)
-                .append(" ")
-                .append(path);
-        String[] addArgv = stringBuilder.toString().split(" ");
-        CommandHandler.execute(addArgv);
-
-        LogUtil.info("Rename %s to %s successfully", alias, newAlias);
+        if (YamlConfig.getPropertiesMap(PATH).containsKey(alias)) {
+            String path = YamlConfig.getProperty(PATH, alias);
+            YamlConfig.renameProperty(PATH, alias, newAlias);
+            YamlConfig.renameProperty(BROWSER, alias, newAlias);
+            YamlConfig.renameProperty(EDITOR, alias, newAlias);
+            YamlConfig.renameProperty(VPN, alias, newAlias);
+            LogUtil.info("Rename %s to %s successfully, path: %s", alias, newAlias, path);
+        }
+        if (YamlConfig.getPropertiesMap(INNER_URL).containsKey(alias)) {
+            String url = YamlConfig.getProperty(INNER_URL, alias);
+            YamlConfig.renameProperty(INNER_URL, alias, newAlias);
+            LogUtil.info("Rename %s to %s successfully, inner url: %s", alias, newAlias, url);
+        }
+        if (YamlConfig.getPropertiesMap(OUTER_URL).containsKey(alias)) {
+            String url = YamlConfig.getProperty(OUTER_URL, alias);
+            YamlConfig.renameProperty(OUTER_URL, alias, newAlias);
+            LogUtil.info("Rename %s to %s successfully, outer url: %s", alias, newAlias, url);
+        }
     }
 
     @Override

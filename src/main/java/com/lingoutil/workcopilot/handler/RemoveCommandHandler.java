@@ -40,6 +40,8 @@ public class RemoveCommandHandler extends CommandHandler {
                 LogUtil.error("Alias %s does not exist", alias);
             }
         }
+
+
     }
 
     @Override
