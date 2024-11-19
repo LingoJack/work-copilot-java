@@ -50,6 +50,11 @@ public class YamlConfig {
         return propertyCache.getOrDefault(fullKey, config.getString(fullKey));
     }
 
+    public static String getProperty(boolean flush, String... keys) {
+        String fullKey = String.join(".", keys);
+        return flush ? config.getString(fullKey) : propertyCache.getOrDefault(fullKey, config.getString(fullKey));
+    }
+
     public static Map<String, String> getPropertiesMap(String parentKey) {
         return propertiesMapCache.computeIfAbsent(parentKey, YamlConfig::loadPropertiesMap);
     }

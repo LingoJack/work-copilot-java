@@ -21,7 +21,9 @@ public class LogCommandHandler extends CommandHandler {
             value = value.equals(MODE_VERBOSE) ? MODE_VERBOSE : MODE_CONCISE;
             YamlConfig.addNestedProperty(LOG, MODE, value);
         }
-        LogUtil.info("Successfully set log.%s to %s", key, value);
+        LOG_MODE = YamlConfig.getProperty(LOG, MODE);
+        LogUtil.info("Successfully change mode to %s", key, value);
+        LogUtil.info("current log mode is: %s", LOG_MODE);
     }
 
     @Override

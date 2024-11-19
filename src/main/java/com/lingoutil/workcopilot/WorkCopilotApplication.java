@@ -21,8 +21,8 @@ public class WorkCopilotApplication {
 
         while (true) {
             System.out.print("copilot > ");
-            args = ("l "+sc.nextLine()).split(" ");
-            boolean verboseMode = YamlConfig.getProperty(LOG, MODE).equals(MODE_VERBOSE);
+            args = ("l " + sc.nextLine()).split(" ");
+            boolean verboseMode = LOG_MODE.equals(MODE_VERBOSE);
 
             if (verboseMode) {
                 LogUtil.log("verbose mode is start: %s", verboseMode);
