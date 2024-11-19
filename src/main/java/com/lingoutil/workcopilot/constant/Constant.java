@@ -41,6 +41,8 @@ public class Constant {
 
     public static final List<String> clearCommands = List.of("clear", "cls");
 
+    public static final List<String> containCommands = List.of("contain", "-contain");
+
     public static final List<String> allCommands = Stream.of(
             exitCommands,
             addCommands,
@@ -56,7 +58,8 @@ public class Constant {
             checkCommands,
             logCommands,
             concatCommands,
-            clearCommands
+            clearCommands,
+            containCommands
     ).flatMap(List::stream).collect(Collectors.toList());
 
     public static final String PATH = "path";
