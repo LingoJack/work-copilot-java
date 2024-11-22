@@ -17,7 +17,7 @@ public class ContainCommandHandler extends CommandHandler {
     @Override
     protected void process(String[] argv) {
         if (argv.length == 4) {
-            String containerListStr = argv[1];
+            String containerListStr = argv[2];
             String targetAlias = argv[3];
 
             // 从[%s|%s|%s|%s|%s]中解析List<String>
@@ -65,6 +65,6 @@ public class ContainCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s [%s[,%s[,%s[,%s[,%s] %s <alias>", argv[0], PATH, BROWSER, VPN, EDITOR, SCRIPT, argv[1]);
+        LogUtil.usage("%s %s [%s[,%s[,%s[,%s[,%s] <alias>", argv[0], argv[1], PATH, BROWSER, VPN, EDITOR, SCRIPT);
     }
 }

@@ -36,12 +36,11 @@ public class CheckReportCommandHandler extends CommandHandler {
             try {
                 lineNum = Integer.parseInt(argv[2].trim());
                 if (lineNum <= 0) {
-                    throw new IllegalArgumentException("行数必须为正数");
+                    LogUtil.error("行数必须为正数");
                 }
             }
             catch (NumberFormatException e) {
                 LogUtil.error("无效的行数参数: %s", argv[2].trim());
-                throw new IllegalArgumentException("行数参数无效", e);
             }
         }
         return lineNum;

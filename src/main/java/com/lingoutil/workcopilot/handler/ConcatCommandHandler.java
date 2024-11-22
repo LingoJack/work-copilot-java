@@ -42,6 +42,7 @@ public class ConcatCommandHandler extends CommandHandler {
 
             try (FileWriter writer = new FileWriter(scriptFile)) {
                 writer.write(scriptContent.substring(1, scriptContent.length() - 1));
+                YamlConfig.addNestedProperty(SCRIPT, scriptName, scriptPath);
                 LogUtil.info("Successfully create script {%s} with content: %s", scriptName, scriptContent);
             }
         }

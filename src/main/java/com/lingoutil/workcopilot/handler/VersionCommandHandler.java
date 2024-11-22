@@ -5,6 +5,7 @@ import com.lingoutil.workcopilot.util.LogUtil;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import static com.lingoutil.workcopilot.constant.Constant.VERSION;
 import static com.lingoutil.workcopilot.constant.Constant.versionCommands;
@@ -17,14 +18,11 @@ public class VersionCommandHandler extends CommandHandler {
 
     @Override
     protected void process(String[] argv) {
-        Iterator<String> propertiesIterator = YamlConfig.getPropertiesIterator(VERSION);
-        while (propertiesIterator.hasNext()) {
-            String key = propertiesIterator.next();
-            String value = YamlConfig.getProperty(key);
-            // 解析键的层级结构
-            String shortKey = key.startsWith(VERSION + ".") ?
-                    key.substring(VERSION.length() + 1) : key;
-            LogUtil.info("%s: %s", shortKey, value);
+        Map<String, String> propertiesMap = YamlConfig.getPropertiesMap(VERSION);
+        for (Map.Entry<String, String> entry : propertiesMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            LogUtil.info("%s: %s", key, value);
         }
     }
 

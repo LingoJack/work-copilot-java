@@ -1,80 +1,89 @@
 path:
-  wx: E:\WeChat\WeChat.exe
-  idea: D:\idea64.exe.lnk
-  wst: D:\webstorm64.exe-shortcut.lnk
-  scp: D:\WinSCP\WinSCP.exe
-  tp: D:\Typora\Typora.exe
-  vpn: E:\Clash.for.Windows-0.20.16-win\Clash
-  bs: D:\chrome.lnk
-  chrome: D:\chrome.lnk
-  edge: D:\Edge.lnk
-  draw: D:\draw.io\draw.io.exe
-  uml: C:\Program Files\StarUML\StarUML.exe
-  snip: D:\Snipaste-2.8.7-Beta-x86\Snipaste.exe
-  store: D:\Nutstore_spe\Nutstore\Nutstore.exe
-  ms: E:\foobar\foobar2000.exe
-  net: C:\Users\Public\Desktop\Dr.COM.lnk
-  wps: E:\ksolaunch.exe.lnk
-  fs: E:\Feishu\Feishu.exe
-  qq: E:\QQ\QQ.exe
-  calc: calc
   tv: E:\bilibili\bilibili.exe
   code: D:\Code_shortcut.exe.lnk
-  startwork: D:/redis/work-starter.bat
+  idea: D:\idea64.exe.lnk
   py: D:\py_shortcut.lnk
-  nacos: e:\work_copilot\quick_start\start_nacos.bat
-  sentinel: E:\Sentinel\start_sentinel.cmd
+  fs: E:\Feishu\Feishu.exe
+  rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
   jmeter: E:\jmeter-5.6.3\bin\jmeter.bat
+  nacos: e:\work_copilot\quick_start\start_nacos.bat
+  bs: D:\chrome.lnk
+  edge: D:\Edge.lnk
+  rocketmq-name: F:\work_copilot_java\script\rocketmq-name.cmd
+  uml: C:\Program Files\StarUML\StarUML.exe
+  startwork: D:/redis/work-starter.bat
+  wst: D:\webstorm64.exe-shortcut.lnk
+  rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
+  net: C:\Users\Public\Desktop\Dr.COM.lnk
+  qq: E:\QQ\QQ.exe
+  wx: E:\WeChat\WeChat.exe
+  scp: D:\WinSCP\WinSCP.exe
+  sentinel: F:\work_copilot_java\script\sentinel.cmd
+  chrome: D:\chrome.lnk
+  ms: E:\foobar\foobar2000.exe
+  draw: D:\draw.io\draw.io.exe
+  store: D:\Nutstore_spe\Nutstore\Nutstore.exe
+  env: F:\work_copilot_java\script\env.cmd
+  rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd
+  vpn: E:\Clash.for.Windows-0.20.16-win\Clash
+  snip: D:\Snipaste-2.8.7-Beta-x86\Snipaste.exe
+  wps: E:\ksolaunch.exe.lnk
+  calc: calc
+  tp: D:\Typora\Typora.exe
   seata: E:\seata\apache-seata-2.2.0-incubating-bin\seata-server\bin\seata-server.bat
-
-version:
-  version: 3.0.0
-  name: work-copilot
-  author: lingojack
-  email: lingojack@qq.com
-  mode: normal  # normal | strategy
-
+editor:
+  wst: D:\WebStorm_2023.3.4\bin\webstorm64.exe
+  wps: E:\ksolaunch.exe.lnk
+  code: D:\Microsoft_VS_Code\Code.exe
+  tp: D:\Typora\Typora.exe
+  idea: D:\IntelliJ_IDEA_2023.2.2\bin\idea64.exe
+  ms: E:\foobar\foobar2000.exe
+color:
+  warn: null
+  error: null
+  log: null
+  info: null
 log:
-  mode: concise   # verbose | concise
-
+  mode: concise
+vpn:
+  vpn: E:\Clash.for.Windows-0.20.16-win\Clash
+browser:
+  chrome: D:\chrome.lnk
+  bs: D:\chrome.lnk
+  edge: D:\Edge.lnk
+report:
+  week_num: '55'
+  week_report: D:\markdown_notebook\week_report.md
+  last_day: 2024.11.27
 inner_url:
   zhihu: www.zhihu.com
-  email: wx.mail.qq.com
+  suixianglu: https://www.programmercarl.com
   ct: omofuns.top
   tsl: https://www.deepl.com/zh/translator
-
+  qianwen: https://tongyi.aliyun.com/qianwen/
+  email: wx.mail.qq.com
+storage:
+  mode: config
+  config:
+    path: null
+  db:
+    type: mysql
+    password: null
+    username: null
+version:
+  name: work-copilot
+  mode: normal
+  version: 3.0.0
+  author: lingojack
+  email: lingojack@qq.com
 outer_url:
   gpt: chatgpt.com
   github: github.com
-
-editor:
-  idea: D:\IntelliJ_IDEA_2023.2.2\bin\idea64.exe
-  wst: D:\WebStorm_2023.3.4\bin\webstorm64.exe
-  tp: D:\Typora\Typora.exe
-  wps: E:\ksolaunch.exe.lnk
-  code: D:\Microsoft_VS_Code\Code.exe
-  ms: E:\foobar\foobar2000.exe
-
-browser:
-  bs: D:\chrome.lnk
-  chrome: D:\chrome.lnk
-  edge: D:\Edge.lnk
-
-vpn:
-  vpn: E:\Clash.for.Windows-0.20.16-win\Clash
-
-report:
-  week_report: D:\markdown_notebook\week_report.md
-  week_num: 54
-  last_day: 2024.11.20
-
-storage:
-  mode: config  # config | db
-  config:
-    path:
-  db:
-    type: mysql
-    username:
-    password:
 script:
+  sentinel: F:\work_copilot_java\script\sentinel.cmd
+  rocketmq-name: F:\work_copilot_java\script\rocketmq-name.cmd
   depot: F:\work_copilot_java\script\
+  rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
+  env: F:\work_copilot_java\script\env.cmd
+  rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
+  rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd

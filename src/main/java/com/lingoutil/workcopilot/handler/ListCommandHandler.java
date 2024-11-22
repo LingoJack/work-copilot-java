@@ -18,31 +18,55 @@ public class ListCommandHandler extends CommandHandler {
     @Override
     protected void process(String[] argv) {
         LogUtil.printLine();
-        print(PATH);
-        print(INNER_URL);
-        print(OUTER_URL);
-        print(EDITOR);
-        print(BROWSER);
-        print(VPN);
+        if (argv.length == 2) {
+            print(PATH);
+            print(INNER_URL);
+            print(OUTER_URL);
+            print(EDITOR);
+            print(BROWSER);
+            print(VPN);
+            print(SCRIPT);
+        }
+        else {
+            String parentKey = argv[2];
+            print(parentKey);
+        }
     }
 
     @Override
     protected boolean checkArgs(String[] argv) {
-        return checkArgs(argv, 2, this::hint);
+        if (argv.length != 2 && argv.length != 3) {
+            hint(argv);
+            return false;
+        }
+        return true;
     }
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s %s", argv[0], argv[1]);
+        LogUtil.usage("%s %s [part]", argv[0], argv[1]);
     }
 
     private void print(String parentKey) {
         Map<String, String> properties = YamlConfig.getPropertiesMap(parentKey);
-        LogUtil.info("[%s]", LogUtil.capitalizeFirstLetter(parentKey));
-        for (Map.Entry<String, String> entry : properties.entrySet()) {
-            String shortKey = entry.getKey();
-            String value = entry.getValue();
-            LogUtil.info("%s: %s", shortKey, value);
+
+        if (properties == null) {
+            LogUtil.error("The part does not exist");
+            return;
+        }
+
+        LogUtil.printf("[%s]\n", LogUtil.YELLOW, LogUtil.capitalizeFirstLetter(parentKey));
+
+        if (properties.isEmpty()) {
+            LogUtil.info("Empty");
+        }
+        else {
+            for (Map.Entry<String, String> entry : properties.entrySet()) {
+                String shortKey = entry.getKey();
+                String value = entry.getValue();
+                LogUtil.printf("%s", LogUtil.GREEN, shortKey);
+                LogUtil.info(": %s", value);
+            }
         }
         LogUtil.printLine();
     }

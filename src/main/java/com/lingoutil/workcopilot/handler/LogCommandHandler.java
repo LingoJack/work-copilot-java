@@ -33,6 +33,6 @@ public class LogCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s %s <key> <value>", argv[0], argv[1]);
+        LogUtil.usage("%s %s mode (verbose | concise)", argv[0], argv[1]);
     }
 }

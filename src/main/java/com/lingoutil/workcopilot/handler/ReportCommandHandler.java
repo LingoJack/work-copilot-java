@@ -74,17 +74,17 @@ public class ReportCommandHandler extends CommandHandler {
         try {
             Date lastDayOfWeek = new SimpleDateFormat("yyyy.MM.dd").parse(lastDayOfWeekStr);
 
-            if (now.after(lastDayOfWeek)) {
-                weekNum++;
+            if (now.after(addOneDay(lastDayOfWeek))) {
                 Calendar calendar = Calendar.getInstance();
-                calendar.setTime(lastDayOfWeek);
+                calendar.setTime(now);
                 calendar.add(Calendar.DAY_OF_MONTH, 6);
                 Date nextLastDayOfWeek = calendar.getTime();
-                updateWeekConfig(reportPath, weekNum, nextLastDayOfWeek);
                 String newWeekTitle = String.format("# Week%d[%s-%s]\n", weekNum,
                         DATE_FORMATTER.format(now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
                         DATE_FORMATTER.format(nextLastDayOfWeek.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
                 );
+                weekNum++;
+                updateWeekConfig(reportPath, weekNum, nextLastDayOfWeek);
                 appendToFile(reportPath, newWeekTitle);
             }
 
@@ -107,6 +107,12 @@ public class ReportCommandHandler extends CommandHandler {
         }
     }
 
+    private Date addOneDay(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
 
     @Override
     protected boolean checkArgs(String[] argv) {

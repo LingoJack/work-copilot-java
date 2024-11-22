@@ -25,6 +25,7 @@ public class RenameCommandHandler extends CommandHandler {
             YamlConfig.renameProperty(BROWSER, alias, newAlias);
             YamlConfig.renameProperty(EDITOR, alias, newAlias);
             YamlConfig.renameProperty(VPN, alias, newAlias);
+            YamlConfig.renameProperty(SCRIPT, alias, newAlias);
             LogUtil.info("Rename %s to %s successfully, path: %s", alias, newAlias, path);
         }
         if (YamlConfig.getPropertiesMap(INNER_URL).containsKey(alias)) {

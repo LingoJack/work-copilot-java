@@ -7,8 +7,9 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import static com.lingoutil.workcopilot.constant.Constant.LOG_MODE;
-import static com.lingoutil.workcopilot.constant.Constant.MODE_VERBOSE;
+import static com.lingoutil.workcopilot.constant.Constant.*;
+import static com.lingoutil.workcopilot.util.LogUtil.YELLOW;
+import static com.lingoutil.workcopilot.util.LogUtil.print;
 
 public class WorkCopilotApplication {
 
@@ -21,7 +22,7 @@ public class WorkCopilotApplication {
         if (args.length == 1) {
             LogUtil.info("Welcome to use work copilot ~");
             while (true) {
-                System.out.print("copilot > ");
+                print("copilot > ", YELLOW);
                 args = ("l " + sc.nextLine()).split("\\s+(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                 boolean verboseMode = LOG_MODE.equals(MODE_VERBOSE);
 

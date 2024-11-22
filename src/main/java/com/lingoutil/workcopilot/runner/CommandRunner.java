@@ -22,7 +22,7 @@ public class CommandRunner {
         }
 
         if (YamlConfig.containProperty(BROWSER, alias)) {
-            if (length != 3) {
+            if (length == 2) {
                 open(alias);
             }
             else {
@@ -36,7 +36,33 @@ public class CommandRunner {
                     url = YamlConfig.getProperty(OUTER_URL, urlAlias);
                 }
                 else {
-                    url = urlAlias;
+                    if (length == 3) {
+                        // 说明是搜索的逻辑
+                        String path = YamlConfig.getProperty(BROWSER, alias);
+                        if (path.contains("chrome")) {
+                            url = String.format(GOOGLE_SEARCH, urlAlias);
+                        }
+                        else {
+                            url = String.format(BING_SEARCH, urlAlias);
+                        }
+                    }
+                    else if (length == 4) {
+                        String engine = argv[3];
+                        if (engine.equalsIgnoreCase(GOOGLE)) {
+                            url = String.format(GOOGLE_SEARCH, urlAlias);
+                        }
+                        else if (engine.equalsIgnoreCase(BING)) {
+                            url = String.format(BING_SEARCH, urlAlias);
+                        }
+                        else if (engine.equalsIgnoreCase(BAIDU)) {
+                            url = String.format(BAIDU_SEARCH, urlAlias);
+                        }
+                        else {
+                            LogUtil.error("Unknown search engine: %s", engine);
+                            LogUtil.usage("Usage: %s %s <search_keyword> <search_engine>", script, alias);
+                            return;
+                        }
+                    }
                 }
                 open(alias, url);
             }

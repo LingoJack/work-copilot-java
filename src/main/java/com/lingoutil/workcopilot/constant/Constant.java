@@ -41,7 +41,7 @@ public class Constant {
 
     public static final List<String> clearCommands = List.of("clear", "cls");
 
-    public static final List<String> containCommands = List.of("contain", "-contain");
+    public static final List<String> containCommands = List.of("contain", "-contain","find","-find");
 
     public static final List<String> allCommands = Stream.of(
             exitCommands,
@@ -88,6 +88,14 @@ public class Constant {
 
     public static String LOG_MODE = YamlConfig.initializeProperty(LOG, MODE);
 
-    public static String STRATEGY = "strategy";
-    public static String NORMAL = "normal";
+    public final static String STRATEGY = "strategy";
+    public final static String NORMAL = "normal";
+
+    public final static String GOOGLE_SEARCH = "https://www.google.com/search?q=%s";
+    public final static String BING_SEARCH = "https://www.bing.com/search?q=%s";
+    public final static String BAIDU_SEARCH = "https://www.baidu.com/s?wd=%s";
+
+    public final static String GOOGLE = "google";
+    public final static String BING = "bing";
+    public final static String BAIDU = "baidu";
 }

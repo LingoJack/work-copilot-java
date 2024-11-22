@@ -3,6 +3,7 @@ package com.lingoutil.workcopilot.handler;
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.util.LogUtil;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,19 @@ public class RemoveCommandHandler extends CommandHandler {
             YamlConfig.removeNestedProperty(EDITOR, alias);
             YamlConfig.removeNestedProperty(VPN, alias);
             YamlConfig.removeNestedProperty(BROWSER, alias);
+
+            if (YamlConfig.containProperty(SCRIPT, alias)) {
+                String path = YamlConfig.getProperty(SCRIPT, alias);
+                File file = new File(path);
+                boolean delete = file.delete();
+                if (delete) {
+                    LogUtil.info("脚本文件{%s}已删除：%s", alias, path);
+                    YamlConfig.removeNestedProperty(SCRIPT, alias);
+                }
+                else {
+                    LogUtil.info("脚本删除失败，脚本：%s，路径：%s", alias, path);
+                }
+            }
             LogUtil.info("Remove alias %s from PATH successfully", alias);
         }
         else {

@@ -41,6 +41,10 @@ public class NoteCommandHandler extends CommandHandler {
                 YamlConfig.addNestedProperty(category, alias, path);
                 LogUtil.info("Add alias %s to OUTER_URL successfully", alias);
             }
+            case SCRIPT -> {
+                YamlConfig.addNestedProperty(category, alias, path);
+                LogUtil.info("Add alias %s to SCRIPT successfully", alias);
+            }
             default -> {
                 hint(argv);
             }
@@ -54,9 +58,9 @@ public class NoteCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s %s <alias> <category (%s, %s, %s, %s)>",
+        LogUtil.usage("%s %s <alias> <category (%s, %s, %s, %s, %s)>",
                 argv[0],
                 argv[1],
-                CATEGORY_EDITOR, CATEGORY_BROWSER, CATEGORY_VPN, CATEGORY_OUTER_URL);
+                CATEGORY_EDITOR, CATEGORY_BROWSER, CATEGORY_VPN, CATEGORY_OUTER_URL, SCRIPT);
     }
 }

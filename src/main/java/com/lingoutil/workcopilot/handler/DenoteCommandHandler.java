@@ -41,6 +41,10 @@ public class DenoteCommandHandler extends CommandHandler {
                 YamlConfig.removeNestedProperty(category, alias);
                 LogUtil.info("Remove alias %s from OUTER_URL successfully", alias);
             }
+            case SCRIPT -> {
+                YamlConfig.removeNestedProperty(category, alias);
+                LogUtil.info("Remove alias %s from SCRIPT successfully", alias);
+            }
             default -> {
                 hint(argv);
             }
@@ -49,14 +53,14 @@ public class DenoteCommandHandler extends CommandHandler {
 
     @Override
     protected boolean checkArgs(String[] argv) {
-        return checkArgs(argv, 3, this::hint);
+        return checkArgs(argv, 4, this::hint);
     }
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s %s <alias> <category (%s, %s, %s, %s)>",
+        LogUtil.usage("%s %s <alias> <category (%s, %s, %s, %s, %s)>",
                 argv[0],
                 argv[1],
-                CATEGORY_EDITOR, CATEGORY_BROWSER, CATEGORY_VPN, CATEGORY_OUTER_URL);
+                CATEGORY_EDITOR, CATEGORY_BROWSER, CATEGORY_VPN, CATEGORY_OUTER_URL, SCRIPT);
     }
 }
