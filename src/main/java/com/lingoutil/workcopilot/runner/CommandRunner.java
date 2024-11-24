@@ -2,8 +2,12 @@ package com.lingoutil.workcopilot.runner;
 
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.util.LogUtil;
+import com.lingoutil.workcopilot.util.URLUtil;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.lingoutil.workcopilot.constant.Constant.*;
 
@@ -17,7 +21,7 @@ public class CommandRunner {
         int length = argv.length;
 
         if (!YamlConfig.containProperty(PATH, alias)) {
-            LogUtil.error("Path corresponding to alias {%s} can not be found", alias);
+            LogUtil.error("❌ 无法找到路径对应的别名 {%s}。请检查配置文件。", alias);
             return;
         }
 
@@ -32,18 +36,25 @@ public class CommandRunner {
                     url = YamlConfig.getProperty(INNER_URL, urlAlias);
                 }
                 else if (YamlConfig.getProperty(OUTER_URL, urlAlias) != null) {
-                    open(YamlConfig.getPropertiesMap(VPN).get(0));
+                    Map<String, String> vpnMap = YamlConfig.getPropertiesMap(VPN);
+                    List<String> vpnAlias = vpnMap.keySet().stream().limit(1).toList();
+                    open(vpnAlias.get(0));
                     url = YamlConfig.getProperty(OUTER_URL, urlAlias);
                 }
                 else {
                     if (length == 3) {
                         // 说明是搜索的逻辑
                         String path = YamlConfig.getProperty(BROWSER, alias);
-                        if (path.contains("chrome")) {
-                            url = String.format(GOOGLE_SEARCH, urlAlias);
+                        if (URLUtil.isURL(urlAlias)) {
+                            url = urlAlias;
                         }
                         else {
-                            url = String.format(BING_SEARCH, urlAlias);
+                            if (path.contains("chrome")) {
+                                url = String.format(GOOGLE_SEARCH, urlAlias);
+                            }
+                            else {
+                                url = String.format(BING_SEARCH, urlAlias);
+                            }
                         }
                     }
                     else if (length == 4) {
@@ -58,8 +69,8 @@ public class CommandRunner {
                             url = String.format(BAIDU_SEARCH, urlAlias);
                         }
                         else {
-                            LogUtil.error("Unknown search engine: %s", engine);
-                            LogUtil.usage("Usage: %s %s <search_keyword> <search_engine>", script, alias);
+                            LogUtil.error("❌ 未知的搜索引擎: %s", engine);
+                            LogUtil.usage("💡 使用方法: %s %s <search_keyword> <search_engine>", script, alias);
                             return;
                         }
                     }
@@ -89,7 +100,7 @@ public class CommandRunner {
         try {
             String path = YamlConfig.getProperty(PATH, alias);
             if (path == null || path.trim().isEmpty()) {
-                LogUtil.error("Path not found for alias: %s", alias);
+                LogUtil.error("❌ 未找到别名对应的路径: %s。请检查路径配置。", alias);
                 return false;
             }
 
@@ -97,11 +108,11 @@ public class CommandRunner {
             String command = String.format("cmd /c start \"\" \"%s\" \"%s\"", path, filePath);
             Runtime.getRuntime().exec(command);
 
-            LogUtil.info("Start {%s} with path %s: {%s}", alias, filePath, path);
+            LogUtil.info("✅ 启动 {%s}，路径 %s: {%s}", alias, filePath, path);
             return true;
         }
         catch (IOException e) {
-            LogUtil.error("Failed to start %s with file %s: %s", alias, filePath, e.getMessage());
+            LogUtil.error("💥 启动 %s 失败，文件 %s: %s", alias, filePath, e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -111,7 +122,7 @@ public class CommandRunner {
         try {
             String path = YamlConfig.getProperty(PATH, alias);
             if (path == null || path.trim().isEmpty()) {
-                LogUtil.error("Path not found for alias: %s", alias);
+                LogUtil.error("❌ 未找到别名对应的路径: %s。请检查路径配置。", alias);
                 return false;
             }
 
@@ -119,11 +130,11 @@ public class CommandRunner {
             String command = String.format("cmd /c start \"\" \"%s\"", path);
             Runtime.getRuntime().exec(command);
 
-            LogUtil.info("Start %s : {%s}", alias, path);
+            LogUtil.info("✅ 启动 %s : {%s}", alias, path);
             return true;
         }
         catch (IOException e) {
-            LogUtil.error("Failed to start %s: %s", alias, e.getMessage());
+            LogUtil.error("💥 启动 %s 失败: %s", alias, e.getMessage());
             e.printStackTrace();
             return false;
         }

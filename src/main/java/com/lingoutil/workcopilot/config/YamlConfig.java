@@ -7,9 +7,7 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class YamlConfig {
@@ -196,5 +194,22 @@ public class YamlConfig {
     public static boolean containProperty(String... keys) {
         String fullKey = String.join(".", keys);
         return propertyCache.containsKey(fullKey);
+    }
+
+    public static List<String> getAllTopLevelKeys() {
+        LogUtil.log("获取所有顶级键...");
+        Set<String> topLevelKeys = new HashSet<>();
+        Iterator<String> keys = config.getKeys();
+
+        while (keys.hasNext()) {
+            String key = keys.next();
+            // 获取顶级键（在第一个"."之前的部分）
+            int dotIndex = key.indexOf('.');
+            String topKey = (dotIndex == -1) ? key : key.substring(0, dotIndex);
+            topLevelKeys.add(topKey);
+        }
+
+        LogUtil.log("顶级键: " + topLevelKeys);
+        return new ArrayList<>(topLevelKeys);
     }
 }

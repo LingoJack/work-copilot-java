@@ -15,6 +15,7 @@ path:
   wst: D:\webstorm64.exe-shortcut.lnk
   rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
   net: C:\Users\Public\Desktop\Dr.COM.lnk
+  kibana: F:\work_copilot_java\script\kibana.cmd
   qq: E:\QQ\QQ.exe
   wx: E:\WeChat\WeChat.exe
   scp: D:\WinSCP\WinSCP.exe
@@ -25,11 +26,13 @@ path:
   store: D:\Nutstore_spe\Nutstore\Nutstore.exe
   env: F:\work_copilot_java\script\env.cmd
   rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd
+  es: F:\work_copilot_java\script\es.cmd
   vpn: E:\Clash.for.Windows-0.20.16-win\Clash
   snip: D:\Snipaste-2.8.7-Beta-x86\Snipaste.exe
   wps: E:\ksolaunch.exe.lnk
   calc: calc
   tp: D:\Typora\Typora.exe
+  week_report: F:\work_copilot_java\script\week_report.cmd
   seata: E:\seata\apache-seata-2.2.0-incubating-bin\seata-server\bin\seata-server.bat
 editor:
   wst: D:\WebStorm_2023.3.4\bin\webstorm64.exe
@@ -73,7 +76,7 @@ storage:
 version:
   name: work-copilot
   mode: normal
-  version: 3.0.0
+  version: 4.0.0
   author: lingojack
   email: lingojack@qq.com
 outer_url:
@@ -85,5 +88,8 @@ script:
   depot: F:\work_copilot_java\script\
   rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
   env: F:\work_copilot_java\script\env.cmd
+  kibana: F:\work_copilot_java\script\kibana.cmd
   rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
   rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd
+  week_report: F:\work_copilot_java\script\week_report.cmd
+  es: F:\work_copilot_java\script\es.cmd

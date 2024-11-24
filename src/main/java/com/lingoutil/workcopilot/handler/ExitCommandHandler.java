@@ -14,7 +14,7 @@ public class ExitCommandHandler extends CommandHandler {
 
     @Override
     protected void process(String[] argv) {
-        LogUtil.info("Bye~");
+        LogUtil.info("Bye~ See you again \uD83D\uDE2D");
         System.exit(0);
     }
 

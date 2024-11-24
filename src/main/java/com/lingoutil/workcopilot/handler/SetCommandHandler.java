@@ -20,7 +20,7 @@ public class SetCommandHandler extends CommandHandler {
         String alias = argv[2];
         if (allCommands.contains(alias)) {
             // 该别名已经被预设，请更换
-            LogUtil.error(String.format("Alias `%s` is already preset. Please choose another one.", alias));
+            LogUtil.error(String.format("Alias `%s` is already preset. Please choose another one. 😢", alias));
             return;
         }
         String path = argv[3];
@@ -36,10 +36,10 @@ public class SetCommandHandler extends CommandHandler {
         Map<String, String> pathMap = YamlConfig.getPropertiesMap(PATH);
         if (!pathMap.containsKey(alias)) {
             YamlConfig.addNestedProperty(PATH, alias, path);
-            LogUtil.info("Add %s with path {%s} successfully", alias, path);
+            LogUtil.info("✅ Added %s with path {%s} successfully! 🎉", alias, path);
         }
         else {
-            LogUtil.error("Alias %s with path {%s} has existed. Please use command `%s` to modify",
+            LogUtil.error("Alias %s with path {%s} already exists. 😢 Please use command `%s` to modify",
                     alias,
                     pathMap.get(alias),
                     modifyCommands.get(0));
@@ -51,10 +51,10 @@ public class SetCommandHandler extends CommandHandler {
         Map<String, String> outerUrlMap = YamlConfig.getPropertiesMap(OUTER_URL);
         if (!innerUrlMap.containsKey(alias) && !outerUrlMap.containsKey(alias)) {
             YamlConfig.addNestedProperty(INNER_URL, alias, path);
-            LogUtil.info("Add %s with url {%s} successfully", alias, path);
+            LogUtil.info("✅ Added %s with URL {%s} successfully! 🚀", alias, path);
         }
         else {
-            LogUtil.error("Alias %s has existed. Please use command `%s` to modify", alias, modifyCommands.get(0));
+            LogUtil.error("Alias %s already exists. 😢 Please use command `%s` to modify", alias, modifyCommands.get(0));
         }
     }
 
@@ -65,6 +65,6 @@ public class SetCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s %s <alias> <path>", argv[0], argv[1]);
+        LogUtil.usage("Usage: %s %s <alias> <path> 💡", argv[0], argv[1]);
     }
 }

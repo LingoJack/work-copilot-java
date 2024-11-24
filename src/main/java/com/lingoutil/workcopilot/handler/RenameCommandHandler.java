@@ -26,17 +26,17 @@ public class RenameCommandHandler extends CommandHandler {
             YamlConfig.renameProperty(EDITOR, alias, newAlias);
             YamlConfig.renameProperty(VPN, alias, newAlias);
             YamlConfig.renameProperty(SCRIPT, alias, newAlias);
-            LogUtil.info("Rename %s to %s successfully, path: %s", alias, newAlias, path);
+            LogUtil.info("✅ Renamed %s to %s successfully! Path: %s 🎉", alias, newAlias, path);
         }
         if (YamlConfig.getPropertiesMap(INNER_URL).containsKey(alias)) {
             String url = YamlConfig.getProperty(INNER_URL, alias);
             YamlConfig.renameProperty(INNER_URL, alias, newAlias);
-            LogUtil.info("Rename %s to %s successfully, inner url: %s", alias, newAlias, url);
+            LogUtil.info("✅ Renamed %s to %s successfully! Inner URL: %s 🚀", alias, newAlias, url);
         }
         if (YamlConfig.getPropertiesMap(OUTER_URL).containsKey(alias)) {
             String url = YamlConfig.getProperty(OUTER_URL, alias);
             YamlConfig.renameProperty(OUTER_URL, alias, newAlias);
-            LogUtil.info("Rename %s to %s successfully, outer url: %s", alias, newAlias, url);
+            LogUtil.info("✅ Renamed %s to %s successfully! Outer URL: %s 🌐", alias, newAlias, url);
         }
     }
 
@@ -47,6 +47,6 @@ public class RenameCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s %s <alias> <new_alias>", argv[0], argv[1]);
+        LogUtil.usage("💡 Usage: %s %s <alias> <new_alias>", argv[0], argv[1]);
     }
 }

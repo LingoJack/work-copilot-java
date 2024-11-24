@@ -4,7 +4,7 @@ import static com.lingoutil.workcopilot.constant.Constant.*;
 
 public class LogUtil {
 
-    private static final String RESET = "\u001B[0m";
+    public static final String RESET = "\u001B[0m";
 
     public static final String BLUE = "\u001B[34m";
     public static final String GREEN = "\u001B[32m";
@@ -69,7 +69,7 @@ public class LogUtil {
     }
 
     public static void printLine() {
-        System.out.println("---------------------------------------------");
+        System.out.println("- - - - - - - - - - - - - - - - - - - - - - -");
     }
 
     private static String escapePercentSigns(String str) {

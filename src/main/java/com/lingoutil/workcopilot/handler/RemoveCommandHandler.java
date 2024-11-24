@@ -29,28 +29,28 @@ public class RemoveCommandHandler extends CommandHandler {
                 File file = new File(path);
                 boolean delete = file.delete();
                 if (delete) {
-                    LogUtil.info("脚本文件{%s}已删除：%s", alias, path);
+                    LogUtil.info("脚本文件{%s}已删除：%s ✅", alias, path);  // 成功删除文件
                     YamlConfig.removeNestedProperty(SCRIPT, alias);
                 }
                 else {
-                    LogUtil.info("脚本删除失败，脚本：%s，路径：%s", alias, path);
+                    LogUtil.info("脚本删除失败，脚本：%s，路径：%s ❌", alias, path);  // 文件删除失败
                 }
             }
-            LogUtil.info("Remove alias %s from PATH successfully", alias);
+            LogUtil.info("成功从 PATH 中移除别名 %s ✅", alias);  // 成功移除路径
         }
         else {
             Map<String, String> innerUrlMap = YamlConfig.getPropertiesMap(INNER_URL);
             Map<String, String> outerUrlMap = YamlConfig.getPropertiesMap(OUTER_URL);
             if (innerUrlMap.containsKey(alias)) {
                 YamlConfig.removeNestedProperty(INNER_URL, alias);
-                LogUtil.info("Remove alias %s from INNER_URL successfully", alias);
+                LogUtil.info("成功从 INNER_URL 中移除别名 %s ✅", alias);  // 成功移除 INNER_URL
             }
             else if (outerUrlMap.containsKey(alias)) {
                 YamlConfig.removeNestedProperty(OUTER_URL, alias);
-                LogUtil.info("Remove alias %s from OUTER_URL successfully", alias);
+                LogUtil.info("成功从 OUTER_URL 中移除别名 %s ✅", alias);  // 成功移除 OUTER_URL
             }
             else {
-                LogUtil.error("Alias %s does not exist", alias);
+                LogUtil.error("别名 %s 不存在 ❌", alias);  // 别名不存在
             }
         }
     }

@@ -23,8 +23,9 @@ public class ConcatCommandHandler extends CommandHandler {
         String scriptContent = argv[3];
         String deportFolderPath = YamlConfig.getProperty(SCRIPT, DEPOT);
 
+        // 检查脚本名是否已存在
         if (YamlConfig.containProperty(PATH, scriptName)) {
-            LogUtil.error("Fail to set script, since script name {%s} already exists", scriptName);
+            LogUtil.error("❌ 失败！脚本名 {%s} 已经存在", scriptName);
             return;
         }
 
@@ -37,18 +38,18 @@ public class ConcatCommandHandler extends CommandHandler {
             if (!scriptFile.exists()) {
                 scriptFile.getParentFile().mkdirs(); // 确保父目录存在
                 scriptFile.createNewFile(); // 创建文件
-                LogUtil.info("Created file: %s", scriptPath);
+                LogUtil.info("🎉 文件创建成功: %s", scriptPath);
             }
 
             try (FileWriter writer = new FileWriter(scriptFile)) {
                 writer.write(scriptContent.substring(1, scriptContent.length() - 1));
                 YamlConfig.addNestedProperty(SCRIPT, scriptName, scriptPath);
-                LogUtil.info("Successfully create script {%s} with content: %s", scriptName, scriptContent);
+                LogUtil.info("✅ 成功创建脚本 {%s} 并写入内容: %s", scriptName, scriptContent);
             }
         }
         catch (IOException e) {
             YamlConfig.removeNestedProperty(PATH, scriptName);
-            LogUtil.error("Failed to write script file: %s", e.getMessage());
+            LogUtil.error("💥 写入脚本文件失败: %s", e.getMessage());
         }
     }
 

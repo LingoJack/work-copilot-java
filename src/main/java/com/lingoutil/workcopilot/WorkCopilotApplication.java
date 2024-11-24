@@ -20,7 +20,7 @@ public class WorkCopilotApplication {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
 
         if (args.length == 1) {
-            LogUtil.info("Welcome to use work copilot ~");
+            LogUtil.info("Welcome to use work copilot \uD83D\uDE80 ~");
             while (true) {
                 print("copilot > ", YELLOW);
                 args = ("l " + sc.nextLine()).split("\\s+(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");

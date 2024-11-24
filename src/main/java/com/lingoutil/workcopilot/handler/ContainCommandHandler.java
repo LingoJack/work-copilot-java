@@ -33,9 +33,15 @@ public class ContainCommandHandler extends CommandHandler {
     }
 
     private static void printResults(List<String> lines) {
-        LogUtil.info("find %d results", lines.size());
-        for (String line : lines) {
-            LogUtil.info(line);
+        int size = lines.size();
+        if (size == 0) {
+            LogUtil.info("noting found \uD83D\uDE22");
+        }
+        else {
+            LogUtil.info("find %s%d%s results \uD83D\uDE0A", LogUtil.GREEN, size, LogUtil.RESET);
+            for (String line : lines) {
+                LogUtil.info(line);
+            }
         }
     }
 
@@ -43,7 +49,12 @@ public class ContainCommandHandler extends CommandHandler {
         List<String> lines = new ArrayList<>();
         for (String container : containerList) {
             if (YamlConfig.containProperty(container, targetAlias)) {
-                lines.add(String.format("[%s] %s: %s", container, targetAlias, YamlConfig.getProperty(container, targetAlias)));
+                lines.add(String.format("%s[%s]%s %s: %s",
+                        LogUtil.GREEN,
+                        container,
+                        LogUtil.RESET,
+                        targetAlias,
+                        YamlConfig.getProperty(container, targetAlias)));
             }
         }
         return lines;

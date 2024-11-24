@@ -1,60 +1,79 @@
-CLI 使用说明：work-copilot 即为 l（字母小写的 "l"）
+CLI 使用说明：work-copilot 即为 j（字母小写的 "j"）
 
-使用方法：
-l <option> <necessary_arguments>
+单次使用方法（较慢）：
+j <option> <necessary_arguments>
+
+多次使用方法，使用后会进入copilot状态，
+可以不再输入开头的j指令，且速度更快：
+j
 
 可用选项：
+以下part均指path, browser, editor等配置文件属性
 
 退出:
 可用命令：exit, -exit, -quit, quit, -q
 示例:
-l exit
+j exit
 
 增加别名:
 可用命令：set, -set, s
 示例:
-l set <alias> <path>
+j set <alias> <path>
 
 列举所有别名:
 可用命令：ls, list, -list
 示例:
-l ls
+j ls [part | all]
 
 查看版本信息:
 可用命令：-version, version, v
 示例:
-l version
+j version
 
 修改别名的路径:
 可用命令：mf, -modify, modify
 示例:
-l mf <alias> <new_path>
+j mf <alias> <new_path>
 
 移除别名:
 可用命令：rm, -remove, remove
 示例:
-l rm <alias>
+j rm <alias>
 
 标记为（浏览器，编辑器或VPN）:
 可用命令：nt, note, -note
 示例:
-l nt <alias> <category(browser,editor,vpn,outer-url)>
+j nt <alias> <category(browser,editor,vpn,outer-url)>
 
 解除标记（浏览器，编辑器或VPN）:
 可用命令：dnt, denote, -denote
 示例:
-l dnt <alias> <category(browser,editor,vpn,outer-url)>
+j dnt <alias> <category(browser,editor,vpn,outer-url)>
 
 重命名别名:
 可用命令：rename, -rename, rn
 示例:
-l rename <alias> <new_name>
+j rename <alias> <new_name>
 
 切换详细输出模式
-l log mode verbose
+j log mode verbose
 
 切换简洁输出模式
-l log mode concise
+j log mode concise
+
+查找指令：find, contain
+j find alias
+其中part可为path,browser,editor等
+
+拼接脚本指令
+concat <script_name> "<content>"
+
+输入日报内容：r, report
+report "content"
+若content中没有空格分隔，则双引号可以省略
+
+查看日报内容：c, check
+check [tail_line_count]
 
 ------------------------
 除了通过命令操作别名和路径外，还可以直接在文件 conf.ini 内修改。需要注意的是 key-value 形式的别名-路径配置中路径不应该带引号。
@@ -62,14 +81,20 @@ l log mode concise
 【Path】存储的所有 key-value 形式的别名-路径键值对
 【Version】版本信息
 【InnerUrl】国内网站别名-网址的键值对，打开国内网站不会自动打开 VPN
-【OutterUrl】国外网站别名-网址键值对，打开国外网站会自动先打开 VPN，别名被标记为 OutterUrl 后会加入到这里
+【OuterUrl】国外网站别名-网址键值对，打开国外网站会自动先打开 VPN，别名被标记为 OutterUrl 后会加入到这里
 【Editor】编辑器，在别名被标记为编辑器后可以通过追加参数来选择打开的文件/目录
 【Browser】浏览器，只有在把别名标记为浏览器之后才可以通过网址别名来快速打开网址，bs 为默认浏览器
 【Vpn】打开国外网站时会先打开 VPN，此时需要有预先的别名被标记为 VPN
+【Script】默认在安装目录的script目录下，remove脚本的别名时会将脚本文件删除
+【Report】使用周报功能需要提前在配置文件report.week_report中配置好周报文件的路径
 
 使用的前置条件：
 
-1. 具有 Python 环境，并配置了 Python 环境变量
-2. 在系统环境变量中新建变量为 COPILOT_HOME，值为 work_copilot 文件夹路径，并且写到 PATH 环境变量中
+1. 具有 Java 环境，并配置了 Java 环境变量
+2. 将安装目录下的bin目录置入环境变量
 
-注意：所有别名对应的路径不应该带有空格，否则会被命令行错误识别。建议的解决方案是为路径有空格的应用创建快捷方式，剪切快捷方式到一个没有空格的路径下然后复制快捷方式文件地址到 conf.ini 下。值得一提的是，复制的路径会带有引号，粘贴到 conf.ini 时需要删除引号。
+注意：所有别名对应的路径不应该带有空格，否则会被命令行错误识别。
+建议的解决方案是为路径有空格的应用创建快捷方式，剪切快捷方式到一个没有空格的路径下然后复制快捷方式文件地址到application.yml配置文件下。
+值得一提的是，复制的路径会带有引号，粘贴时需要删除引号
+
+
