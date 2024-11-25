@@ -3,7 +3,6 @@ path:
   code: D:\Code_shortcut.exe.lnk
   idea: D:\idea64.exe.lnk
   py: D:\py_shortcut.lnk
-  fs: E:\Feishu\Feishu.exe
   rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
   jmeter: E:\jmeter-5.6.3\bin\jmeter.bat
   nacos: e:\work_copilot\quick_start\start_nacos.bat
@@ -17,6 +16,7 @@ path:
   wst: D:\webstorm64.exe-shortcut.lnk
   rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
   file-c: '"explorer c:"'
+  open-week-report: F:\work_copilot_java\script\week_report.cmd
   file-d: '"explorer d:"'
   net: C:\Users\Public\Desktop\Dr.COM.lnk
   kibana: F:\work_copilot_java\script\kibana.cmd
@@ -36,10 +36,10 @@ path:
   es: F:\work_copilot_java\script\es.cmd
   vpn: E:\Clash.for.Windows-0.20.16-win\Clash
   snip: D:\Snipaste-2.8.7-Beta-x86\Snipaste.exe
+  feishu: E:\Feishu\Feishu.exe
   wps: E:\ksolaunch.exe.lnk
   calc: calc
   tp: D:\Typora\Typora.exe
-  week_report: F:\work_copilot_java\script\week_report.cmd
   seata: E:\seata\apache-seata-2.2.0-incubating-bin\seata-server\bin\seata-server.bat
 editor:
   wst: D:\WebStorm_2023.3.4\bin\webstorm64.exe
@@ -66,7 +66,7 @@ report:
   week_report: D:\markdown_notebook\week_report.md
   last_day: 2024.11.27
 inner_url:
-  zhihu: www.zhihu.com
+  zhihu: https://www/zhihu.com
   suixianglu: https://www.programmercarl.com
   bl: https://www.bilibili.com/
   tsl: https://www.deepl.com/zh/translator
@@ -89,16 +89,16 @@ version:
   email: lingojack@qq.com
 outer_url:
   gpt: https://chatgpt.com
-  github: github.com
+  github: https://github.com
 script:
   sentinel: F:\work_copilot_java\script\sentinel.cmd
   rocketmq-name: F:\work_copilot_java\script\rocketmq-name.cmd
   depot: F:\work_copilot_java\script\
   rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
   leetcode: F:\work_copilot_java\script\leetcode.cmd
+  open-week-report: F:\work_copilot_java\script\week_report.cmd
   env: F:\work_copilot_java\script\env.cmd
   kibana: F:\work_copilot_java\script\kibana.cmd
   rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
   rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd
-  week_report: F:\work_copilot_java\script\week_report.cmd
   es: F:\work_copilot_java\script\es.cmd

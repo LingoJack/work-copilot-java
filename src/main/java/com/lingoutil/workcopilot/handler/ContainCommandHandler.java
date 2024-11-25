@@ -27,7 +27,7 @@ public class ContainCommandHandler extends CommandHandler {
         }
         else {
             String targetAlias = argv[2];
-            List<String> lines = findAlias(List.of(PATH, SCRIPT, BROWSER, EDITOR, VPN, SCRIPT, INNER_URL, OUTER_URL), targetAlias);
+            List<String> lines = findAlias(List.of(PATH, SCRIPT, BROWSER, EDITOR, VPN, INNER_URL, OUTER_URL), targetAlias);
             printResults(lines);
         }
     }
@@ -35,7 +35,7 @@ public class ContainCommandHandler extends CommandHandler {
     private static void printResults(List<String> lines) {
         int size = lines.size();
         if (size == 0) {
-            LogUtil.info("noting found \uD83D\uDE22");
+            LogUtil.info("nothing found \uD83D\uDE22");
         }
         else {
             LogUtil.info("find %s%d%s results \uD83D\uDE0A", LogUtil.GREEN, size, LogUtil.RESET);

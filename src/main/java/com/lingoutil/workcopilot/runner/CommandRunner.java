@@ -20,8 +20,10 @@ public class CommandRunner {
         String alias = argv[1];
         int length = argv.length;
 
-        if (!YamlConfig.containProperty(PATH, alias)) {
-            LogUtil.error("❌ 无法找到路径对应的别名 {%s}。请检查配置文件。", alias);
+        if (!YamlConfig.containProperty(PATH, alias)
+                && !YamlConfig.containProperty(INNER_URL, alias)
+                && !YamlConfig.containProperty(OUTER_URL, alias)) {
+            LogUtil.error("❌ 无法找到别名对应的路径或网址 {%s}。请检查配置文件。", alias);
             return;
         }
 
@@ -120,10 +122,19 @@ public class CommandRunner {
 
     public static boolean open(String alias) {
         try {
-            String path = YamlConfig.getProperty(PATH, alias);
-            if (path == null || path.trim().isEmpty()) {
-                LogUtil.error("❌ 未找到别名对应的路径: %s。请检查路径配置。", alias);
-                return false;
+            String path = null;
+
+            if (YamlConfig.containProperty(PATH,alias)) {
+                path = YamlConfig.getProperty(PATH, alias);
+            }
+            else if (YamlConfig.containProperty(INNER_URL, alias)) {
+                path = YamlConfig.getProperty(INNER_URL, alias);
+            }
+            else if (YamlConfig.containProperty(OUTER_URL, alias)){
+                path = YamlConfig.getProperty(OUTER_URL, alias);
+            }
+            else {
+                LogUtil.error("❌ 未找到别名对应的路径或网址: %s。请检查配置文件。", alias);
             }
 
             // 使用 cmd /c start 打开路径
