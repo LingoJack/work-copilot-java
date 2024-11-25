@@ -18,7 +18,9 @@ public class NoteCommandHandler extends CommandHandler {
         String alias = argv[2];
 
         String path = YamlConfig.getProperty(PATH, alias);
-        if (path == null) {
+        if (YamlConfig.containProperty(PATH, alias)
+                || YamlConfig.containProperty(INNER_URL, alias)
+                || YamlConfig.containProperty(OUTER_URL, alias)) {
             LogUtil.error("No such alias %s", alias);
             return;
         }

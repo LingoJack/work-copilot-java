@@ -133,7 +133,7 @@ j find alias
 
 #### ➗ **拼接脚本指令**
 ```bash
-concat <script_name> "<content>"
+j concat <script_name> "<content>"
 ```
 
 ---
@@ -142,7 +142,7 @@ concat <script_name> "<content>"
 **可用命令**：`r`, `report`  
 **示例**：  
 ```bash
-report "content"
+j report "content"
 ```
 > **注意**：若内容中没有空格，双引号可以省略。
 
@@ -152,7 +152,16 @@ report "content"
 **可用命令**：`c`, `check`  
 **示例**：  
 ```bash
-check [tail_line_count]
+j check [tail_line_count]
+```
+
+---
+
+#### 🔍 **查看程序性能使用情况** 
+**可用命令**：`ps`, `system`  
+**示例**：
+```bash
+j ps
 ```
 
 ---

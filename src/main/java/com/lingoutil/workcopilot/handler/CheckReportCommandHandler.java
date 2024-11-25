@@ -20,7 +20,8 @@ public class CheckReportCommandHandler extends CommandHandler {
     protected void process(String[] argv) {
         int lineNum = parseLineCount(argv);
         String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
-        LogUtil.log("Report path: %s", reportPath);
+
+        LogUtil.info(false, "📂 正在读取周报文件路径: %s", reportPath);
 
         if (!validateFile(reportPath)) {
             return;
@@ -36,11 +37,12 @@ public class CheckReportCommandHandler extends CommandHandler {
             try {
                 lineNum = Integer.parseInt(argv[2].trim());
                 if (lineNum <= 0) {
-                    LogUtil.error("行数必须为正数");
+                    LogUtil.error("❌ 行数必须为正整数，请重试！");
+                    return 5; // 回退到默认值
                 }
             }
             catch (NumberFormatException e) {
-                LogUtil.error("无效的行数参数: %s", argv[2].trim());
+                LogUtil.error("❌ 无效的行数参数: %s，请输入正确的数字！", argv[2].trim());
             }
         }
         return lineNum;
@@ -49,11 +51,11 @@ public class CheckReportCommandHandler extends CommandHandler {
     private boolean validateFile(String reportPath) {
         File file = new File(reportPath);
         if (!file.exists()) {
-            LogUtil.error("路径上的文件不存在: %s", reportPath);
+            LogUtil.error("❌ 文件不存在: %s，请检查路径是否正确！", reportPath);
             return false;
         }
         if (!file.isFile()) {
-            LogUtil.error("路径不是一个文件: %s", reportPath);
+            LogUtil.error("❌ 路径不是有效文件: %s，请提供一个有效的文件路径！", reportPath);
             return false;
         }
         return true;
@@ -77,14 +79,12 @@ public class CheckReportCommandHandler extends CommandHandler {
                 raf.seek(pointer);
                 raf.readFully(buffer, 0, bytesToRead);
 
-                // 从后往前处理缓冲区内容
                 for (int i = bytesToRead - 1; i >= 0; i--) {
                     byte b = buffer[i];
                     if (b == '\n') {
                         if (lineBuffer.size() > 0) {
                             lines.add(0, decodeUTF8(lineBuffer));
                             lineBuffer.reset();
-
                             if (lines.size() >= lineNum) {
                                 break;
                             }
@@ -96,28 +96,32 @@ public class CheckReportCommandHandler extends CommandHandler {
                 }
             }
 
-            // 处理文件开头未换行的最后一行
             if (lineBuffer.size() > 0 && lines.size() < lineNum) {
                 lines.add(0, decodeUTF8(lineBuffer));
             }
         }
         catch (IOException e) {
-            LogUtil.error("读取文件时发生错误: %s", e.getMessage(), e);
+            LogUtil.error("❌ 读取文件时发生错误: %s", e.getMessage(), e);
         }
         return lines;
     }
 
-    private String decodeUTF8(ByteArrayOutputStream lineBuffer) throws UnsupportedEncodingException {
+    private String decodeUTF8(ByteArrayOutputStream lineBuffer) {
         byte[] bytes = lineBuffer.toByteArray();
-        for (int i = 0, j = bytes.length - 1; i < j; i++, j--) {
-            byte temp = bytes[i];
-            bytes[i] = bytes[j];
-            bytes[j] = temp;
-        }
+        reverseArray(bytes);
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
+    private void reverseArray(byte[] array) {
+        for (int i = 0, j = array.length - 1; i < j; i++, j--) {
+            byte temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+
     private void logLines(List<String> lines) {
+        LogUtil.info(false, "📄 最近的 %d 行内容如下：", lines.size());
         for (String line : lines) {
             LogUtil.info(true, line);
         }
@@ -137,6 +141,7 @@ public class CheckReportCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("%s %s [<行数，从文件尾部开始>]", argv[0], argv[1]);
+        LogUtil.usage("用法: %s %s [<行数，从文件尾部开始>]", argv[0], argv[1]);
+        LogUtil.info(false, "❓ 示例：查看最近 10 行记录：check report 10");
     }
 }

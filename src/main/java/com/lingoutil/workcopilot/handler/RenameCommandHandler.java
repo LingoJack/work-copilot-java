@@ -19,6 +19,8 @@ public class RenameCommandHandler extends CommandHandler {
         String alias = argv[2];
         String newAlias = argv[3];
 
+        boolean updated = false;
+
         if (YamlConfig.getPropertiesMap(PATH).containsKey(alias)) {
             String path = YamlConfig.getProperty(PATH, alias);
             YamlConfig.renameProperty(PATH, alias, newAlias);
@@ -26,17 +28,25 @@ public class RenameCommandHandler extends CommandHandler {
             YamlConfig.renameProperty(EDITOR, alias, newAlias);
             YamlConfig.renameProperty(VPN, alias, newAlias);
             YamlConfig.renameProperty(SCRIPT, alias, newAlias);
+            updated = true;
             LogUtil.info("✅ Renamed %s to %s successfully! Path: %s 🎉", alias, newAlias, path);
         }
         if (YamlConfig.getPropertiesMap(INNER_URL).containsKey(alias)) {
             String url = YamlConfig.getProperty(INNER_URL, alias);
             YamlConfig.renameProperty(INNER_URL, alias, newAlias);
+            updated = true;
             LogUtil.info("✅ Renamed %s to %s successfully! Inner URL: %s 🚀", alias, newAlias, url);
         }
         if (YamlConfig.getPropertiesMap(OUTER_URL).containsKey(alias)) {
             String url = YamlConfig.getProperty(OUTER_URL, alias);
             YamlConfig.renameProperty(OUTER_URL, alias, newAlias);
+            updated = true;
             LogUtil.info("✅ Renamed %s to %s successfully! Outer URL: %s 🌐", alias, newAlias, url);
+        }
+
+        if (!updated) {
+            LogUtil.error("❌ Alias %s does not exist!", alias);
+            hint(argv);
         }
     }
 

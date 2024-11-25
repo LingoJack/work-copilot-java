@@ -63,7 +63,7 @@ public class ListCommandHandler extends CommandHandler {
             return;
         }
 
-        LogUtil.printf("[%s]\n", LogUtil.YELLOW, LogUtil.capitalizeFirstLetter(parentKey));
+        LogUtil.printfWithColor("[%s]\n", LogUtil.YELLOW, LogUtil.capitalizeFirstLetter(parentKey));
 
         if (properties.isEmpty()) {
             LogUtil.info("Empty");
@@ -72,7 +72,7 @@ public class ListCommandHandler extends CommandHandler {
             for (Map.Entry<String, String> entry : properties.entrySet()) {
                 String shortKey = entry.getKey();
                 String value = entry.getValue();
-                LogUtil.printf("%s", LogUtil.GREEN, shortKey);
+                LogUtil.printfWithColor("%s", LogUtil.GREEN, shortKey);
                 LogUtil.info(": %s", value);
             }
         }

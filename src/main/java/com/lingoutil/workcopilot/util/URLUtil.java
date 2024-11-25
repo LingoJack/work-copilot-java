@@ -14,26 +14,11 @@ public class URLUtil {
 
             // 验证 scheme 是否为 http 或 https
             String scheme = uri.getScheme();
-            if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
-                return false;
-            }
-
-            // 验证 host 是否为 localhost
-            String host = uri.getHost();
-            if (!"localhost".equalsIgnoreCase(host)) {
-                return false;
-            }
-
-            // 验证是否有端口
-            int port = uri.getPort();
-            if (port == -1) { // -1 表示未指定端口
-                return false;
-            }
-
-            return true;
+            return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
         }
         catch (URISyntaxException e) {
             return false;
         }
     }
+
 }

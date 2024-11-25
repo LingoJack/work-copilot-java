@@ -10,18 +10,25 @@ path:
   bs: D:\chrome.lnk
   edge: D:\Edge.lnk
   rocketmq-name: F:\work_copilot_java\script\rocketmq-name.cmd
+  file: '"explorer shell:MyComputerFolder"'
   uml: C:\Program Files\StarUML\StarUML.exe
+  disk-g: '"explorer g:"'
   startwork: D:/redis/work-starter.bat
   wst: D:\webstorm64.exe-shortcut.lnk
   rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
+  file-c: '"explorer c:"'
+  file-d: '"explorer d:"'
   net: C:\Users\Public\Desktop\Dr.COM.lnk
   kibana: F:\work_copilot_java\script\kibana.cmd
+  file-e: '"explorer e:"'
+  file-f: '"explorer f:"'
   qq: E:\QQ\QQ.exe
   wx: E:\WeChat\WeChat.exe
   scp: D:\WinSCP\WinSCP.exe
   sentinel: F:\work_copilot_java\script\sentinel.cmd
   chrome: D:\chrome.lnk
   ms: E:\foobar\foobar2000.exe
+  leetcode: F:\work_copilot_java\script\leetcode.cmd
   draw: D:\draw.io\draw.io.exe
   store: D:\Nutstore_spe\Nutstore\Nutstore.exe
   env: F:\work_copilot_java\script\env.cmd
@@ -61,10 +68,11 @@ report:
 inner_url:
   zhihu: www.zhihu.com
   suixianglu: https://www.programmercarl.com
-  ct: omofuns.top
+  bl: https://www.bilibili.com/
   tsl: https://www.deepl.com/zh/translator
   qianwen: https://tongyi.aliyun.com/qianwen/
-  email: wx.mail.qq.com
+  email: https://wx.mail.qq.com
+  fun: https://omofuns.top
 storage:
   mode: config
   config:
@@ -76,17 +84,18 @@ storage:
 version:
   name: work-copilot
   mode: normal
-  version: 4.0.0
+  version: 5.0.0
   author: lingojack
   email: lingojack@qq.com
 outer_url:
-  gpt: chatgpt.com
+  gpt: https://chatgpt.com
   github: github.com
 script:
   sentinel: F:\work_copilot_java\script\sentinel.cmd
   rocketmq-name: F:\work_copilot_java\script\rocketmq-name.cmd
   depot: F:\work_copilot_java\script\
   rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
+  leetcode: F:\work_copilot_java\script\leetcode.cmd
   env: F:\work_copilot_java\script\env.cmd
   kibana: F:\work_copilot_java\script\kibana.cmd
   rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd

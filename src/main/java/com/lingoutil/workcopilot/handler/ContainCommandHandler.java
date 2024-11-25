@@ -27,7 +27,7 @@ public class ContainCommandHandler extends CommandHandler {
         }
         else {
             String targetAlias = argv[2];
-            List<String> lines = findAlias(List.of(PATH, SCRIPT, BROWSER, EDITOR, VPN), targetAlias);
+            List<String> lines = findAlias(List.of(PATH, SCRIPT, BROWSER, EDITOR, VPN, SCRIPT, INNER_URL, OUTER_URL), targetAlias);
             printResults(lines);
         }
     }

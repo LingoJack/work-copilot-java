@@ -43,6 +43,10 @@ public class Constant {
 
     public static final List<String> containCommands = List.of("contain", "-contain","find","-find");
 
+    public static final List<String> performanceCommands = List.of("system", "ps","-ps");
+
+    public static final List<String> timeCommands = List.of("time");
+
     public static final List<String> allCommands = Stream.of(
             exitCommands,
             addCommands,
@@ -59,7 +63,9 @@ public class Constant {
             logCommands,
             concatCommands,
             clearCommands,
-            containCommands
+            containCommands,
+            performanceCommands,
+            timeCommands
     ).flatMap(List::stream).collect(Collectors.toList());
 
     public static final String PATH = "path";
@@ -98,4 +104,6 @@ public class Constant {
     public final static String GOOGLE = "google";
     public final static String BING = "bing";
     public final static String BAIDU = "baidu";
+
+    public final static String TIME_COUNTDOWN = "countdown";
 }

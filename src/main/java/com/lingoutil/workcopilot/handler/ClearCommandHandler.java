@@ -1,8 +1,5 @@
 package com.lingoutil.workcopilot.handler;
 
-import com.lingoutil.workcopilot.util.LogUtil;
-
-import java.io.IOException;
 import java.util.List;
 
 import static com.lingoutil.workcopilot.constant.Constant.clearCommands;
@@ -15,8 +12,13 @@ public class ClearCommandHandler extends CommandHandler {
 
     @Override
     protected void process(String[] argv) {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        }
+        catch (Exception e) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
     }
 
     @Override

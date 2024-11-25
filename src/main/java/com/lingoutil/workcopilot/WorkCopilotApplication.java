@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 import static com.lingoutil.workcopilot.constant.Constant.*;
 import static com.lingoutil.workcopilot.util.LogUtil.YELLOW;
-import static com.lingoutil.workcopilot.util.LogUtil.print;
 
 public class WorkCopilotApplication {
 
@@ -22,8 +21,8 @@ public class WorkCopilotApplication {
         if (args.length == 1) {
             LogUtil.info("Welcome to use work copilot \uD83D\uDE80 ~");
             while (true) {
-                print("copilot > ", YELLOW);
-                args = ("l " + sc.nextLine()).split("\\s+(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                LogUtil.printWithColor("copilot > ", YELLOW);
+                args = ("j " + sc.nextLine()).split("\\s+(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
                 boolean verboseMode = LOG_MODE.equals(MODE_VERBOSE);
 
                 if (verboseMode) {

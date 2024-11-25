@@ -103,14 +103,14 @@ j find alias
 ------------------------------------
 
 ➗ 拼接脚本指令
-concat <script_name> "<content>"
+j concat <script_name> "<content>"
 
 ------------------------------------
 
 📝 输入日报内容
 可用命令：r, report
 示例：
-report "content"
+j report "content"
 > 注意：若内容中没有空格，双引号可以省略。
 
 ------------------------------------
@@ -118,13 +118,26 @@ report "content"
 📅 查看日报内容
 可用命令：c, check
 示例：
-check [tail_line_count]
+j check [tail_line_count]
+
+------------------------------------
+
+🔍 查看程序性能使用情况
+可用命令：system, ps, -ps
+示例：
+j ps
+
+------------------------------------
+⏲️ 使用计时器功能
+可用命令：countdown, timer 示例：
+启动一个 5 分钟的倒计时。
+j time countdown 5m
 
 ------------------------------------
 
 配置文件说明
 
-除了通过命令操作别名和路径外，还可以直接在配置文件 conf.ini 内进行修改。注意以下几点：
+除了通过命令操作别名和路径外，还可以直接在配置文件 application.yml 内进行修改。注意以下几点：
 
 Path
 存储所有 key-value 形式的别名-路径 配置。
