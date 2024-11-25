@@ -125,6 +125,6 @@ public class ReportCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("💡 用法: %s %s <content>", argv[0], argv[1]);
+        LogUtil.usage("%s %s <content>", argv[0], argv[1]);
     }
 }

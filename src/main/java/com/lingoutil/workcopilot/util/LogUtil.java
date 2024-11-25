@@ -20,16 +20,16 @@ public class LogUtil {
         System.out.print(colorCode + str + RESET);
     }
 
+    public static String highlight(String str, String colorCode) {
+        return colorCode + str + RESET;
+    }
+
     public static void print(String str) {
         System.out.print(str);
     }
 
-    private static void printf(String str, Object... args) {
-        System.out.printf(str, args);
-    }
-
     public static void info(String str, Object... args) {
-        printf(str, args);
+        System.out.printf(str, args);
         System.out.println();
     }
 
@@ -37,7 +37,7 @@ public class LogUtil {
         if (convertPresentSigns) {
             str = escapePercentSigns(str);
         }
-        printf(str, args);
+        System.out.printf(str, args);
         System.out.println();
     }
 
@@ -51,20 +51,20 @@ public class LogUtil {
     public static void logError(String str, Object... args) {
         if (!LOG_MODE.equals(MODE_CONCISE)) {
             printWithColor("[ERROR] ", RED);
-            printf(str, args);
+            System.out.printf(str, args);
             System.err.println();
         }
     }
 
     public static void error(String str, Object... args) {
         printWithColor("[ERROR] ", RED);
-        printf(str, args);
+        System.out.printf(str, args);
         System.err.println();
     }
 
     public static void usage(String str, Object... args) {
-        printWithColor("Usage: ", GREEN);
-        printf(str, args);
+        printWithColor("💡 Usage: ", GREEN);
+        System.out.printf(str, args);
         System.out.println();
     }
 

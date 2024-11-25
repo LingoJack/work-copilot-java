@@ -41,11 +41,15 @@ public class Constant {
 
     public static final List<String> clearCommands = List.of("clear", "cls");
 
-    public static final List<String> containCommands = List.of("contain", "-contain","find","-find");
+    public static final List<String> containCommands = List.of("contain", "-contain", "find", "-find");
 
-    public static final List<String> performanceCommands = List.of("system", "ps","-ps");
+    public static final List<String> performanceCommands = List.of("system", "ps", "-ps");
 
     public static final List<String> timeCommands = List.of("time");
+
+    public static final List<String> searchCommands = List.of("search", "-search", "select", "look", "sch");
+
+    public static final List<String> changeCommands = List.of("change", "-change", "cg");
 
     public static final List<String> allCommands = Stream.of(
             exitCommands,
@@ -65,7 +69,9 @@ public class Constant {
             clearCommands,
             containCommands,
             performanceCommands,
-            timeCommands
+            timeCommands,
+            searchCommands,
+            changeCommands
     ).flatMap(List::stream).collect(Collectors.toList());
 
     public static final String PATH = "path";
@@ -86,6 +92,8 @@ public class Constant {
     public static final String MODE_VERBOSE = "verbose";
     public static final String MODE_CONCISE = "concise";
     public static final String DEPOT = "depot";
+    public static final String SETTING = "setting";
+    public static final String SEARCH_ENGINE = "search-engine";
 
     public static final String CATEGORY_BROWSER = "browser";
     public static final String CATEGORY_EDITOR = "editor";

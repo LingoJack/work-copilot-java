@@ -33,6 +33,6 @@ public class VersionCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("Usage: %s ", argv[0], argv[1]);
+        LogUtil.usage("%s %s", argv[0], argv[1]);
     }
 }

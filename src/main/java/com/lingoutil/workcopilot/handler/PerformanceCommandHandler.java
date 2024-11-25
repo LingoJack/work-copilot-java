@@ -76,7 +76,7 @@ public class PerformanceCommandHandler extends CommandHandler {
                     LogUtil.GREEN, processCpuLoad, LogUtil.RESET);
         }
         else {
-            LogUtil.error("⚠️ 当前 JVM 不支持获取进程 CPU 使用率！");
+            LogUtil.error("\uD83D\uDEA7 当前 JVM 不支持获取进程 CPU 使用率！");
         }
     }
 

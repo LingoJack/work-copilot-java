@@ -4,6 +4,7 @@ path:
   idea: D:\idea64.exe.lnk
   py: D:\py_shortcut.lnk
   rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
+  fs: E:\Feishu\Feishu.exe
   jmeter: E:\jmeter-5.6.3\bin\jmeter.bat
   nacos: e:\work_copilot\quick_start\start_nacos.bat
   bs: D:\chrome.lnk
@@ -36,7 +37,6 @@ path:
   es: F:\work_copilot_java\script\es.cmd
   vpn: E:\Clash.for.Windows-0.20.16-win\Clash
   snip: D:\Snipaste-2.8.7-Beta-x86\Snipaste.exe
-  feishu: E:\Feishu\Feishu.exe
   wps: E:\ksolaunch.exe.lnk
   calc: calc
   tp: D:\Typora\Typora.exe
@@ -102,3 +102,5 @@ script:
   rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
   rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd
   es: F:\work_copilot_java\script\es.cmd
+setting:
+  search-engine: bing  # bing | google | baidu

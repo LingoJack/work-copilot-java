@@ -57,6 +57,6 @@ public class RenameCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("💡 Usage: %s %s <alias> <new_alias>", argv[0], argv[1]);
+        LogUtil.usage("%s %s <alias> <new_alias>", argv[0], argv[1]);
     }
 }

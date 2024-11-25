@@ -65,6 +65,6 @@ public class SetCommandHandler extends CommandHandler {
 
     @Override
     protected void hint(String[] argv) {
-        LogUtil.usage("Usage: %s %s <alias> <path> 💡", argv[0], argv[1]);
+        LogUtil.usage("%s %s <alias> <path>", argv[0], argv[1]);
     }
 }

@@ -3,17 +3,20 @@ package com.lingoutil.workcopilot.handler;
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.util.LogUtil;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.lingoutil.workcopilot.constant.Constant.*;
 
-public class CheckReportCommandHandler extends CommandHandler {
-
+public class SearchCommandHandler extends CommandHandler {
     @Override
     protected List<String> loadCommandList() {
-        return checkCommands;
+        return searchCommands;
     }
 
     @Override
@@ -33,17 +36,52 @@ public class CheckReportCommandHandler extends CommandHandler {
         }
 
         List<String> lines = readLastNLines(new File(reportPath), lineNum);
-        logLines(lines);
+
+        String target = argv[3];
+        // 高效找出lines里含有target字符串的行，并按照格式"[序号] xxx"输出，其中涉及到target的要高亮显示为黄色
+        LogUtil.info("🔍 搜索目标关键字: %s", getHighlightTargetStr(target));
+
+        int index = 0; // 输出行的序号
+        for (String line : lines) {
+            if (line.contains(target)) {
+                index++;
+                String highlightedLine = line.replace(target, getHighlightTargetStr(target));
+                LogUtil.info("[%d] %s", index, highlightedLine);
+            }
+        }
+
+        if (index == 0) {
+            LogUtil.info("nothing found \uD83D\uDE22");
+        }
+    }
+
+    private String getHighlightTargetStr(String target) {
+        return LogUtil.highlight(target, LogUtil.GREEN);
+    }
+
+    @Override
+    protected boolean checkArgs(String[] argv) {
+        return checkArgs(argv, 4, this::hint);
+    }
+
+    @Override
+    protected void hint(String[] argv) {
+        LogUtil.usage("%s %s <line_count_from_tail> <target>", argv[0], argv[1]);
     }
 
     private int parseLineCount(String[] argv) {
         int lineNum = 5; // 默认值为 5 行
-        if (argv.length == 3) {
+        if (argv.length == 4) {
             try {
-                lineNum = Integer.parseInt(argv[2].trim());
-                if (lineNum <= 0) {
-                    LogUtil.error("❌ 行数必须为正整数，请重试！");
-                    return 5; // 回退到默认值
+                if (argv[2].equals("all")) {
+                    lineNum = Integer.MAX_VALUE;
+                }
+                else {
+                    lineNum = Integer.parseInt(argv[2].trim());
+                    if (lineNum <= 0) {
+                        LogUtil.error("❌ 行数必须为正整数或`all`，请重试！");
+                        return 5; // 回退到默认值
+                    }
                 }
             }
             catch (NumberFormatException e) {
@@ -124,29 +162,5 @@ public class CheckReportCommandHandler extends CommandHandler {
             array[i] = array[j];
             array[j] = temp;
         }
-    }
-
-    private void logLines(List<String> lines) {
-        LogUtil.info(false, "📄 最近的 %d 行内容如下：", lines.size());
-        for (String line : lines) {
-            LogUtil.info(true, line);
-        }
-    }
-
-    @Override
-    protected boolean checkArgs(String[] argv) {
-        int length = argv.length;
-        if (length == 2 || length == 3) {
-            return true;
-        }
-        else {
-            hint(argv);
-            return false;
-        }
-    }
-
-    @Override
-    protected void hint(String[] argv) {
-        LogUtil.usage("%s %s [<行数，从文件尾部开始>]", argv[0], argv[1]);
     }
 }
