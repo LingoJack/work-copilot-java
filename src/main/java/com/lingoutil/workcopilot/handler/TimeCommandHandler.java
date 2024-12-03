@@ -89,7 +89,8 @@ public class TimeCommandHandler extends CommandHandler {
             System.out.println("\r🎉 Time's up! [============================================================>] 🎉");
             beepOnFinish();
             displayCelebration();
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             LogUtil.error("Countdown interrupted!");
             Thread.currentThread().interrupt();
         }

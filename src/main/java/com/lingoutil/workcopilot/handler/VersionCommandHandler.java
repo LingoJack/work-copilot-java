@@ -1,9 +1,9 @@
 package com.lingoutil.workcopilot.handler;
 
 import com.lingoutil.workcopilot.config.YamlConfig;
+import com.lingoutil.workcopilot.runner.CommandRunner;
 import com.lingoutil.workcopilot.util.LogUtil;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +24,7 @@ public class VersionCommandHandler extends CommandHandler {
             String value = entry.getValue();
             LogUtil.info("%s: %s", key, value);
         }
+        LogUtil.info("os: %s", CommandRunner.getOsType());
     }
 
     @Override

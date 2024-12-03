@@ -7,7 +7,8 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
-import static com.lingoutil.workcopilot.constant.Constant.*;
+import static com.lingoutil.workcopilot.constant.Constant.LOG_MODE;
+import static com.lingoutil.workcopilot.constant.Constant.MODE_VERBOSE;
 import static com.lingoutil.workcopilot.util.LogUtil.YELLOW;
 
 public class WorkCopilotApplication {

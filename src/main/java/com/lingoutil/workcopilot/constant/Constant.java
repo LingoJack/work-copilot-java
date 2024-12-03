@@ -2,10 +2,6 @@ package com.lingoutil.workcopilot.constant;
 
 import com.lingoutil.workcopilot.config.YamlConfig;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

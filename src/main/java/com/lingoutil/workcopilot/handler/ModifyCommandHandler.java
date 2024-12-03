@@ -2,7 +2,6 @@ package com.lingoutil.workcopilot.handler;
 
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.util.LogUtil;
-import com.lingoutil.workcopilot.util.URLUtil;
 
 import java.util.List;
 import java.util.Map;

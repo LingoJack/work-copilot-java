@@ -14,6 +14,23 @@ public class CommandRunner {
 
     private static final StringBuilder sb = new StringBuilder();
 
+    // 静态变量存储操作系统类型
+    private static String osType;
+
+    // 静态代码块在类加载时判断操作系统类型
+    static {
+        String os = System.getProperty("os.name").toLowerCase();
+        if (os.contains("win")) {
+            osType = "win";
+        }
+        else if (os.contains("nix") || os.contains("nux") || os.contains("mac")) {
+            osType = "unix";
+        }
+        else {
+            osType = "unknown";
+        }
+    }
+
     public static void run(String[] argv) {
         String script = argv[0];
         String alias = argv[1];
@@ -124,10 +141,26 @@ public class CommandRunner {
                 return false;
             }
 
-            // 构建命令
-            String command = String.format("cmd /c start \"\" \"%s\" \"%s\"", path, filePath);
-            Runtime.getRuntime().exec(command);
+            // 根据操作系统类型选择命令
+            String command = "";
+            if ("win".equals(osType)) {
+                command = String.format("cmd /c start \"\" \"%s\" \"%s\"", path, filePath);
+            }
+            else if ("unix".equals(osType)) {
+                // Linux/Mac 使用sh
+                command = String.format("sh -c 'open \"%s\"'", filePath);  // macOS
+                if ("nix".equals(osType) || "nux".equals(osType)) {
+                    // Linux命令, 使用sh
+                    command = String.format("sh -c 'xdg-open \"%s\"'", filePath);
+                }
+            }
+            else {
+                LogUtil.error("💥 当前操作系统不支持此功能: %s", osType);
+                return false;
+            }
 
+            // 执行命令
+            Runtime.getRuntime().exec(command);
             LogUtil.info("✅ 启动 {%s}，路径 %s: {%s}", alias, filePath, path);
             return true;
         }
@@ -155,10 +188,22 @@ public class CommandRunner {
                 LogUtil.error("❌ 未找到别名对应的路径或网址: %s。请检查配置文件。", alias);
             }
 
-            // 使用 cmd /c start 打开路径
-            String command = String.format("cmd /c start \"\" \"%s\"", path);
-            Runtime.getRuntime().exec(command);
+            // 根据操作系统类型选择命令
+            String command = "";
+            if ("win".equals(osType)) {
+                command = String.format("cmd /c start \"\" \"%s\"", path);
+            }
+            else if ("unix".equals(osType)) {
+                // Linux/Mac 使用sh
+                command = String.format("sh -c 'open \"%s\"'", path);  // macOS
+            }
+            else {
+                LogUtil.error("💥 当前操作系统不支持此功能: %s", osType);
+                return false;
+            }
 
+            // 执行命令
+            Runtime.getRuntime().exec(command);
             LogUtil.info("✅ 启动 %s : {%s}", alias, path);
             return true;
         }
@@ -167,5 +212,9 @@ public class CommandRunner {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static String getOsType() {
+        return osType;
     }
 }
