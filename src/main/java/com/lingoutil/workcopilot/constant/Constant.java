@@ -94,7 +94,7 @@ public class Constant {
     public static final String CATEGORY_BROWSER = "browser";
     public static final String CATEGORY_EDITOR = "editor";
     public static final String CATEGORY_VPN = "vpn";
-    public static final String CATEGORY_OUTER_URL = "outer-url";
+    public static final String CATEGORY_OUTER_URL = "outer_url";
 
     public static String LOG_MODE = YamlConfig.initializeProperty(LOG, MODE);
 
