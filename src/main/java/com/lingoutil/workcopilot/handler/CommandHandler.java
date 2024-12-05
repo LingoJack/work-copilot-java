@@ -4,6 +4,7 @@ import com.lingoutil.workcopilot.runner.CommandRunner;
 import com.lingoutil.workcopilot.scanner.CommandHandlerScanner;
 import com.lingoutil.workcopilot.util.LogUtil;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -65,8 +66,8 @@ public abstract class CommandHandler {
 
     protected final boolean checkArgs(String[] argv, Consumer<String[]> errorHandler, int... expectedNums) {
         int length = argv.length;
-        if (containInArray(expectedNums,length)) {
-            LogUtil.error("expected argument num is %d, but got %d", expectedNums, length);
+        if (!containInArray(expectedNums,length)) {
+            LogUtil.error("expected argument num is %s, but got %d", Arrays.toString(expectedNums), length);
             errorHandler.accept(argv);
             return false;
         }
