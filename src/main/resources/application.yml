@@ -1,5 +1,8 @@
 editor:
   code: /Applications/work_copilot_java/link/code.app
+  wps: /Applications/work_copilot_java/link/wps
+  tp: /Applications/Typora.app
+  idea: /Applications/work_copilot_java/link/idea.app
 color:
   warn: null
   error: null
@@ -7,7 +10,8 @@ color:
   info: null
 log:
   mode: concise
-inner_url: null
+inner_url:
+  suixainglu: https://www.programmercarl.com/
 storage:
   mode: config
   config:
@@ -24,20 +28,32 @@ version:
   email: lingojack@qq.com
 script:
   depot: /Applications/work_copilot_java/script/
-  hello: /Applications/work_copilot_java/script/hello.sh
+  leetcode: /Applications/work_copilot_java/script/leetcode.sh
   download-bv: /Applications/work_copilot_java/script/download-bv.sh
 setting:
   search-engine: bing
 path:
-  bs: /Applications/work_copilot_java/link/chrome.app
+  wx: /Applications/WeChat.app
   code: /Applications/work_copilot_java/link/code.app
-  hello: /Applications/work_copilot_java/script/hello.sh
+  idea: /Applications/work_copilot_java/link/idea.app
+  ms: /Applications/foobar2000.app
+  leetcode: /Applications/work_copilot_java/script/leetcode.sh
+  landrop: /Applications/LANDrop.app
+  fs: /Applications/Lark.app
+  bs: /Applications/work_copilot_java/link/chrome.app
+  vpn: /Applications/SFM.app
   download-bv: /Applications/work_copilot_java/script/download-bv.sh
-vpn: null
+  snip: /Applications/Snipaste.app
+  wps: /Applications/work_copilot_java/link/wps
+  calc: /System/Applications/Calculator.app
+  tp: /Applications/Typora.app
+vpn:
+  vpn: /Applications/SFM.app
 browser:
   bs: /Applications/work_copilot_java/link/chrome.app
 report:
   week_num: '58'
-  week_report: /Users/a1-6/Documents/markdown_notebook/week_report.md
+  week_report: /Applications/work_copilot_java/report/week_report.md
   last_day: 2024.12.04
-outer_url: null
+outer_url:
+  gpt: https://chatgpt.com/

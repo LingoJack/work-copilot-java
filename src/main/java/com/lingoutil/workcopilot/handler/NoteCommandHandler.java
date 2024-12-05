@@ -16,14 +16,14 @@ public class NoteCommandHandler extends CommandHandler {
     @Override
     protected void process(String[] argv) {
         String alias = argv[2];
-
-        String path = YamlConfig.getProperty(PATH, alias);
         if (!YamlConfig.containProperty(PATH, alias)
                 && !YamlConfig.containProperty(INNER_URL, alias)
                 && !YamlConfig.containProperty(OUTER_URL, alias)) {
             LogUtil.error("No such alias %s", alias);
             return;
         }
+
+        String path = YamlConfig.getProperty(PATH, alias);
 
         String category = argv[3];
         switch (category) {
@@ -40,7 +40,9 @@ public class NoteCommandHandler extends CommandHandler {
                 LogUtil.info("Add alias %s to VPN successfully", alias);
             }
             case CATEGORY_OUTER_URL -> {
+                path = YamlConfig.getProperty(INNER_URL, alias);
                 YamlConfig.addNestedProperty(category, alias, path);
+                YamlConfig.removeNestedProperty(INNER_URL, alias);
                 LogUtil.info("Add alias %s to OUTER_URL successfully", alias);
             }
             case SCRIPT -> {

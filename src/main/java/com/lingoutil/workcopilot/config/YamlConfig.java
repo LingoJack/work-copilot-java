@@ -121,6 +121,7 @@ public class YamlConfig {
         String fullKey = parentKey + "." + childKey;
         LogUtil.log("添加嵌套键值对: " + fullKey + " = " + value);
         config.setProperty(fullKey, value);
+        // todo
         propertyCache.put(fullKey, value);
         propertiesMapCache.clear();
         saveConfig();

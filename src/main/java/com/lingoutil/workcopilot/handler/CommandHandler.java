@@ -63,6 +63,25 @@ public abstract class CommandHandler {
         return true;
     }
 
+    protected final boolean checkArgs(String[] argv, Consumer<String[]> errorHandler, int... expectedNums) {
+        int length = argv.length;
+        if (containInArray(expectedNums,length)) {
+            LogUtil.error("expected argument num is %d, but got %d", expectedNums, length);
+            errorHandler.accept(argv);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean containInArray(int[] expected, int target) {
+        for (int i : expected) {
+            if (i == target) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected final boolean checkArgs(String[] argv, int expectedNum) {
         return checkArgs(argv, expectedNum, this::hint);
     }
