@@ -1,10 +1,7 @@
 editor:
-  wst: D:\WebStorm_2023.3.4\bin\webstorm64.exe
-  wps: E:\ksolaunch.exe.lnk
-  code: D:\Microsoft_VS_Code\Code.exe
-  tp: D:\Typora\Typora.exe
-  idea: D:\IntelliJ_IDEA_2023.2.2\bin\idea64.exe
-  ms: E:\foobar\foobar2000.exe
+  tp: /Applications/Typora.app
+  idea: /Applications/work_copilot_java/link/idea.app
+  code: /Applications/work_copilot_java/link/code.app
 color:
   warn: null
   error: null
@@ -12,14 +9,6 @@ color:
   info: null
 log:
   mode: concise
-inner_url:
-  zhihu: https://www/zhihu.com
-  suixianglu: https://www.programmercarl.com
-  bl: https://www.bilibili.com/
-  tsl: https://www.deepl.com/zh/translator
-  qianwen: https://tongyi.aliyun.com/qianwen/
-  email: https://wx.mail.qq.com
-  fun: https://omofuns.top
 storage:
   mode: config
   config:
@@ -28,6 +17,9 @@ storage:
     type: mysql
     password: null
     username: null
+inner_url:
+  suixianglu: https://www.programmercarl.com/
+  bl: https://www.bilibili.com/
 version:
   name: work-copilot
   mode: normal
@@ -35,78 +27,45 @@ version:
   author: lingojack
   email: lingojack@qq.com
 script:
-  start-work: F:\work_copilot_java\script\start-work.cmd
-  sentinel: F:\work_copilot_java\script\sentinel.cmd
-  open_report: F:\work_copilot_java\script\week_report.cmd
-  depot: F:\work_copilot_java\script\
-  leetcode: F:\work_copilot_java\script\leetcode.cmd
-  env: F:\work_copilot_java\script\env.cmd
-  rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
-  rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd
-  es: F:\work_copilot_java\script\es.cmd
-  rocketmq-name: F:\work_copilot_java\script\rocketmq-name.cmd
-  download-bv: F:\work_copilot_java\script\download-bv.cmd
-  rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
-  kibana: F:\work_copilot_java\script\kibana.cmd
+  open-copilot: /Applications/work_copilot_java/script/open-copilot.sh
+  depot: /Applications/work_copilot_java/script/
+  download-bv: /Applications/work_copilot_java/script/download-bv.sh
+  open-report: /Applications/work_copilot_java/script/open-report.sh
+  ip: /Applications/work_copilot_java/script/ip.sh
+  leetcode: /Applications/work_copilot_java/script/leetcode.sh
+  push-report: /Applications/work_copilot_java/script/push-report.sh
+  pull-report: /Applications/work_copilot_java/script/sync-report.sh
 setting:
   search-engine: bing
 path:
-  open_report: F:\work_copilot_java\script\week_report.cmd
-  tv: E:\bilibili\bilibili.exe
-  code: D:\Code_shortcut.exe.lnk
-  idea: D:\idea64.exe.lnk
-  py: D:\py_shortcut.lnk
-  rocketmq-broker: F:\work_copilot_java\script\rocketmq-broker.cmd
-  fs: E:\Feishu\Feishu.exe
-  jmeter: E:\jmeter-5.6.3\bin\jmeter.bat
-  nacos: e:\work_copilot\quick_start\start_nacos.bat
-  bs: D:\chrome.lnk
-  edge: D:\Edge.lnk
-  rocketmq-name: F:\work_copilot_java\script\rocketmq-name.cmd
-  file: '"explorer shell:MyComputerFolder"'
-  uml: C:\Program Files\StarUML\StarUML.exe
-  startwork: D:/redis/work-starter.bat
-  wst: D:\webstorm64.exe-shortcut.lnk
-  rocketmq-dashboard: F:\work_copilot_java\script\rocketmq-dashboard.cmd
-  file-c: '"explorer c:"'
-  file-d: '"explorer d:"'
-  net: C:\Users\Public\Desktop\Dr.COM.lnk
-  kibana: F:\work_copilot_java\script\kibana.cmd
-  file-e: '"explorer e:"'
-  file-f: '"explorer f:"'
-  file-g: '"explorer g:"'
-  qq: E:\QQ\QQ.exe
-  start-work: F:\work_copilot_java\script\start-work.cmd
-  wx: E:\WeChat\WeChat.exe
-  scp: D:\WinSCP\WinSCP.exe
-  sentinel: F:\work_copilot_java\script\sentinel.cmd
-  chrome: D:\chrome.lnk
-  ms: E:\foobar\foobar2000.exe
-  leetcode: F:\work_copilot_java\script\leetcode.cmd
-  draw: D:\draw.io\draw.io.exe
-  store: D:\Nutstore_spe\Nutstore\Nutstore.exe
-  env: F:\work_copilot_java\script\env.cmd
-  landrop: F:\landrop-v2-electron\LANDrop.exe
-  rabbitmq: F:\work_copilot_java\script\rabbitmq.cmd
-  es: F:\work_copilot_java\script\es.cmd
-  xshell: '"G:\xshell\Xshell.link"'
-  vpn: E:\Clash.for.Windows-0.20.16-win\Clash
-  snip: D:\Snipaste-2.8.7-Beta-x86\Snipaste.exe
-  download-bv: F:\work_copilot_java\script\download-bv.cmd
-  wps: E:\ksolaunch.exe.lnk
-  calc: calc
-  tp: D:\Typora\Typora.exe
-  seata: E:\seata\apache-seata-2.2.0-incubating-bin\seata-server\bin\seata-server.bat
+  qq: /Applications/QQ.app
+  wx: /Applications/WeChat.app
+  code: /Applications/work_copilot_java/link/code.app
+  idea: /Applications/work_copilot_java/link/idea.app
+  ms: /Applications/foobar2000.app
+  open-report: /Applications/work_copilot_java/script/open-report.sh
+  ip: /Applications/work_copilot_java/script/ip.sh
+  leetcode: /Applications/work_copilot_java/script/leetcode.sh
+  landrop: /Applications/LANDrop.app
+  fs: /Applications/Lark.app
+  open-copilot: /Applications/work_copilot_java/script/open-copilot.sh
+  bs: /Applications/work_copilot_java/link/chrome.app
+  vpn: /Applications/SFM.app
+  download-bv: /Applications/work_copilot_java/script/download-bv.sh
+  snip: /Applications/Snipaste.app
+  calc: /System/Applications/Calculator.app
+  wps: /Applications/work_copilot_java/link/wps
+  tp: /Applications/Typora.app
+  push-report: /Applications/work_copilot_java/script/push-report.sh
+  pull-report: /Applications/work_copilot_java/script/sync-report.sh
 vpn:
-  vpn: E:\Clash.for.Windows-0.20.16-win\Clash
+  vpn: /Applications/SFM.app
 browser:
-  chrome: D:\chrome.lnk
-  bs: D:\chrome.lnk
-  edge: D:\Edge.lnk
+  bs: /Applications/work_copilot_java/link/chrome.app
 report:
-  week_num: '58'
-  week_report: F:\work_copilot_java\report\week_report.md
-  last_day: 2024.12.04
+  week_num: '59'
+  week_report: /Applications/work_copilot_java/report/week_report.md
+  last_day: 2024.12.11
 outer_url:
-  gpt: https://chatgpt.com
-  github: https://github.com
+  gpt: https://chatgpt.com/
+  github: https://github.com/

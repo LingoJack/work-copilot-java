@@ -5,6 +5,7 @@ import com.lingoutil.workcopilot.scanner.CommandHandlerScanner;
 import com.lingoutil.workcopilot.util.LogUtil;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -13,7 +14,7 @@ import static com.lingoutil.workcopilot.constant.Constant.helpCommands;
 
 public abstract class CommandHandler {
 
-    private static final ConcurrentHashMap<String, CommandHandler> commandHandlerMap = new ConcurrentHashMap<>();
+    private static final HashMap<String, CommandHandler> commandHandlerMap = new HashMap<>();
 
     public static void execute(String command, String[] argv) {
         if (commandHandlerMap.entrySet().isEmpty()) {
