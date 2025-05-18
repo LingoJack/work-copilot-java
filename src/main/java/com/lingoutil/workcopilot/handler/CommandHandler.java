@@ -7,7 +7,6 @@ import com.lingoutil.workcopilot.util.LogUtil;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 import static com.lingoutil.workcopilot.constant.Constant.helpCommands;

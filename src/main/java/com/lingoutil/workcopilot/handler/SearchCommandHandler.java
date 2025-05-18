@@ -4,7 +4,6 @@ import com.lingoutil.workcopilot.component.FuzzyMatcher;
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.util.LogUtil;
 
-import java.awt.event.HierarchyBoundsAdapter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -70,8 +69,7 @@ public class SearchCommandHandler extends CommandHandler {
 	private String processMatchLine(String line, String target, boolean fuzzy) {
 		if (!fuzzy) {
 			return line.replaceAll(target, getHighlightTargetStr(target));
-		}
-		else {
+		} else {
 
 			List<FuzzyMatcher.Interval> intervals = FuzzyMatcher.getMatchIntervals(line, target);
 			if (intervals.isEmpty()) {
@@ -122,16 +120,14 @@ public class SearchCommandHandler extends CommandHandler {
 			try {
 				if (argv[2].equals("all")) {
 					lineNum = Integer.MAX_VALUE;
-				}
-				else {
+				} else {
 					lineNum = Integer.parseInt(argv[2].trim());
 					if (lineNum <= 0) {
 						LogUtil.error("❌ 行数必须为正整数或`all`，请重试！");
 						return 5; // 回退到默认值
 					}
 				}
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				LogUtil.error("❌ 无效的行数参数: %s，请输入正确的数字！", argv[2].trim());
 				return -1;
 			}
@@ -156,20 +152,15 @@ public class SearchCommandHandler extends CommandHandler {
 		List<String> lines = new LinkedList<>();
 		int bufferSize = 16384; // 每次读取 16KB
 		byte[] buffer = new byte[bufferSize];
-
-		try (RandomAccessFile raf = new RandomAccessFile(file, "r")) {
-			long fileLength = raf.length();
+		try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
+			long fileLength = randomAccessFile.length();
 			long pointer = fileLength;
-
 			ByteArrayOutputStream lineBuffer = new ByteArrayOutputStream();
-
 			while (pointer > 0 && lines.size() < lineNum) {
 				int bytesToRead = (int) Math.min(bufferSize, pointer);
 				pointer -= bytesToRead;
-
-				raf.seek(pointer);
-				raf.readFully(buffer, 0, bytesToRead);
-
+				randomAccessFile.seek(pointer);
+				randomAccessFile.readFully(buffer, 0, bytesToRead);
 				for (int i = bytesToRead - 1; i >= 0; i--) {
 					byte b = buffer[i];
 					if (b == '\n') {
@@ -180,18 +171,15 @@ public class SearchCommandHandler extends CommandHandler {
 								break;
 							}
 						}
-					}
-					else {
+					} else {
 						lineBuffer.write(b);
 					}
 				}
 			}
-
 			if (lineBuffer.size() > 0 && lines.size() < lineNum) {
 				lines.add(0, decodeUTF8(lineBuffer));
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			LogUtil.error("❌ 读取文件时发生错误: %s", e.getMessage(), e);
 		}
 		return lines;

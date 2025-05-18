@@ -25,7 +25,6 @@ public class WorkCopilotApplication {
     public static void main(String[] args) {
         // 设置控制台输出为UTF-8编码
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
-
         if (args.length == 1) {
             if (CommandRunner.getOsType().equals(CommandRunner.MAC)) {
                 runWithMultiModeOnUnix();
@@ -46,7 +45,7 @@ public class WorkCopilotApplication {
             LogUtil.log("verbose mode is start: %s", verboseMode);
             long startTime = System.currentTimeMillis();
             long endTime = 0;
-            if (!isValidArgsNum(args)) {
+            if (isIllegal(args)) {
                 return;
             }
             String command = args[1];
@@ -55,7 +54,7 @@ public class WorkCopilotApplication {
             LogUtil.log("duration: %s ms", endTime - startTime);
         }
         else {
-            if (!isValidArgsNum(args)) {
+            if (isIllegal(args)) {
                 return;
             }
             String command = args[1];
@@ -85,7 +84,7 @@ public class WorkCopilotApplication {
                         LogUtil.log("verbose mode is start: %s", verboseMode);
                         long startTime = System.currentTimeMillis();
                         long endTime = 0;
-                        if (!isValidArgsNum(args)) {
+                        if (isIllegal(args)) {
                             continue;
                         }
                         String command = args[1];
@@ -94,7 +93,7 @@ public class WorkCopilotApplication {
                         LogUtil.log("duration: %s ms", endTime - startTime);
                     }
                     else {
-                        if (!isValidArgsNum(args)) {
+                        if (isIllegal(args)) {
                             continue;
                         }
                         String command = args[1];
@@ -125,7 +124,7 @@ public class WorkCopilotApplication {
                 LogUtil.log("verbose mode is start: %s", verboseMode);
                 long startTime = System.currentTimeMillis();
                 long endTime = 0;
-                if (!isValidArgsNum(args)) {
+                if (isIllegal(args)) {
                     continue;
                 }
                 String command = args[1];
@@ -134,7 +133,7 @@ public class WorkCopilotApplication {
                 LogUtil.log("duration: %s ms", endTime - startTime);
             }
             else {
-                if (!isValidArgsNum(args)) {
+                if (isIllegal(args)) {
                     continue;
                 }
                 String command = args[1];
@@ -144,13 +143,13 @@ public class WorkCopilotApplication {
         }
     }
 
-    private static boolean isValidArgsNum(String[] args) {
+    private static boolean isIllegal(String... args) {
         int len = args.length;
         LogUtil.log("command line argument length: %s", len);
         if (len != 2 && len != 3 && len != 4 && len != 5) {
             LogUtil.error("Invalid number of arguments, arguments len: %s\n", len);
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

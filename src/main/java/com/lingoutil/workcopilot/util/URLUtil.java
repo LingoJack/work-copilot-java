@@ -9,10 +9,7 @@ public class URLUtil {
             return false;
         }
         try {
-            // 尝试解析为 URI
             URI uri = new URI(input);
-
-            // 验证 scheme 是否为 http 或 https
             String scheme = uri.getScheme();
             return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
         }
