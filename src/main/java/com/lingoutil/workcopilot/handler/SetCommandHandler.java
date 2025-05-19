@@ -26,8 +26,7 @@ public class SetCommandHandler extends CommandHandler {
         String path = argv[3];
         if (isURL(path)) {
             addAsUrl(alias, path);
-        }
-        else {
+        } else {
             addAsPath(alias, path);
         }
     }
@@ -37,8 +36,7 @@ public class SetCommandHandler extends CommandHandler {
         if (!pathMap.containsKey(alias)) {
             YamlConfig.addNestedProperty(PATH, alias, path);
             LogUtil.info("✅ Added %s with path {%s} successfully! 🎉", alias, path);
-        }
-        else {
+        } else {
             LogUtil.error("Alias %s with path {%s} already exists. 😢 Please use command `%s` to modify",
                     alias,
                     pathMap.get(alias),
@@ -52,8 +50,7 @@ public class SetCommandHandler extends CommandHandler {
         if (!innerUrlMap.containsKey(alias) && !outerUrlMap.containsKey(alias)) {
             YamlConfig.addNestedProperty(INNER_URL, alias, path);
             LogUtil.info("✅ Added %s with URL {%s} successfully! 🚀", alias, path);
-        }
-        else {
+        } else {
             LogUtil.error("Alias %s already exists. 😢 Please use command `%s` to modify", alias, modifyCommands.get(0));
         }
     }

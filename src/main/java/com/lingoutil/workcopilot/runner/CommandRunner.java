@@ -28,11 +28,9 @@ public class CommandRunner {
         String os = System.getProperty("os.name").toLowerCase();
         if (os.contains(WINDOWS)) {
             osType = WINDOWS;
-        }
-        else if (os.contains("mac")) {
+        } else if (os.contains("mac")) {
             osType = MAC;
-        }
-        else {
+        } else {
             osType = "unknown";
         }
     }
@@ -50,17 +48,13 @@ public class CommandRunner {
 
         if (YamlConfig.containProperty(BROWSER, alias)) {
             openBrowser(argv, length, alias, script);
-        }
-        else if (YamlConfig.containProperty(EDITOR, alias)) {
+        } else if (YamlConfig.containProperty(EDITOR, alias)) {
             openEditor(argv, length, alias);
-        }
-        else if (YamlConfig.containProperty(VPN, alias)) {
+        } else if (YamlConfig.containProperty(VPN, alias)) {
             openVPN(alias);
-        }
-        else if (YamlConfig.containProperty(SCRIPT, alias)) {
+        } else if (YamlConfig.containProperty(SCRIPT, alias)) {
             runScript(alias);
-        }
-        else {
+        } else {
             // path是应用路径，如何打开
             open(alias);
         }
@@ -78,20 +72,17 @@ public class CommandRunner {
             if (MAC.equals(osType)) {
                 // 在 macOS 上新开一个终端窗口运行脚本
                 command = new String[]{"open", "-a", "Terminal", path}; // 替换 Terminal 为 iTerm 可改用 iTerm
-            }
-            else if (WINDOWS.equals(osType)) {
+            } else if (WINDOWS.equals(osType)) {
                 // Windows 环境运行脚本，添加是否需要新窗口的逻辑
                 boolean openNewWindow = true; // 根据需求设置此值
                 if (openNewWindow) {
                     // 新窗口运行
                     command = new String[]{"cmd.exe", "/c", "start", "cmd.exe", "/k", path};
-                }
-                else {
+                } else {
                     // 当前窗口运行
                     command = new String[]{"cmd.exe", "/c", path};
                 }
-            }
-            else {
+            } else {
                 LogUtil.error("❌ 不支持的操作系统: %s", osType);
                 return;
             }
@@ -127,8 +118,7 @@ public class CommandRunner {
     private static void openEditor(String[] argv, int length, String alias) {
         if (length != 3) {
             open(alias);
-        }
-        else {
+        } else {
             String filePath = argv[2];
             open(alias, filePath);
         }
@@ -137,8 +127,7 @@ public class CommandRunner {
     private static void openBrowser(String[] argv, int length, String alias, String script) {
         if (length == 2) {
             open(alias);
-        }
-        else {
+        } else {
             openBrowserWithUrlAliasOrSearchedContent(argv, length, script, alias);
         }
     }
@@ -154,19 +143,16 @@ public class CommandRunner {
         String url = null;
         if (YamlConfig.getProperty(INNER_URL, urlAlias) != null) {
             url = YamlConfig.getProperty(INNER_URL, urlAlias);
-        }
-        else if (YamlConfig.getProperty(OUTER_URL, urlAlias) != null) {
+        } else if (YamlConfig.getProperty(OUTER_URL, urlAlias) != null) {
             Map<String, String> vpnMap = YamlConfig.getPropertiesMap(VPN);
             List<String> vpnAlias = vpnMap.keySet().stream().limit(1).toList();
             open(vpnAlias.get(0));
             url = YamlConfig.getProperty(OUTER_URL, urlAlias);
-        }
-        else {
+        } else {
             // 如果urlAlias既不在inner_url里也不在outer_url里，即不是网址别名
             if (length == 3) {
                 url = URLUtil.isURL(urlAlias) ? urlAlias : getSearchUrlWithEngine(urlAlias);
-            }
-            else if (length == 4) {
+            } else if (length == 4) {
                 // 如果指定了搜索引擎
                 String engine = argv[3];
                 url = getSearchUrlWithEngine(urlAlias, engine);
@@ -184,14 +170,11 @@ public class CommandRunner {
         String searchPattern;
         if (engine.equalsIgnoreCase(GOOGLE)) {
             searchPattern = GOOGLE_SEARCH;
-        }
-        else if (engine.equalsIgnoreCase(BING)) {
+        } else if (engine.equalsIgnoreCase(BING)) {
             searchPattern = BING_SEARCH;
-        }
-        else if (engine.equalsIgnoreCase(BAIDU)) {
+        } else if (engine.equalsIgnoreCase(BAIDU)) {
             searchPattern = BAIDU_SEARCH;
-        }
-        else {
+        } else {
             LogUtil.info("未指定搜索引擎，使用默认搜索引擎：%s", BING);
             searchPattern = BING_SEARCH;
         }
@@ -211,12 +194,10 @@ public class CommandRunner {
             if (WINDOWS.equals(osType)) {
                 command = String.format("cmd /c start \"\" \"%s\" \"%s\"", path, filePath);
                 Runtime.getRuntime().exec(command);
-            }
-            else if (MAC.equals(osType)) {
+            } else if (MAC.equals(osType)) {
                 String[] commands = {"open", path, filePath};
                 Runtime.getRuntime().exec(commands);
-            }
-            else {
+            } else {
                 LogUtil.error("💥 当前操作系统不支持此功能: %s", osType);
                 return false;
             }
@@ -242,12 +223,10 @@ public class CommandRunner {
             if (WINDOWS.equals(osType)) {
                 String command = String.format("cmd /c start \"\" \"%s\"", path);
                 Runtime.getRuntime().exec(command);
-            }
-            else if (MAC.equals(osType)) {
+            } else if (MAC.equals(osType)) {
                 String[] commands = {"open", path};
                 Runtime.getRuntime().exec(commands);
-            }
-            else {
+            } else {
                 LogUtil.error("💥 当前操作系统不支持此功能: %s", osType);
                 return false;
             }
@@ -265,14 +244,11 @@ public class CommandRunner {
         String path = null;
         if (YamlConfig.containProperty(PATH, alias)) {
             path = YamlConfig.getProperty(PATH, alias);
-        }
-        else if (YamlConfig.containProperty(INNER_URL, alias)) {
+        } else if (YamlConfig.containProperty(INNER_URL, alias)) {
             path = YamlConfig.getProperty(INNER_URL, alias);
-        }
-        else if (YamlConfig.containProperty(OUTER_URL, alias)) {
+        } else if (YamlConfig.containProperty(OUTER_URL, alias)) {
             path = YamlConfig.getProperty(OUTER_URL, alias);
-        }
-        else {
+        } else {
             LogUtil.error("❌ 未找到别名对应的路径或网址: %s。请检查配置文件。", alias);
         }
         return path;

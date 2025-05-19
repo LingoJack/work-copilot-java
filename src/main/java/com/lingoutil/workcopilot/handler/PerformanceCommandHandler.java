@@ -74,8 +74,7 @@ public class PerformanceCommandHandler extends CommandHandler {
             // 打印进程 CPU 使用率
             LogUtil.info("🚀 当前进程 CPU 使用率: %s%.2f%%%s",
                     LogUtil.GREEN, processCpuLoad, LogUtil.RESET);
-        }
-        else {
+        } else {
             LogUtil.error("\uD83D\uDEA7 当前 JVM 不支持获取进程 CPU 使用率！");
         }
     }

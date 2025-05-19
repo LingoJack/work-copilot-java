@@ -27,11 +27,10 @@ public class YamlConfig {
             System.out.println("加载配置文件: " + CONFIG_FILE_NAME + "");
             builder = configs.fileBasedBuilder(YAMLConfiguration.class, CONFIG_FILE_NAME);
             config = builder.getConfiguration();
-            
+
             // 初始化缓存
             initializeCache();
-        }
-        catch (ConfigurationException e) {
+        } catch (ConfigurationException e) {
             LogUtil.error("加载配置文件失败：" + CONFIG_FILE_NAME);
             throw new RuntimeException("加载配置文件失败：" + CONFIG_FILE_NAME, e);
         }
@@ -133,8 +132,7 @@ public class YamlConfig {
         try {
             LogUtil.log("保存配置到文件...");
             builder.save();
-        }
-        catch (ConfigurationException e) {
+        } catch (ConfigurationException e) {
             LogUtil.log("保存配置文件失败：" + CONFIG_FILE_NAME);
             throw new RuntimeException("保存配置文件失败：" + CONFIG_FILE_NAME, e);
         }

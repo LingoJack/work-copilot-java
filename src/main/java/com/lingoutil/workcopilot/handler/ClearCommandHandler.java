@@ -14,8 +14,7 @@ public class ClearCommandHandler extends CommandHandler {
     protected void process(String[] argv) {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.print("\033[H\033[2J");
             System.out.flush();
         }

@@ -25,8 +25,7 @@ public class ListCommandHandler extends CommandHandler {
             listByParentKey(BROWSER);
             listByParentKey(VPN);
             listByParentKey(SCRIPT);
-        }
-        else {
+        } else {
             String parentKey = argv[2];
 
             if (parentKey.equals("all")) {
@@ -34,8 +33,7 @@ public class ListCommandHandler extends CommandHandler {
                 for (String topLevelKey : topLevelKeys) {
                     listByParentKey(topLevelKey);
                 }
-            }
-            else {
+            } else {
                 listByParentKey(parentKey);
             }
         }
@@ -67,8 +65,7 @@ public class ListCommandHandler extends CommandHandler {
 
         if (properties.isEmpty()) {
             LogUtil.info("Empty");
-        }
-        else {
+        } else {
             for (Map.Entry<String, String> entry : properties.entrySet()) {
                 String shortKey = entry.getKey();
                 String value = entry.getValue();

@@ -38,19 +38,15 @@ public class TimeCommandHandler extends CommandHandler {
         try {
             if (threshold.endsWith("s")) {
                 return Long.parseLong(threshold.replace("s", ""));
-            }
-            else if (threshold.endsWith("m")) {
+            } else if (threshold.endsWith("m")) {
                 return TimeUnit.MINUTES.toSeconds(Long.parseLong(threshold.replace("m", "")));
-            }
-            else if (threshold.endsWith("h")) {
+            } else if (threshold.endsWith("h")) {
                 return TimeUnit.HOURS.toSeconds(Long.parseLong(threshold.replace("h", "")));
-            }
-            else {
+            } else {
                 // 默认单位为分钟
                 return TimeUnit.MINUTES.toSeconds(Long.parseLong(threshold));
             }
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             LogUtil.error("Invalid duration format: %s", threshold);
             return -1;
         }
@@ -89,8 +85,7 @@ public class TimeCommandHandler extends CommandHandler {
             System.out.println("\r🎉 Time's up! [============================================================>] 🎉");
             beepOnFinish();
             displayCelebration();
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             LogUtil.error("Countdown interrupted!");
             Thread.currentThread().interrupt();
         }
@@ -107,8 +102,7 @@ public class TimeCommandHandler extends CommandHandler {
             System.out.printf("\r%s", celebrationFrames[i % celebrationFrames.length]);
             try {
                 Thread.sleep(500); // 每帧显示500ms
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }

@@ -35,18 +35,11 @@
             <artifactId>snakeyaml</artifactId>
             <version>1.29</version>
         </dependency>
-        <!--微软翻译服务-->
-        <dependency>
-            <groupId>com.azure</groupId>
-            <artifactId>azure-ai-translation-text</artifactId>
-            <version>1.0.0-beta.1</version>
-        </dependency>
     </dependencies>
 
     <!-- 构建配置 -->
     <build>
         <plugins>
-            <!-- 使用Maven Shade插件替代Spring Boot插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -59,7 +52,8 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>com.lingoutil.workcopilot.WorkCopilotApplication</mainClass>
                                 </transformer>
                             </transformers>
@@ -78,7 +72,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- 编译插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -92,7 +86,7 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-            
+
             <!-- 资源插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

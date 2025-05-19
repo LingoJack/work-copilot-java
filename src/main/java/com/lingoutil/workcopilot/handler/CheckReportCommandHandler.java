@@ -49,8 +49,7 @@ public class CheckReportCommandHandler extends CommandHandler {
                     LogUtil.error("❌ 行数必须为正整数，请重试！");
                     return 5; // 回退到默认值
                 }
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 LogUtil.error("❌ 无效的行数参数: %s，请输入正确的数字！", argv[2].trim());
                 return -1;
             }
@@ -99,8 +98,7 @@ public class CheckReportCommandHandler extends CommandHandler {
                                 break;
                             }
                         }
-                    }
-                    else {
+                    } else {
                         lineBuffer.write(b);
                     }
                 }
@@ -109,8 +107,7 @@ public class CheckReportCommandHandler extends CommandHandler {
             if (lineBuffer.size() > 0 && lines.size() < lineNum) {
                 lines.add(0, decodeUTF8(lineBuffer));
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LogUtil.error("❌ 读取文件时发生错误: %s", e.getMessage(), e);
         }
         return lines;
@@ -142,8 +139,7 @@ public class CheckReportCommandHandler extends CommandHandler {
         int length = argv.length;
         if (length == 2 || length == 3) {
             return true;
-        }
-        else {
+        } else {
             hint(argv);
             return false;
         }

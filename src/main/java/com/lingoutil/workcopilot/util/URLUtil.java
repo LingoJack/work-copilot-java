@@ -12,8 +12,7 @@ public class URLUtil {
             URI uri = new URI(input);
             String scheme = uri.getScheme();
             return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
-        }
-        catch (URISyntaxException e) {
+        } catch (URISyntaxException e) {
             return false;
         }
     }

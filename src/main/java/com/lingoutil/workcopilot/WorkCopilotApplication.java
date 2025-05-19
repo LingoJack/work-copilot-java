@@ -29,13 +29,11 @@ public class WorkCopilotApplication {
             if (CommandRunner.getOsType().equals(CommandRunner.MAC)) {
                 LogUtil.info("mac os detected, run with multi mode");
                 runWithMultiModeOnUnix();
-            }
-            else {
+            } else {
                 LogUtil.info("windows os detected, run with multi mode");
                 runWithMultiModeOnWin();
             }
-        }
-        else {
+        } else {
             // j another argument
             LogUtil.info("run with single mode");
             runWithSingleMode(args);
@@ -55,8 +53,7 @@ public class WorkCopilotApplication {
             CommandHandler.execute(command, args);
             endTime = System.currentTimeMillis();
             LogUtil.log("duration: %s ms", endTime - startTime);
-        }
-        else {
+        } else {
             if (isIllegal(args)) {
                 return;
             }
@@ -93,8 +90,7 @@ public class WorkCopilotApplication {
                         CommandHandler.execute(command, args);
                         endTime = System.currentTimeMillis();
                         LogUtil.log("duration: %s ms", endTime - startTime);
-                    }
-                    else {
+                    } else {
                         if (isIllegal(args)) {
                             continue;
                         }
@@ -133,8 +129,7 @@ public class WorkCopilotApplication {
                 CommandHandler.execute(command, args);
                 endTime = System.currentTimeMillis();
                 LogUtil.log("duration: %s ms", endTime - startTime);
-            }
-            else {
+            } else {
                 if (isIllegal(args)) {
                     continue;
                 }

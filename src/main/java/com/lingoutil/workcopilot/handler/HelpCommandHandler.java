@@ -35,8 +35,7 @@ public class HelpCommandHandler extends CommandHandler {
                 LogUtil.info(line);
             }
             reader.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             LogUtil.error("Failed to read help file: " + e.getMessage(), e);
         }
     }
