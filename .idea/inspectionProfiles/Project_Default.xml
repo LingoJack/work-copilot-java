@@ -6,5 +6,8 @@
         <language minSize="106" name="Java" />
       </Languages>
     </inspection_tool>
+    <inspection_tool class="ShellCheck" enabled="true" level="ERROR" enabled_by_default="true">
+      <shellcheck_settings value="SC2215" />
+    </inspection_tool>
   </profile>
 </component>

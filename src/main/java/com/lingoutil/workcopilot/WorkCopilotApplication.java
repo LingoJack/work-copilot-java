@@ -25,16 +25,19 @@ public class WorkCopilotApplication {
     public static void main(String[] args) {
         // 设置控制台输出为UTF-8编码
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
-        if (args.length == 1) {
+        if (args.length == 0) {
             if (CommandRunner.getOsType().equals(CommandRunner.MAC)) {
+                LogUtil.info("mac os detected, run with multi mode");
                 runWithMultiModeOnUnix();
             }
             else {
+                LogUtil.info("windows os detected, run with multi mode");
                 runWithMultiModeOnWin();
             }
         }
         else {
             // j another argument
+            LogUtil.info("run with single mode");
             runWithSingleMode(args);
         }
     }
@@ -78,7 +81,6 @@ public class WorkCopilotApplication {
                     // 显示提示符并读取输入
                     String input = reader.readLine(prompt);
                     String[] args = ("j " + input).split("\\s+(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
-
                     boolean verboseMode = LOG_MODE.equals(MODE_VERBOSE);
                     if (verboseMode) {
                         LogUtil.log("verbose mode is start: %s", verboseMode);

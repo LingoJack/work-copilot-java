@@ -24,9 +24,10 @@ public class YamlConfig {
     static {
         Configurations configs = new Configurations();
         try {
+            System.out.println("加载配置文件: " + CONFIG_FILE_NAME + "");
             builder = configs.fileBasedBuilder(YAMLConfiguration.class, CONFIG_FILE_NAME);
             config = builder.getConfiguration();
-
+            
             // 初始化缓存
             initializeCache();
         }
@@ -42,6 +43,7 @@ public class YamlConfig {
             String key = keys.next();
             String value = config.getString(key);
             propertyCache.put(key, value);
+            System.out.println("缓存添加键值对: " + key + " = " + value);
         }
     }
 

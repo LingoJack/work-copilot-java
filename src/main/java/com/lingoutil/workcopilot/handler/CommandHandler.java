@@ -19,16 +19,16 @@ public abstract class CommandHandler {
         if (commandHandlerMap.entrySet().isEmpty()) {
             CommandHandlerScanner.scanAndRegisterHandlers("com.lingoutil.workcopilot.handler");
         }
+        LogUtil.info("command: %s", command);
         CommandHandler handler = commandHandlerMap.get(command);
         if (handler != null) {
             if (handler.checkArgs(argv)) {
                 handler.process(argv);
             }
+            return;
         }
-        else {
-            // 打开alias
-            CommandRunner.run(argv);
-        }
+        // 打开alias
+        CommandRunner.run(argv);
     }
 
     public static void execute(String[] argv) {
