@@ -1,0 +1,92 @@
+editor:
+  tp: /Applications/Typora.app
+  idea: /Applications/work_copilot_java/link/idea.app
+  code: /Applications/work_copilot_java/link/code.app
+color:
+  warn: null
+  error: null
+  log: null
+  info: null
+log:
+  mode: concise
+storage:
+  mode: config
+  config:
+    path: null
+  db:
+    type: mysql
+    password: null
+    username: null
+inner_url:
+  suixianglu: https://www.programmercarl.com/
+  bl: https://www.bilibili.com/
+  qianwen: https://tongyi.aliyun.com/qianwen/
+  '150': https://leetcode.cn/studyplan/top-interview-150/
+  yuanbao: https://yuanbao.tencent.com/chat/naQivTmsDa
+  learn-dp: https://leetcode.cn/discuss/post/3581838/fen-xiang-gun-ti-dan-dong-tai-gui-hua-ru-007o/
+version:
+  name: work-copilot
+  mode: normal
+  version: 8.0.0
+  author: lingojack
+  email: lingojack@qq.com
+script:
+  start-work: /Applications/work_copilot_java/script/start-work.sh
+  depot: /Applications/work_copilot_java/script/
+  open-report: /Applications/work_copilot_java/script/open-report.sh
+  ip: /Applications/work_copilot_java/script/ip.sh
+  push-code: /Applications/work_copilot_java/script/push-code.sh
+  start: /Applications/work_copilot_java/script/start.sh
+  push-note: /Applications/work_copilot_java/script/push.note.sh
+  leetcode: /Applications/work_copilot_java/script/leetcode.sh
+  pull-note: /Applications/work_copilot_java/script/pull.note.sh
+  push: /Applications/work_copilot_java/script/push-report.sh
+  open-copilot: /Applications/work_copilot_java/script/open-copilot.sh
+  pull: /Applications/work_copilot_java/script/sync-report.sh
+  bv: /Applications/work_copilot_java/script/bv.sh
+  download-bv: /Applications/work_copilot_java/script/download-bv.sh
+  pull-code: /Applications/work_copilot_java/script/pull-code.sh
+setting:
+  search-engine: baidu
+path:
+  code: /Applications/work_copilot_java/link/code.app
+  idea: /Applications/work_copilot_java/link/idea.app
+  open-report: /Applications/work_copilot_java/script/open-report.sh
+  fs: /Applications/Lark.app
+  pull-note: /Applications/work_copilot_java/script/pull.note.sh
+  docker: /Applications/Docker.app
+  open-copilot: /Applications/work_copilot_java/script/open-copilot.sh
+  bs: /Applications/work_copilot_java/link/chrome.app
+  bv: /Applications/work_copilot_java/script/bv.sh
+  pull-code: /Applications/work_copilot_java/script/pull-code.sh
+  qq: /Applications/QQ.app
+  start-work: /Applications/work_copilot_java/script/start-work.sh
+  wx: /Applications/WeChat.app
+  ms: /Applications/foobar2000.app
+  ip: /Applications/work_copilot_java/script/ip.sh
+  push-code: /Applications/work_copilot_java/script/push-code.sh
+  start: /Applications/work_copilot_java/script/start.sh
+  push-note: /Applications/work_copilot_java/script/push.note.sh
+  leetcode: /Applications/work_copilot_java/script/leetcode.sh
+  landrop: /Applications/LANDrop.app
+  push: /Applications/work_copilot_java/script/push-report.sh
+  wxp: /Applications/企业微信.app
+  pull: /Applications/work_copilot_java/script/sync-report.sh
+  tg: /Applications/Telegram.app
+  vpn: /Applications/FlClash.app
+  download-bv: /Applications/work_copilot_java/script/download-bv.sh
+  snip: /Applications/Snipaste.app
+  calc: /System/Applications/Calculator.app
+  wps: /Applications/work_copilot_java/link/wps
+  tp: /Applications/Typora.app
+vpn:
+  vpn: /Applications/FlClash.app
+browser:
+  bs: /Applications/work_copilot_java/link/chrome.app
+report:
+  week_num: '78'
+  week_report: /Applications/work_copilot_java/report/week_report.md
+  last_day: 2025.06.18
+outer_url:
+  gpt: https://chatgpt.com/
+  github: https://github.com/

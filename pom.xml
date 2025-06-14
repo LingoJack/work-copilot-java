@@ -39,6 +39,7 @@
 
     <!-- 构建配置 -->
     <build>
+        <finalName>work-copilot-kernel</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

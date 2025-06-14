@@ -6,13 +6,15 @@ import org.apache.commons.configuration2.YAMLConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Configurations;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.jline.utils.Log;
 
+import java.io.File;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class YamlConfig {
 
-    private static final String CONFIG_FILE_NAME = "application.yml";
+    private static final String CONFIG_FILE_NAME = "config.yaml";
 
     private static final FileBasedConfigurationBuilder<YAMLConfiguration> builder;
     private static final Configuration config;
@@ -24,11 +26,8 @@ public class YamlConfig {
     static {
         Configurations configs = new Configurations();
         try {
-            System.out.println("加载配置文件: " + CONFIG_FILE_NAME + "");
             builder = configs.fileBasedBuilder(YAMLConfiguration.class, CONFIG_FILE_NAME);
             config = builder.getConfiguration();
-
-            // 初始化缓存
             initializeCache();
         } catch (ConfigurationException e) {
             LogUtil.error("加载配置文件失败：" + CONFIG_FILE_NAME);
@@ -42,7 +41,7 @@ public class YamlConfig {
             String key = keys.next();
             String value = config.getString(key);
             propertyCache.put(key, value);
-            System.out.println("缓存添加键值对: " + key + " = " + value);
+            LogUtil.log("缓存添加键值对: " + key + " = " + value);
         }
     }
 

@@ -19,7 +19,6 @@ public abstract class CommandHandler {
         if (commandHandlerMap.entrySet().isEmpty()) {
             CommandHandlerScanner.scanAndRegisterHandlers("com.lingoutil.workcopilot.handler");
         }
-        LogUtil.info("command: %s", command);
         CommandHandler handler = commandHandlerMap.get(command);
         if (handler != null) {
             if (handler.checkArgs(argv)) {

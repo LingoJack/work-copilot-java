@@ -1,7 +1,6 @@
 package com.lingoutil.workcopilot.util;
 
-import static com.lingoutil.workcopilot.constant.Constant.LOG_MODE;
-import static com.lingoutil.workcopilot.constant.Constant.MODE_CONCISE;
+import static com.lingoutil.workcopilot.constant.Constant.*;
 
 public class LogUtil {
 
@@ -43,14 +42,14 @@ public class LogUtil {
     }
 
     public static void log(String str, Object... args) {
-        if (!LOG_MODE.equals(MODE_CONCISE)) {
+        if (LOG_MODE != null && LOG_MODE.equals(MODE_VERBOSE)) {
             System.out.printf(str, args);
             System.out.println();
         }
     }
 
     public static void logError(String str, Object... args) {
-        if (!LOG_MODE.equals(MODE_CONCISE)) {
+        if (LOG_MODE != null && LOG_MODE.equals(MODE_VERBOSE)) {
             printWithColor("[ERROR] ", RED);
             System.out.printf(str, args);
             System.err.println();

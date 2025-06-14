@@ -42,6 +42,10 @@ public class WorkCopilotApplication {
 
     private static void runWithSingleMode(String[] args) {
         boolean verboseMode = LOG_MODE.equals(MODE_VERBOSE);
+        String[] newArgs = new String[args.length + 1];
+        newArgs[0] = "j";
+        System.arraycopy(args, 0, newArgs, 1, args.length);
+        args = newArgs;
         if (verboseMode) {
             LogUtil.log("verbose mode is start: %s", verboseMode);
             long startTime = System.currentTimeMillis();

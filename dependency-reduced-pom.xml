@@ -5,6 +5,7 @@
   <artifactId>work-copilot-java</artifactId>
   <version>1.0</version>
   <build>
+    <finalName>work-copilot-kernel</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
