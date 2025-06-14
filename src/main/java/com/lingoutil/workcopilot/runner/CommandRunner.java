@@ -193,10 +193,12 @@ public class CommandRunner {
             String command = "";
             if (WINDOWS.equals(osType)) {
                 command = String.format("cmd /c start \"\" \"%s\" \"%s\"", path, filePath);
+                LogUtil.log("command: %s", command);
                 Runtime.getRuntime().exec(command);
             } else if (MAC.equals(osType)) {
-                String[] commands = {"open", path, filePath};
-                Runtime.getRuntime().exec(commands);
+                command = String.format("open -a %s %s", path, filePath);
+                LogUtil.log("command: %s", command);
+                Runtime.getRuntime().exec(command);
             } else {
                 LogUtil.error("💥 当前操作系统不支持此功能: %s", osType);
                 return false;
