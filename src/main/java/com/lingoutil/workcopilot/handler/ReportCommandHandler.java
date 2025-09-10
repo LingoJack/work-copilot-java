@@ -1,48 +1,61 @@
 package com.lingoutil.workcopilot.handler;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.util.LogUtil;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static com.lingoutil.workcopilot.constant.Constant.*;
 
 public class ReportCommandHandler extends CommandHandler {
+    private static final String NEW_WEEK_CONFIG_UPDATE = "new";
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+    private static final DateTimeFormatter SIMPLE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
     @Override
     protected List<String> loadCommandList() {
         return reportCommands;
     }
 
-    private final static String NEW_WEEK_CONFIG_UPDATE = "new";
-
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-
-    private Instant parseDate(String dateStr) throws ParseException {
-        return LocalDate.parse(dateStr, DATE_FORMATTER).atStartOfDay(ZoneId.systemDefault()).toInstant();
+    private LocalDate parseDate(String dateStr) {
+        return LocalDate.parse(dateStr, DATE_FORMATTER);
     }
 
-    private void updateWeekConfig(int weekNum, Date nextLastDayOfWeek) {
+    private void updateConfigFiles(int weekNum, LocalDate nextLastDayOfWeek, Path configPath) {
+        String nextLastDayOfWeekStr = nextLastDayOfWeek.format(DATE_FORMATTER);
+
+        // 更新YAML配置
         try {
-            String nextLastDayOfWeekStr = new SimpleDateFormat("yyyy.MM.dd").format(nextLastDayOfWeek);
             YamlConfig.addNestedProperty(REPORT, WEEK_NUM, String.valueOf(weekNum));
             YamlConfig.addNestedProperty(REPORT, LAST_DAY_OF_WEEK, nextLastDayOfWeekStr);
-            LogUtil.info("✅ 更新配置文件成功：周数 = %d, 周结束日期 = %s", weekNum, nextLastDayOfWeekStr);
+            LogUtil.info("✅ 更新YAML配置文件成功：周数 = %d, 周结束日期 = %s", weekNum, nextLastDayOfWeekStr);
         } catch (Exception e) {
-            LogUtil.error("❌ 更新配置文件时出错: %s", e.getMessage());
+            LogUtil.error("❌ 更新YAML配置文件时出错: %s", e.getMessage());
+        }
+
+        // 更新JSON配置
+        if (configPath != null && Files.exists(configPath)) {
+            try {
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.add("week_num", new JsonPrimitive(weekNum));
+                jsonObject.add("last_day", new JsonPrimitive(nextLastDayOfWeekStr));
+
+                Files.writeString(configPath, jsonObject.toString(),
+                        StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING);
+                LogUtil.info("✅ 更新JSON配置文件成功：周数 = %d, 周结束日期 = %s", weekNum, nextLastDayOfWeekStr);
+            } catch (Exception e) {
+                LogUtil.error("❌ 更新JSON配置文件时出错: %s", e.getMessage());
+            }
         }
     }
 
@@ -54,89 +67,108 @@ public class ReportCommandHandler extends CommandHandler {
         }
 
         String content = argv[2].trim();
-
-        // 如果 content 被引号包围 ""，去除引号
-        if (content.startsWith("\"") && content.endsWith("\"")) {
-            content = content.substring(1, content.length() - 1);
-        }
+        content = content.replaceAll("^\"|\"$", ""); // 去除首尾引号
 
         if (content.isEmpty()) {
             LogUtil.error("⚠️ 内容为空，无法写入。");
             return;
         }
 
-        int weekNum = Integer.parseInt(YamlConfig.getProperty(REPORT, WEEK_NUM));
-        String lastDayOfWeekStr = YamlConfig.getProperty(REPORT, LAST_DAY_OF_WEEK);
-
+        // 处理更新周数操作
         if (content.equals(NEW_WEEK_CONFIG_UPDATE)) {
-            String dataStr = argv.length == 4 ? argv[3] : lastDayOfWeekStr;
-            Date lastDayOfWeek = null;
-            Date nextLastDayOfWeek = null;
-
-            try {
-                lastDayOfWeek = new SimpleDateFormat("yyyy.MM.dd").parse(dataStr);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(lastDayOfWeek);
-                calendar.add(Calendar.DAY_OF_MONTH, 7);
-                nextLastDayOfWeek = calendar.getTime();
-            } catch (ParseException e) {
-                LogUtil.error("更新周数失败，请检查日期字符串是否有误");
-                return;
-            }
-            updateWeekConfig(weekNum + 1, nextLastDayOfWeek);
+            handleWeekUpdate(argv);
             return;
         }
 
+        // 处理常规日报写入
+        handleDailyReport(content);
+    }
+
+    private void handleWeekUpdate(String[] argv) {
+        int currentWeekNum = Integer.parseInt(YamlConfig.getProperty(REPORT, WEEK_NUM));
+        String lastDayOfWeekStr = YamlConfig.getProperty(REPORT, LAST_DAY_OF_WEEK);
+
+        String inputDateStr = argv.length == 4 ? argv[3] : lastDayOfWeekStr;
+
+        try {
+            LocalDate lastDayOfWeek = parseDate(inputDateStr);
+            LocalDate nextLastDayOfWeek = lastDayOfWeek.plusDays(7);
+
+            // 获取JSON配置文件路径
+            String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
+            Path reportFilePath = Path.of(reportPath);
+            Path configPath = reportFilePath.getParent().resolve("settings.json");
+
+            updateConfigFiles(currentWeekNum + 1, nextLastDayOfWeek, configPath);
+        } catch (Exception e) {
+            LogUtil.error("更新周数失败，请检查日期字符串是否有误: %s", e.getMessage());
+        }
+    }
+
+    private void handleDailyReport(String content) {
         String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
         LogUtil.info("📂 从配置文件中读取到路径：%s", reportPath);
 
-        File file = new File(reportPath);
-        if (!file.exists()) {
+        Path reportFilePath = Path.of(reportPath);
+        if (!Files.exists(reportFilePath)) {
             LogUtil.error("❌ 路径不存在：%s", reportPath);
             return;
         }
 
-        Date now = new Date();
-        try {
-            Date lastDayOfWeek = new SimpleDateFormat("yyyy.MM.dd").parse(lastDayOfWeekStr);
+        Path workDir = reportFilePath.getParent();
+        Path configPath = workDir.resolve("settings.json");
+        LogUtil.log("日报所在路径：%s, 配置文件：%s", workDir, configPath);
 
-            if (now.after(addOneDay(lastDayOfWeek))) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(now);
-                calendar.add(Calendar.DAY_OF_MONTH, 6);
-                Date nextLastDayOfWeek = calendar.getTime();
-                String newWeekTitle = String.format("# Week%d[%s-%s]\n", weekNum,
-                        DATE_FORMATTER.format(now.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()),
-                        DATE_FORMATTER.format(nextLastDayOfWeek.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+        loadConfigFromJson(configPath);
+
+        LocalDate now = LocalDate.now();
+        try {
+            int weekNum = Integer.parseInt(YamlConfig.getProperty(REPORT, WEEK_NUM));
+            LocalDate lastDayOfWeek = parseDate(YamlConfig.getProperty(REPORT, LAST_DAY_OF_WEEK));
+
+            if (now.isAfter(lastDayOfWeek)) {
+                LocalDate nextLastDayOfWeek = now.plusDays(6);
+                String newWeekTitle = String.format("# Week%d[%s-%s]%n",
+                        weekNum,
+                        now.format(DATE_FORMATTER),
+                        nextLastDayOfWeek.format(DATE_FORMATTER)
                 );
-                weekNum++;
-                updateWeekConfig(weekNum, nextLastDayOfWeek);
-                appendToFile(reportPath, newWeekTitle);
+                updateConfigFiles(weekNum + 1, nextLastDayOfWeek, configPath);
+                appendToFile(reportFilePath, newWeekTitle);
             }
 
-            String todayStr = new SimpleDateFormat("yyyy/MM/dd").format(now);
-            String logEntry = String.format("- 【%s】 %s\n", todayStr, content);
-            appendToFile(reportPath, logEntry);
+            String todayStr = now.format(SIMPLE_DATE_FORMATTER);
+            String logEntry = String.format("- 【%s】 %s%n", todayStr, content);
+            appendToFile(reportFilePath, logEntry);
             LogUtil.info("✅ 成功将内容写入：%s", reportPath);
         } catch (Exception e) {
             LogUtil.error("❌ 操作时发生错误: %s", e.getMessage(), e);
         }
     }
 
-    // 使用 UTF-8 编码的文件追加方法
-    private void appendToFile(String filePath, String content) throws IOException {
-        try (FileChannel channel = new FileOutputStream(filePath, true).getChannel()) {
-            byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
-            ByteBuffer buffer = ByteBuffer.wrap(bytes);
-            channel.write(buffer);
+    private void loadConfigFromJson(Path configPath) {
+        if (!Files.exists(configPath)) {
+            LogUtil.error("❌ 日报配置文件不存在：%s", configPath);
+            return;
+        }
+
+        try {
+            String jsonContent = Files.readString(configPath);
+            JsonObject jsonObject = JsonParser.parseString(jsonContent).getAsJsonObject();
+            String lastDayOfWeekStr = jsonObject.get("last_day").getAsString();
+            int weekNum = jsonObject.get("week_num").getAsInt();
+            LogUtil.info("✅ 从日报配置文件中读取到：last_day = %s, week_num = %d", lastDayOfWeekStr, weekNum);
+
+            LocalDate lastDayOfWeek = parseDate(lastDayOfWeekStr);
+            updateConfigFiles(weekNum, lastDayOfWeek, configPath);
+        } catch (Exception e) {
+            LogUtil.error("❌ 解析日报配置文件时出错: %s", e.getMessage());
         }
     }
 
-    private Date addOneDay(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        return calendar.getTime();
+    private void appendToFile(Path filePath, String content) throws IOException {
+        Files.writeString(filePath, content, StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 
     @Override
