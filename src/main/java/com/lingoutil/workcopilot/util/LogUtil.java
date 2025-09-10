@@ -1,6 +1,7 @@
 package com.lingoutil.workcopilot.util;
 
-import static com.lingoutil.workcopilot.constant.Constant.*;
+import static com.lingoutil.workcopilot.constant.Constant.LOG_MODE;
+import static com.lingoutil.workcopilot.constant.Constant.MODE_VERBOSE;
 
 public class LogUtil {
 

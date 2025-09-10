@@ -3,7 +3,6 @@ package com.lingoutil.workcopilot.handler;
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.runner.CommandRunner;
 import com.lingoutil.workcopilot.util.LogUtil;
-import org.jline.utils.Log;
 
 import java.util.List;
 import java.util.Map;
