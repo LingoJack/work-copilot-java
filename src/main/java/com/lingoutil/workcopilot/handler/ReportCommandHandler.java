@@ -67,7 +67,7 @@ public class ReportCommandHandler extends CommandHandler {
         }
 
         String content = argv[2].trim();
-        content = content.replaceAll("^\"|\"$", ""); // 去除首尾引号
+        content = content.replaceAll("^\"|\"$", "");
 
         if (content.isEmpty()) {
             LogUtil.error("⚠️ 内容为空，无法写入。");
