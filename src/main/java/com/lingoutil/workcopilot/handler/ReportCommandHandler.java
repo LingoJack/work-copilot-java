@@ -50,8 +50,7 @@ public class ReportCommandHandler extends CommandHandler {
                 jsonObject.add("week_num", new JsonPrimitive(weekNum));
                 jsonObject.add("last_day", new JsonPrimitive(nextLastDayOfWeekStr));
 
-                Files.writeString(configPath, jsonObject.toString(),
-                        StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING);
+                Files.writeString(configPath, jsonObject.toString(), StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING);
                 LogUtil.info("✅ 更新JSON配置文件成功：周数 = %d, 周结束日期 = %s", weekNum, nextLastDayOfWeekStr);
             } catch (Exception e) {
                 LogUtil.error("❌ 更新JSON配置文件时出错: %s", e.getMessage());
@@ -80,11 +79,42 @@ public class ReportCommandHandler extends CommandHandler {
             return;
         }
 
+        if (content.equals("sync")) {
+            sync(argv);
+            return;
+        }
+
         // 处理常规日报写入
         handleDailyReport(content);
     }
 
+    private void sync(String[] argv) {
+        // 获取JSON配置文件路径
+        String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
+        Path reportFilePath = Path.of(reportPath);
+        Path configPath = reportFilePath.getParent().resolve("settings.json");
+
+        loadConfigFromJson(configPath);
+
+        int currentWeekNum = Integer.parseInt(YamlConfig.getProperty(REPORT, WEEK_NUM));
+        String lastDayOfWeekStr = YamlConfig.getProperty(REPORT, LAST_DAY_OF_WEEK);
+
+        String inputDateStr = argv.length == 4 ? argv[3] : lastDayOfWeekStr;
+
+        try {
+            LocalDate lastDayOfWeek = parseDate(inputDateStr);
+            updateConfigFiles(currentWeekNum, lastDayOfWeek, configPath);
+        } catch (Exception e) {
+            LogUtil.error("更新周数失败，请检查日期字符串是否有误: %s", e.getMessage());
+        }
+    }
+
     private void handleWeekUpdate(String[] argv) {
+        // 获取JSON配置文件路径
+        String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
+        Path reportFilePath = Path.of(reportPath);
+        Path configPath = reportFilePath.getParent().resolve("settings.json");
+
         int currentWeekNum = Integer.parseInt(YamlConfig.getProperty(REPORT, WEEK_NUM));
         String lastDayOfWeekStr = YamlConfig.getProperty(REPORT, LAST_DAY_OF_WEEK);
 
@@ -93,11 +123,6 @@ public class ReportCommandHandler extends CommandHandler {
         try {
             LocalDate lastDayOfWeek = parseDate(inputDateStr);
             LocalDate nextLastDayOfWeek = lastDayOfWeek.plusDays(7);
-
-            // 获取JSON配置文件路径
-            String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
-            Path reportFilePath = Path.of(reportPath);
-            Path configPath = reportFilePath.getParent().resolve("settings.json");
 
             updateConfigFiles(currentWeekNum + 1, nextLastDayOfWeek, configPath);
         } catch (Exception e) {
@@ -128,11 +153,7 @@ public class ReportCommandHandler extends CommandHandler {
 
             if (now.isAfter(lastDayOfWeek)) {
                 LocalDate nextLastDayOfWeek = now.plusDays(6);
-                String newWeekTitle = String.format("# Week%d[%s-%s]%n",
-                        weekNum,
-                        now.format(DATE_FORMATTER),
-                        nextLastDayOfWeek.format(DATE_FORMATTER)
-                );
+                String newWeekTitle = String.format("# Week%d[%s-%s]%n", weekNum, now.format(DATE_FORMATTER), nextLastDayOfWeek.format(DATE_FORMATTER));
                 updateConfigFiles(weekNum + 1, nextLastDayOfWeek, configPath);
                 appendToFile(reportFilePath, newWeekTitle);
             }
@@ -167,8 +188,7 @@ public class ReportCommandHandler extends CommandHandler {
     }
 
     private void appendToFile(Path filePath, String content) throws IOException {
-        Files.writeString(filePath, content, StandardCharsets.UTF_8,
-                StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        Files.writeString(filePath, content, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
     }
 
     @Override
