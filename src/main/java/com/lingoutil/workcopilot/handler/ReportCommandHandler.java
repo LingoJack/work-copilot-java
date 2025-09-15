@@ -61,7 +61,7 @@ public class ReportCommandHandler extends CommandHandler {
     @Override
     protected void process(String[] argv) {
         if (argv.length < 3) {
-            LogUtil.error("❌ 缺少必要参数，请提供脚本名、命令和内容。");
+            LogUtil.error("❌ 缺少必要参数，请提供脚本名、命令和内容 ");
             return;
         }
 
@@ -69,7 +69,7 @@ public class ReportCommandHandler extends CommandHandler {
         content = content.replaceAll("^\"|\"$", "");
 
         if (content.isEmpty()) {
-            LogUtil.error("⚠️ 内容为空，无法写入。");
+            LogUtil.error("⚠️ 内容为空，无法写入 ");
             return;
         }
 
