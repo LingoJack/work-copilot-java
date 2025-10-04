@@ -7,6 +7,7 @@ import com.lingoutil.workcopilot.util.URLUtil;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -53,34 +54,54 @@ public class CommandRunner {
         } else if (YamlConfig.containProperty(VPN, alias)) {
             openVPN(alias);
         } else if (YamlConfig.containProperty(SCRIPT, alias)) {
-            runScript(alias);
+            runScript(argv);
         } else {
             // path是应用路径，如何打开
             open(alias);
         }
     }
 
-    private static void runScript(String alias) {
+    private static void runScript(String[] argv) {
+        String alias = argv[1];
         String path = YamlConfig.getProperty(SCRIPT, alias);
-
         // 打印调试信息
         LogUtil.info("⚙️ 即将执行脚本，路径: %s", path);
-
+        // 带给脚本的参数
+        String[] args = Arrays.copyOfRange(argv, 2, argv.length);
         try {
             String[] command;
-
+            // 如果有需要带给脚本的参数，也要能一起带过去
             if (MAC.equals(osType)) {
-                // 在 macOS 上新开一个终端窗口运行脚本
-                command = new String[]{"open", "-a", "Terminal", path}; // 替换 Terminal 为 iTerm 可改用 iTerm
+                // 在 macOS 上新开一个终端窗口运行脚本，并传递参数
+                String[] newCommand = new String[4 + args.length];
+                newCommand[0] = "open";
+                newCommand[1] = "-a";
+                newCommand[2] = "Terminal";
+                newCommand[3] = path;
+                System.arraycopy(args, 0, newCommand, 4, args.length);
+                command = newCommand;
             } else if (WINDOWS.equals(osType)) {
-                // Windows 环境运行脚本，添加是否需要新窗口的逻辑
-                boolean openNewWindow = true; // 根据需求设置此值
+                // Windows 环境运行脚本，添加是否需要新窗口的逻辑，并传递参数
+                boolean openNewWindow = true;
                 if (openNewWindow) {
-                    // 新窗口运行
-                    command = new String[]{"cmd.exe", "/c", "start", "cmd.exe", "/k", path};
+                    // 新窗口运行，并传递参数
+                    String[] newCommand = new String[6 + args.length];
+                    newCommand[0] = "cmd.exe";
+                    newCommand[1] = "/c";
+                    newCommand[2] = "start";
+                    newCommand[3] = "cmd.exe";
+                    newCommand[4] = "/k";
+                    newCommand[5] = path;
+                    System.arraycopy(args, 0, newCommand, 6, args.length);
+                    command = newCommand;
                 } else {
-                    // 当前窗口运行
-                    command = new String[]{"cmd.exe", "/c", path};
+                    // 当前窗口运行，并传递参数
+                    String[] newCommand = new String[3 + args.length];
+                    newCommand[0] = "cmd.exe";
+                    newCommand[1] = "/c";
+                    newCommand[2] = path;
+                    System.arraycopy(args, 0, newCommand, 3, args.length);
+                    command = newCommand;
                 }
             } else {
                 LogUtil.error("❌ 不支持的操作系统: %s", osType);
