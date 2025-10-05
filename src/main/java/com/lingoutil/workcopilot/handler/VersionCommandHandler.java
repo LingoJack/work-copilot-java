@@ -3,6 +3,7 @@ package com.lingoutil.workcopilot.handler;
 import com.lingoutil.workcopilot.config.YamlConfig;
 import com.lingoutil.workcopilot.runner.CommandRunner;
 import com.lingoutil.workcopilot.util.LogUtil;
+import org.jline.utils.Log;
 
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class VersionCommandHandler extends CommandHandler {
             }
             LogUtil.info("%s: %s", key, value);
         }
+        String version = "9.0.0";
+        LogUtil.info("kernel version: %s", version);
         LogUtil.info("os: %s", CommandRunner.getOsType());
         LogUtil.info("author: lingojack | LingoJack | 达不溜勾勾");
         LogUtil.info("email: lingojack@qq.com | 3065225677@qq.com | 3065225677w@gmail.com");
