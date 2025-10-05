@@ -1,264 +1,409 @@
-🚀 CLI 使用说明：**work-copilot**（即 **j** 字母小写）
+# 概要
 
----
+`work-copilot`是基于`java`构建的命令行程序，别名为`j`，后文简称`wcp`，支持以**交互模式**或者**快捷模式**执行
 
-#### **单次使用方法（较慢）**
+快捷模式下：执行完单次命令后关闭
 
-使用命令：
+交互模式下：支持等待读取命令
+
+
+
+基本格式如下
+
+**快捷模式**：
 
 ```bash
-j <option> <necessary_arguments>
+j <command> <args>
 ```
 
----
-
-#### **多次使用方法（快速模式）**
-
-使用命令进入 **copilot 状态**，无需重复输入开头的 `j` 指令，且速度更快：
+**交互模式**：
 
 ```bash
 j
+# 然后进入交互，输入<command> <args>
+copilot > ...
 ```
 
----
 
-### 可用选项：
 
-以下部分均指 **path**, **browser**, **editor** 等配置文件属性。
+`wcp`本质是一个脚本注册器。你可以：
 
----
+- 为应用程序注册别名，然后通过别名快速打开应用程序
+- 配置日报，并且上传到`github`，从`github`拉取，或者查找日报中的某些内容
+- 自定义脚本和扩展，构建你需要的工作流
+- 在`cli`环境快捷搜索浏览器
+- 为网页注册别名，通过别名快捷打开网页
+- 使用计时器之类的小工具...
 
-### 常见命令
 
----
 
-#### 🚪 **退出**
+# 使用方法
 
-**可用命令**：`exit`, `-exit`, `-quit`, `quit`, `-q`  
-**示例**：
+## `alias` 相关
 
-```bash
-j exit
-```
-
----
-
-#### 🔑 **增加别名**
-
-**可用命令**：`set`, `-set`, `s`  
-**示例**：
+增加别名
 
 ```bash
 j set <alias> <path>
 ```
 
----
 
-#### 📋 **列举所有别名**
 
-**可用命令**：`ls`, `list`, `-list`  
-**示例**：
+移除别名
 
 ```bash
-j ls [part | all]
-```
-
----
-
-#### ℹ️ **查看版本信息**
-
-**可用命令**：`-version`, `version`, `v`  
-**示例**：
-
-```bash
-j version
-```
-
----
-
-#### ✏️ **修改别名的路径**
-
-**可用命令**：`mf`, `-modify`, `modify`  
-**示例**：
-
-```bash
-j mf <alias> <new_path>
-```
-
----
-
-#### 🗑️ **移除别名**
-
-**可用命令**：`rm`, `-remove`, `remove`  
-**示例**：
-
-```bash
+j remove <alias>
 j rm <alias>
 ```
 
----
 
-#### 🌐 **标记为（浏览器，编辑器或 VPN）**
 
-**可用命令**：`nt`, `note`, `-note`  
-**示例**：
+重命名别名
 
 ```bash
-j nt <alias> <category(browser, editor, vpn, outer-url)>
+j rename <alias> <new_alias>
+j rn <alias> <new_alias>
 ```
 
----
 
-#### 🚫 **解除标记（浏览器，编辑器或 VPN）**
 
-**可用命令**：`dnt`, `denote`, `-denote`  
-**示例**：
+修改别名指向
 
 ```bash
-j dnt <alias> <category(browser, editor, vpn, outer-url)>
+j modify <alias> <new_path>
+j mf <alias> <new_path>
 ```
 
----
 
-#### ✨ **重命名别名**
 
-**可用命令**：`rename`, `-rename`, `rn`  
-**示例**：
+## `category` 相关
+
+`<category>` 可以为:
+
+-  `browser` 可以打开网页，或者直接调用搜索引擎搜索内容
+-  `editor` 可以打开路径
+-  `script` 可执行的脚本
+-  `vpn` vpn
+- `outer_url` 外部url，需要开启vpn访问
+- `inner_url`内部url
+
+
+
+标记分类
 
 ```bash
-j rename <alias> <new_name>
+j note <alias> <category>
+j nt <alias> <categort>
 ```
 
----
 
-#### 📜 **切换详细输出模式**
+
+解标记分类
 
 ```bash
-j log mode verbose
+j denote <alias> <category>
+j dnt <alias> <categort>
 ```
 
-#### 🧑‍💻 **切换简洁输出模式**
+
+
+
+
+## `report` 相关
+
+使用日报，需要先在配置文件配置日报地址
+
+默认为 `/Applications/work_copilot_java/report/`
+
+
+
+写入日报
 
 ```bash
-j log mode concise
+j report "<content>"
+j r "<content>"
 ```
 
----
 
-#### 🔍 **查找指令**
 
-**可用命令**：`find`, `contain`  
-**示例**：
+查看日报
 
 ```bash
-j find alias
+j check [tail_line]
+j c [tail_line]
+# tail_line缺省为5
 ```
 
-其中 **part** 可为 `path`, `browser`, `editor` 等。
 
----
 
-#### ➗ **拼接脚本指令**
+搜索日报
 
 ```bash
-j concat <script_name> "<content>"
+j search <key_word>
+j sch <key_word>
+j look <key_word>
+j look <key_word> -f
+# -f 选项表示忽略大小写
 ```
 
----
 
-#### 📝 **输入日报内容**
 
-**可用命令**：`r`, `report`  
-**示例**：
+
+
+## `script` 相关
+
+拼接脚本
 
 ```bash
-j report "content"
+j concat <script_name> <script_content>
 ```
 
-> **注意**：若内容中没有空格，双引号可以省略。
 
----
 
-#### 📅 **查看日报内容**
 
-**可用命令**：`c`, `check`  
-**示例**：
+
+## `find` 相关
+
+查找别名
 
 ```bash
-j check [tail_line_count]
+j find [path|browser|editor|editor|vpn|script] <alias>
+j contain [path|browser|editor|editor|vpn|script] <alias>
+# [path|browser|editor|editor|vpn|script]缺省为all
 ```
 
----
 
-#### 🔍 **查看程序性能使用情况**
 
-**可用命令**：`ps`, `system`  
-**示例**：
+## `system` 相关
+
+查看版本
+
+```bash
+j version
+j v
+```
+
+
+
+启动计时器
+
+```bash
+j time countdown 10s
+j time countdown 10m
+j time countdown 1h
+```
+
+
+
+查看帮助信息
+
+```bash
+j help
+j h
+```
+
+
+
+查看系统状态
 
 ```bash
 j ps
 ```
 
----
 
-### 配置文件说明
 
-除了通过命令操作别名和路径外，还可以直接在配置文件 **`conf.ini`** 内进行修改。注意以下几点：
+切换日志模式
 
-#### **Path**
+```bash
+j log mode verbose
+j log mode concise
+```
 
-- 存储所有 **key-value 形式的别名-路径** 配置。
 
-#### **Version**
 
-- 存储 **版本信息**。
+查看列表
 
-#### **InnerUrl**
+```bash
+j list [all|script|path|browser|report|...]
+j ls [all|script|path|browser|report|...]
+```
 
-- 国内网站别名-网址的键值对，打开国内网站不会自动打开 VPN。
 
-#### **OuterUrl**
 
-- 国外网站别名-网址的键值对，打开国外网站会先打开 VPN，别名被标记为 `OuterUrl` 后会加入到此处。
+退出
 
-#### **Editor**
+```bash
+j exit
+```
 
-- 存储被标记为 **编辑器** 的别名，支持选择打开的文件/目录。
 
-#### **Browser**
 
-- 存储被标记为 **浏览器** 的别名，支持快速通过网址别名打开网站，`bs` 为默认浏览器。
+修改某些配置项，比如：修改默认的搜索引擎
 
-#### **Vpn**
+```bash
+j change setting search-engine [engine_name]
+# engine_name可以为 bing, google, baidu
+```
 
-- 存储被标记为 **VPN** 的别名，打开国外网站时会先启动 VPN。
 
-#### **Script**
 
-- 默认存储在安装目录的 `script` 目录中。删除脚本的别名时会自动删除脚本文件。
 
-#### **Report**
 
-- 使用周报功能前，需要在配置文件 `report.week_report` 中提前配置周报文件路径。
+## `open` 相关
 
----
+打开别名对应的路径
 
-### 使用前置条件
+```bash
+j <alias>
+# alias可以为应用路径或者url,或者script_name
+```
 
-1. 需要 **Java 环境** 并正确配置 **Java 环境变量**。
-2. 将安装目录下的 **bin** 目录添加到 **环境变量** 中。
 
----
 
-### 路径注意事项
+用编辑器打开某个文件
 
-1. **路径中不应包含空格**：所有别名对应的路径不应带有空格，否则可能被命令行错误识别。
-    - **解决方案**
-      ：为路径包含空格的应用创建快捷方式，将快捷方式剪切到无空格的路径下，并将快捷方式文件的地址复制到 `application.yml`
-      配置文件中。粘贴路径时请删除引号。
+```bash
+j <editor_alias> <dir_path>
+```
 
----
 
-如果你有任何问题或需要进一步的帮助，随时告诉我！😊
-作者邮箱：
-3065225677@qq.com
+
+用浏览器搜索网页
+
+```bash
+j bs <search_key_word>
+```
+
+
+
+# 进阶技巧
+
+## 工具结构
+
+`wcp`的目录结构如下和规范如下：
+
+- `bin` 二进制文件、配置文件（`application.yaml`）存储
+- `output` 输出目录，所有`wcp`输出的内容都在此
+- `report` 日报文件、日报时间同步文件存储的位置
+- `script` 脚本存储的位置，例如`concat`命令产生的脚本将会在这里
+- `link` 软链接，一些`path`中带空格的，可以先在此目录创建一个`path`的软链接，然后给这个软链接设置别名打开
+- `plugin` 插件仓库，可以将`wcp`需要使用的外部二进制程序放在这里集中管理
+
+
+
+`wcp`的正常工作，依赖于`application.yaml`文件
+
+
+
+
+
+# 使用案例
+
+## 使用vscode打开某个目录
+
+```bash
+j
+set code "vscode_path"
+nt code editor
+code "file_dir_path"
+```
+
+
+
+
+
+## 打开多个应用
+
+```bash
+j
+set wx "weixin_path"
+set code "vscode_path"
+concat start_multi_app "j wx & j code"
+start_multi_app
+```
+
+
+
+
+
+## 在命令行使用浏览器搜索内容
+
+```bash
+j
+set bs "chrome_path"
+nt bs browser
+bs "我的小马名字叫珍珠"
+```
+
+
+
+
+
+## 自动化下载B站音频并转换为flac
+
+`BBDown`是`github`上的一个下载b站音频的工具
+
+`filetranslate`是一个用`ffmpeg`将`m4a`格式文件转为`flac`格式文件的工具
+
+下载`ffmpeg`
+
+```bash
+# 安装ffmpeg
+brew install ffmpeg
+```
+
+注册一个脚本
+
+```bash
+concat download-bv "temp_content" 
+```
+
+下载`BBDown`到`plugin`文件夹，下载`filetranslate`到`plugin`到文件夹
+
+找到`script`目录下的`download-bv.sh`，写入以下脚本：
+
+```bash
+#!/bin/bash
+cd /Applications/work_copilot_java/plugin
+
+# 等待用户输入BV号
+read -p "请输入B站视频BV号: " bv
+
+if [ -z "$bv" ]; then
+    echo "错误：未提供 bv 参数"
+    echo "用法: $0 <bv号>"
+    read -p "按任意键退出..." -n1 -s
+    exit 1
+fi
+
+echo "pwd res: $(pwd), bv: ${bv}"
+echo "call BBDown..."
+./BBDown --audio-only ${bv}
+echo "BBDown work done"
+echo "current directory contain:"
+ls -al
+echo "call filetranslate convert..."
+mkdir -p ../output
+./filetranslate -if m4a -of flac -o ../output -d
+echo "afer directory contain:"
+ls -al
+# 添加结束暂停
+echo ""
+echo "所有操作已完成"
+read -p "按任意键进入文件目录..." -n1 -s
+open ../output
+```
+
+执行
+
+```bash
+j download-bv
+```
+
+输入想要下载的b站视频的bv号即可
+
+
+
+# Contact
+
+作者邮箱： 3065225677@qq.com
