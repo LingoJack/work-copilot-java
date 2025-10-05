@@ -177,7 +177,7 @@ public class SearchCommandHandler extends CommandHandler {
                 }
             }
             if (lineBuffer.size() > 0 && lines.size() < lineNum) {
-                lines.add(0, decodeUTF8(lineBuffer));
+                lines.addFirst(decodeUTF8(lineBuffer));
             }
         } catch (IOException e) {
             LogUtil.error("❌ 读取文件时发生错误: %s", e.getMessage(), e);

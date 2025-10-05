@@ -19,7 +19,6 @@ public class ContainCommandHandler extends CommandHandler {
         if (argv.length == 4) {
             String containerListStr = argv[2];
             String targetAlias = argv[3];
-
             // 从[%s|%s|%s|%s|%s]中解析List<String>
             List<String> containerList = parseContainerListStr(containerListStr);
             List<String> lines = findAlias(containerList, targetAlias);
@@ -31,6 +30,10 @@ public class ContainCommandHandler extends CommandHandler {
         }
     }
 
+    /**
+     * 打印`find`结果
+     * @param lines
+     */
     private static void printResults(List<String> lines) {
         int size = lines.size();
         if (size == 0) {
@@ -43,6 +46,12 @@ public class ContainCommandHandler extends CommandHandler {
         }
     }
 
+    /**
+     * 在容器列表中查找别名
+     * @param containerList
+     * @param targetAlias
+     * @return
+     */
     private static List<String> findAlias(List<String> containerList, String targetAlias) {
         List<String> lines = new ArrayList<>();
         for (String container : containerList) {

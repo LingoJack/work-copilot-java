@@ -15,7 +15,6 @@ public class RenameCommandHandler extends CommandHandler {
 
     @Override
     protected void process(String[] argv) {
-        String script = argv[0];
         String alias = argv[2];
         String newAlias = argv[3];
 

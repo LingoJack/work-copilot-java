@@ -68,20 +68,20 @@ public class ReportCommandHandler extends CommandHandler {
         String content = argv[2].trim();
         content = content.replaceAll("^\"|\"$", "");
 
-        if (content.isEmpty()) {
-            LogUtil.error("⚠️ 内容为空，无法写入 ");
-            return;
-        }
-
-        // 处理更新周数操作
-        if (content.equals(NEW_WEEK_CONFIG_UPDATE)) {
-            handleWeekUpdate(argv);
-            return;
-        }
-
-        if (content.equals("sync")) {
-            sync(argv);
-            return;
+        switch (content) {
+            case "" -> {
+                LogUtil.error("⚠️ 内容为空，无法写入 ");
+                return;
+            }
+            case NEW_WEEK_CONFIG_UPDATE -> {
+                // 处理更新周数操作
+                handleWeekUpdate(argv);
+                return;
+            }
+            case "sync" -> {
+                sync(argv);
+                return;
+            }
         }
 
         // 处理常规日报写入
