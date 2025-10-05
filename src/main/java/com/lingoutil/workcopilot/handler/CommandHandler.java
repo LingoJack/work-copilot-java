@@ -16,7 +16,7 @@ public abstract class CommandHandler {
     private static final HashMap<String, CommandHandler> commandHandlerMap = new HashMap<>();
 
     public static void execute(String command, String[] argv) {
-        if (commandHandlerMap.entrySet().isEmpty()) {
+        if (commandHandlerMap.isEmpty()) {
             CommandHandlerScanner.scanAndRegisterHandlers("com.lingoutil.workcopilot.handler");
         }
         CommandHandler handler = commandHandlerMap.get(command);

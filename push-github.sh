@@ -1,4 +1,4 @@
-COMMENT="优化周报同步功能"
+COMMENT="优化"
 
 git add .
 git commit -m "$COMMENT"

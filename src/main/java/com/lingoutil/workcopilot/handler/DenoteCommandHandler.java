@@ -8,6 +8,7 @@ import java.util.List;
 import static com.lingoutil.workcopilot.constant.Constant.*;
 
 public class DenoteCommandHandler extends CommandHandler {
+    
     @Override
     protected List<String> loadCommandList() {
         return denoteCommands;

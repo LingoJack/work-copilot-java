@@ -18,19 +18,18 @@ public class TimeCommandHandler extends CommandHandler {
     @Override
     protected void process(String[] argv) {
         String function = argv[2];
-        switch (function) {
-            case TIME_COUNTDOWN -> {
-                String threshold = argv[3];
-                long durationInSeconds = parseDuration(threshold);
-                if (durationInSeconds <= 0) {
-                    LogUtil.error("Invalid duration: %s", threshold);
-                    return;
-                }
-
-                LogUtil.info("⏳ Countdown started for %s seconds...", durationInSeconds);
-                runCountdownWithProgress(durationInSeconds);
+        if (function.equals(TIME_COUNTDOWN)) {
+            String threshold = argv[3];
+            long durationInSeconds = parseDuration(threshold);
+            if (durationInSeconds <= 0) {
+                LogUtil.error("Invalid duration: %s", threshold);
+                return;
             }
-            default -> LogUtil.error("❌ No such function %s", function);
+
+            LogUtil.info("⏳ Countdown started for %s seconds...", durationInSeconds);
+            runCountdownWithProgress(durationInSeconds);
+        } else {
+            LogUtil.error("❌ No such function %s", function);
         }
     }
 

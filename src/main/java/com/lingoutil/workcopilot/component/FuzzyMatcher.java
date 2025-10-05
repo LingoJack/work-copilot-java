@@ -32,8 +32,7 @@ public class FuzzyMatcher {
     }
 
     public static boolean match(String content, String target) {
-        boolean contains = content.toLowerCase().contains(target.toLowerCase());
-        return contains;
+        return content.toLowerCase().contains(target.toLowerCase());
     }
 
     public static List<Interval> getMatchIntervals(String content, String target) {
