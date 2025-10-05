@@ -16,7 +16,7 @@ import static com.lingoutil.workcopilot.constant.Constant.*;
 
 public class SearchCommandHandler extends CommandHandler {
 
-    private List<String> options = List.of("-f", "-fuzzy");
+    private final List<String> options = List.of("-f", "-fuzzy");
 
     @Override
     protected List<String> loadCommandList() {

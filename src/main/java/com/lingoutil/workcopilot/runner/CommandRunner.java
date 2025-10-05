@@ -67,40 +67,30 @@ public class CommandRunner {
         // 打印调试信息
         LogUtil.info("⚙️ 即将执行脚本，路径: %s", path);
         // 带给脚本的参数
-        String[] args = Arrays.copyOfRange(argv, 2, argv.length);
+        String[] argsForScript = Arrays.copyOfRange(argv, 2, argv.length);
         try {
             String[] command;
             // 如果有需要带给脚本的参数，也要能一起带过去
             if (MAC.equals(osType)) {
                 // 在 macOS 上新开一个终端窗口运行脚本，并传递参数
-                String[] newCommand = new String[4 + args.length];
+                String[] newCommand = new String[4 + argsForScript.length];
                 newCommand[0] = "open";
                 newCommand[1] = "-a";
                 newCommand[2] = "Terminal";
                 newCommand[3] = path;
-                System.arraycopy(args, 0, newCommand, 4, args.length);
+                System.arraycopy(argsForScript, 0, newCommand, 4, argsForScript.length);
                 command = newCommand;
             } else if (WINDOWS.equals(osType)) {
-                // Windows 环境运行脚本，添加是否需要新窗口的逻辑，并传递参数
-                boolean openNewWindow = true;
-                if (openNewWindow) {
+                {
                     // 新窗口运行，并传递参数
-                    String[] newCommand = new String[6 + args.length];
+                    String[] newCommand = new String[6 + argsForScript.length];
                     newCommand[0] = "cmd.exe";
                     newCommand[1] = "/c";
                     newCommand[2] = "start";
                     newCommand[3] = "cmd.exe";
                     newCommand[4] = "/k";
                     newCommand[5] = path;
-                    System.arraycopy(args, 0, newCommand, 6, args.length);
-                    command = newCommand;
-                } else {
-                    // 当前窗口运行，并传递参数
-                    String[] newCommand = new String[3 + args.length];
-                    newCommand[0] = "cmd.exe";
-                    newCommand[1] = "/c";
-                    newCommand[2] = path;
-                    System.arraycopy(args, 0, newCommand, 3, args.length);
+                    System.arraycopy(argsForScript, 0, newCommand, 6, argsForScript.length);
                     command = newCommand;
                 }
             } else {

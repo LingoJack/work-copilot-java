@@ -19,6 +19,7 @@ public abstract class CommandHandler {
         if (commandHandlerMap.isEmpty()) {
             CommandHandlerScanner.scanAndRegisterHandlers("com.lingoutil.workcopilot.handler");
         }
+        // 如果找到了对应的命令处理器，就交给处理器处理（内置命令）
         CommandHandler handler = commandHandlerMap.get(command);
         if (handler != null) {
             if (handler.checkArgs(argv)) {
@@ -26,7 +27,7 @@ public abstract class CommandHandler {
             }
             return;
         }
-        // 打开alias
+        // 如果找不到对应的命令处理器，就直接执行命令
         CommandRunner.run(argv);
     }
 

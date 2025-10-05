@@ -65,8 +65,7 @@ public class PerformanceCommandHandler extends CommandHandler {
                 LogUtil.GREEN, totalMax == -1 ? "NAN" : bytesToMB(totalMax) + " MB", LogUtil.RESET);
 
         // 新增：打印当前进程的 CPU 使用率
-        if (osBean instanceof com.sun.management.OperatingSystemMXBean) {
-            com.sun.management.OperatingSystemMXBean extendedOsBean = (com.sun.management.OperatingSystemMXBean) osBean;
+        if (osBean instanceof com.sun.management.OperatingSystemMXBean extendedOsBean) {
 
             // 获取进程 CPU 使用率 (0.0 到 1.0)
             double processCpuLoad = extendedOsBean.getProcessCpuLoad() * 100;
