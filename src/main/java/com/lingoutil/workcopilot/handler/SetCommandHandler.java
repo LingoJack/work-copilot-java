@@ -40,7 +40,7 @@ public class SetCommandHandler extends CommandHandler {
             LogUtil.error("Alias %s with path {%s} already exists. 😢 Please use command `%s` to modify",
                     alias,
                     pathMap.get(alias),
-                    modifyCommands.get(0));
+                    modifyCommands.getFirst());
         }
     }
 
