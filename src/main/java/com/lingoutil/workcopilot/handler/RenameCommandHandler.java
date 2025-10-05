@@ -42,6 +42,12 @@ public class RenameCommandHandler extends CommandHandler {
             updated = true;
             LogUtil.info("✅ Renamed %s to %s successfully! Outer URL: %s 🌐", alias, newAlias, url);
         }
+        if (YamlConfig.getPropertiesMap(SCRIPT).containsKey(alias)) {
+            String script = YamlConfig.getProperty(SCRIPT, alias);
+            YamlConfig.renameProperty(SCRIPT, alias, newAlias);
+            updated = true;
+            LogUtil.info("✅ Renamed %s to %s successfully! Script: %s 📜", alias, newAlias, script);
+        }
 
         if (!updated) {
             LogUtil.error("❌ Alias %s does not exist!", alias);
