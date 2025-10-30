@@ -4,6 +4,11 @@
     <option name="conversations">
       <list>
         <Conversation>
+          <option name="createTime" value="1759568658776" />
+          <option name="id" value="0199ae77015870b8bb990b8ad152be6c" />
+          <option name="updateTime" value="1759568658776" />
+        </Conversation>
+        <Conversation>
           <option name="createTime" value="1755938724752" />
           <option name="id" value="0198d61a9b907e9aa8f4871fd4cf008c" />
           <option name="title" value="新对话 2025年8月23日 16:45:24" />
@@ -81,7 +86,7 @@
                       <option name="filename" value="WorkCopilotApplication.java" />
                       <option name="language" value="JAVA" />
                       <option name="range">
-                        <Range>
+                        <CommitRange>
                           <option name="end">
                             <Position>
                               <option name="character" value="1" />
@@ -91,7 +96,7 @@
                           <option name="start">
                             <Position />
                           </option>
-                        </Range>
+                        </CommitRange>
                       </option>
                       <option name="type" value="editor" />
                       <option name="url" value="file://$PROJECT_DIR$/src/main/java/com/lingoutil/workcopilot/WorkCopilotApplication.java" />
@@ -102,7 +107,7 @@
                       <option name="filename" value="WorkCopilotApplication.java" />
                       <option name="language" value="JAVA" />
                       <option name="range">
-                        <Range>
+                        <CommitRange>
                           <option name="end">
                             <Position>
                               <option name="character" value="1" />
@@ -112,7 +117,7 @@
                           <option name="start">
                             <Position />
                           </option>
-                        </Range>
+                        </CommitRange>
                       </option>
                       <option name="type" value="editor" />
                       <option name="url" value="file://$PROJECT_DIR$/src/main/java/com/lingoutil/workcopilot/WorkCopilotApplication.java" />
