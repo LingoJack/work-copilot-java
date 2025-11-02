@@ -1,9 +1,11 @@
 package com.lingoutil.workcopilot.completer;
 
+import org.apache.commons.text.diff.StringsComparator;
 import org.jline.reader.Candidate;
 import org.jline.reader.Completer;
 import org.jline.reader.LineReader;
 import org.jline.reader.ParsedLine;
+import org.jline.reader.impl.completer.StringsCompleter;
 
 import java.util.List;
 
@@ -28,15 +30,8 @@ public class PlaceholderCompleter implements Completer {
 
     @Override
     public void complete(LineReader reader, ParsedLine line, List<Candidate> candidates) {
-        // 添加占位符作为候选项，但不实际补全（displ 和 value 不同）
-        candidates.add(new Candidate(
-                "", // value: 实际补全的值为空
-                placeholder, // displ: 显示的占位符文本
-                null, // group
-                desc, // descr
-                null, // suffix
-                null, // key
-                false // complete: 不自动补全
-        ));
+        Candidate candidate = new Candidate(placeholder, desc, null, null, null, null, false);
+        StringsCompleter stringsCompleter = new StringsCompleter(candidate);
+        stringsCompleter.complete(reader, line, candidates);
     }
 }

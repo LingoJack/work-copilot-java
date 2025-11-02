@@ -2,7 +2,6 @@ package com.lingoutil.workcopilot;
 
 import com.lingoutil.workcopilot.completer.ConfigCompleter;
 import com.lingoutil.workcopilot.completer.ConfigItemCompleter;
-import com.lingoutil.workcopilot.completer.PlaceholderCompleter;
 import com.lingoutil.workcopilot.completer.RefreshableAliasCompleter;
 import com.lingoutil.workcopilot.handler.CommandHandler;
 import com.lingoutil.workcopilot.runner.CommandRunner;
@@ -21,7 +20,6 @@ import org.jline.widget.AutosuggestionWidgets;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.LinkOption;
 import java.util.List;
 import java.util.Scanner;
 
@@ -93,12 +91,107 @@ public class WorkCopilotApplication {
             // 创建 JLine 终端和读取器
             Terminal terminal = TerminalBuilder.builder().system(true).build();
 
+            // ========== 参数补全器 ==========
+            ArgumentCompleter exitArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(exitCommands),
+                    NullCompleter.INSTANCE);
+
             ArgumentCompleter addArgumentCompleter = new ArgumentCompleter(
                     new StringsCompleter(addCommands),
-                    new PlaceholderCompleter("<alias>", "设置的别名"),
+                    new StringsCompleter("<alias>"),
                     new Completers.FileNameCompleter(),
                     NullCompleter.INSTANCE);
             addArgumentCompleter.setStrict(false);
+
+            ArgumentCompleter listArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(listCommands),
+                    new StringsCompleter(allListCommandParts),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter versionArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(versionCommands),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter helpArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(helpCommands),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter modifyArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(modifyCommands),
+                    new RefreshableAliasCompleter(),
+                    new Completers.FileNameCompleter(),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter removeArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(removeCommands),
+                    new RefreshableAliasCompleter(),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter noteArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(noteCommands),
+                    new RefreshableAliasCompleter(),
+                    new StringsCompleter(allNoteCategory),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter denoteArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(denoteCommands),
+                    new RefreshableAliasCompleter(),
+                    new StringsCompleter(allNoteCategory),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter renameArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(renameCommands),
+                    new RefreshableAliasCompleter(),
+                    new StringsCompleter("<new_alias>"),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter reportArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(reportCommands),
+                    new StringsCompleter("\"<content>\""),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter checkArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(checkCommands),
+                    new StringsCompleter(List.of("", "<line_count_from_end>")),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter logArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(logCommands),
+                    new StringsCompleter("mode"),
+                    new StringsCompleter("concise", "verbose"),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter concatArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(concatCommands),
+                    new StringsCompleter("<script_name>"),
+                    new StringsCompleter("\"<script_content>\""),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter clearArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(clearCommands),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter containArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(containCommands),
+                    new StringsCompleter(allNoteCategory),
+                    new RefreshableAliasCompleter(),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter performanceArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(performanceCommands),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter timeArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(timeCommands),
+                    new StringsCompleter("countdown"),
+                    new StringsCompleter("10s", "15m", "1h"),
+                    NullCompleter.INSTANCE);
+
+            ArgumentCompleter searchArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(searchCommands),
+                    new StringsCompleter("all", "100", "50", "10"),
+                    new StringsCompleter("<keyword>"),
+                    NullCompleter.INSTANCE);
 
             ArgumentCompleter changeArgumentCompleter = new ArgumentCompleter(
                     new StringsCompleter(changeCommands),
@@ -108,97 +201,27 @@ public class WorkCopilotApplication {
                     NullCompleter.INSTANCE);
             changeArgumentCompleter.setStrict(false);
 
-            // 补全器
+            // ========== 聚合补全器 ==========
             Completer completer = new AggregateCompleter(
-                    // 退出
-                    new ArgumentCompleter(
-                            new StringsCompleter(exitCommands),
-                            NullCompleter.INSTANCE),
-                    // 添加别名
+                    exitArgumentCompleter,
                     addArgumentCompleter,
-                    new ArgumentCompleter(
-                            new StringsCompleter(listCommands),
-                            new StringsCompleter(allListCommandParts),
-                            NullCompleter.INSTANCE),
-                    // 版本
-                    new ArgumentCompleter(
-                            new StringsCompleter(versionCommands),
-                            NullCompleter.INSTANCE),
-                    // 帮助
-                    new ArgumentCompleter(
-                            new StringsCompleter(helpCommands),
-                            NullCompleter.INSTANCE),
-                    // 修改别名对应的路径
-                    new ArgumentCompleter(
-                            new StringsCompleter(modifyCommands),
-                            new RefreshableAliasCompleter(),
-                            new Completers.FileNameCompleter(),
-                            NullCompleter.INSTANCE),
-                    // 删除别名
-                    new ArgumentCompleter(
-                            new StringsCompleter(removeCommands),
-                            new RefreshableAliasCompleter(),
-                            NullCompleter.INSTANCE),
-                    // 标记别名为xxx
-                    new ArgumentCompleter(
-                            new StringsCompleter(noteCommands),
-                            new RefreshableAliasCompleter(),
-                            new StringsCompleter(allNoteCategory),
-                            NullCompleter.INSTANCE),
-                    // 解标记别名为xxx
-                    new ArgumentCompleter(
-                            new StringsCompleter(denoteCommands),
-                            new RefreshableAliasCompleter(),
-                            new StringsCompleter(allNoteCategory),
-                            NullCompleter.INSTANCE),
-                    // 重命名别名
-                    new ArgumentCompleter(
-                            new StringsCompleter(renameCommands),
-                            new RefreshableAliasCompleter(),
-                            new StringsCompleter("<new_alias>"),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(helpCommands),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(reportCommands),
-                            new StringsCompleter("\"<content>\""),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(checkCommands),
-                            new StringsCompleter(List.of("", "<line_count_from_end>")),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(logCommands),
-                            new StringsCompleter("mode"),
-                            new StringsCompleter("concise", "verbose"),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(concatCommands),
-                            new StringsCompleter("<script_name>"),
-                            new StringsCompleter("\"<script_content>\""),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(clearCommands),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(containCommands),
-                            new StringsCompleter(allNoteCategory),
-                            new RefreshableAliasCompleter(),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(performanceCommands),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(timeCommands),
-                            new StringsCompleter("countdown"),
-                            new StringsCompleter("10s", "15m", "1h"),
-                            NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(searchCommands),
-                            new StringsCompleter("all", "100", "50", "10"),
-                            new StringsCompleter("<keyword>"),
-                            NullCompleter.INSTANCE),
+                    listArgumentCompleter,
+                    versionArgumentCompleter,
+                    helpArgumentCompleter,
+                    modifyArgumentCompleter,
+                    removeArgumentCompleter,
+                    noteArgumentCompleter,
+                    denoteArgumentCompleter,
+                    renameArgumentCompleter,
+                    reportArgumentCompleter,
+                    checkArgumentCompleter,
+                    logArgumentCompleter,
+                    concatArgumentCompleter,
+                    clearArgumentCompleter,
+                    containArgumentCompleter,
+                    performanceArgumentCompleter,
+                    timeArgumentCompleter,
+                    searchArgumentCompleter,
                     changeArgumentCompleter);
 
             // 行阅读器
