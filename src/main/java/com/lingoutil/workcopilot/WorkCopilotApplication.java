@@ -15,6 +15,7 @@ import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import org.jline.widget.AutosuggestionWidgets;
 
 import java.io.File;
 import java.io.PrintStream;
@@ -128,13 +129,13 @@ public class WorkCopilotApplication {
                     // 标记别名为xxx
                     new ArgumentCompleter(
                             new StringsCompleter(noteCommands),
-                           new RefreshableAliasCompleter(),
+                            new RefreshableAliasCompleter(),
                             new StringsCompleter(allNoteCategory),
                             NullCompleter.INSTANCE),
                     // 解标记别名为xxx
                     new ArgumentCompleter(
                             new StringsCompleter(denoteCommands),
-                           new RefreshableAliasCompleter(),
+                            new RefreshableAliasCompleter(),
                             new StringsCompleter(allNoteCategory),
                             NullCompleter.INSTANCE),
                     // 重命名别名
@@ -198,6 +199,10 @@ public class WorkCopilotApplication {
                     .history(new DefaultHistory())
                     .completer(completer)
                     .build();
+
+            // 自动建议
+            AutosuggestionWidgets autosuggestionWidgets = new AutosuggestionWidgets(reader);
+            autosuggestionWidgets.enable();
 
             LogUtil.info("Welcome to use work copilot \uD83D\uDE80 ~");
             String prompt = YELLOW + "copilot > " + RESET;
