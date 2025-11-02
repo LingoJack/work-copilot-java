@@ -224,7 +224,7 @@ public class WorkCopilotApplication {
                     LogUtil.log("input: %s", input);
 
                     // !开头表示执行bash命令
-                    if (input.startsWith("/")) {
+                    if (input.startsWith("`")) {
                         String bashCommand = input.substring(1);
                         bashCommand = " " + bashCommand;
                         // 这里 work dir 和当前一样, 命令是 stateless 的
