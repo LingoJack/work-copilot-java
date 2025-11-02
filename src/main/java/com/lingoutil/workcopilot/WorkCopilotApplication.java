@@ -92,120 +92,101 @@ public class WorkCopilotApplication {
                     // 退出
                     new ArgumentCompleter(
                             new StringsCompleter(exitCommands),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 添加别名
                     new ArgumentCompleter(
                             new StringsCompleter(addCommands),
                             new StringsCompleter("<alias>"),
                             new Completers.FileNameCompleter(),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(listCommands),
                             new StringsCompleter(allListCommandParts),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 版本
                     new ArgumentCompleter(
                             new StringsCompleter(versionCommands),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 帮助
                     new ArgumentCompleter(
                             new StringsCompleter(helpCommands),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 修改别名对应的路径
                     new ArgumentCompleter(
                             new StringsCompleter(modifyCommands),
                             new StringsCompleter("<alias>"),
                             new Completers.FileNameCompleter(),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 删除别名
                     new ArgumentCompleter(
                             new StringsCompleter(removeCommands),
                             new StringsCompleter("<alias>"),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 标记别名为xxx
                     new ArgumentCompleter(
                             new StringsCompleter(noteCommands),
                             new StringsCompleter("<alias>"),
                             new StringsCompleter(allNoteCategory),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 解标记别名为xxx
                     new ArgumentCompleter(
                             new StringsCompleter(denoteCommands),
                             new StringsCompleter("<alias>"),
                             new StringsCompleter(allNoteCategory),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     // 重命名别名
                     new ArgumentCompleter(
                             new StringsCompleter(renameCommands),
                             new StringsCompleter("<alias>"),
                             new StringsCompleter("<new_alias>"),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(helpCommands),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(reportCommands),
-                            new StringsCompleter("\"<content>\"")
-                    ),
+                            new StringsCompleter("\"<content>\""),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(checkCommands),
                             new StringsCompleter(List.of("", "<line_count_from_end>")),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(logCommands),
                             new StringsCompleter("mode"),
                             new StringsCompleter("concise", "verbose"),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(concatCommands),
                             new StringsCompleter("<script_name>"),
-                            new StringsCompleter("\"<script_content>\"")
-                    ),
+                            new StringsCompleter("\"<script_content>\""),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(clearCommands),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(concatCommands),
                             new StringsCompleter(allNoteCategory),
                             new StringsCompleter("<alias>"),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(performanceCommands),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(timeCommands),
                             new StringsCompleter("countdown"),
                             new StringsCompleter("10s", "15m", "1h"),
-                            NullCompleter.INSTANCE
-                    ),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(searchCommands),
                             new StringsCompleter("all", "100", "50", "10"),
-                            NullCompleter.INSTANCE
-                    ),
+                            new StringsCompleter("<keyword>"),
+                            NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(changeCommands),
                             new StringsCompleter(allListCommandParts),
-                            new StringsCompleter("<new_value>")
-                    )
-            );
-
+                            new StringsCompleter("<new_value>"),
+                            NullCompleter.INSTANCE));
 
             // 行阅读器
             LineReader reader = LineReaderBuilder.builder()
