@@ -1,5 +1,8 @@
 package com.lingoutil.workcopilot;
 
+import com.lingoutil.workcopilot.completer.ConfigCompleter;
+import com.lingoutil.workcopilot.completer.ConfigItemCompleter;
+import com.lingoutil.workcopilot.completer.RefreshableAliasCompleter;
 import com.lingoutil.workcopilot.handler.CommandHandler;
 import com.lingoutil.workcopilot.runner.CommandRunner;
 import com.lingoutil.workcopilot.util.LogUtil;
@@ -114,30 +117,30 @@ public class WorkCopilotApplication {
                     // 修改别名对应的路径
                     new ArgumentCompleter(
                             new StringsCompleter(modifyCommands),
-                            new StringsCompleter("<alias>"),
+                            new RefreshableAliasCompleter(),
                             new Completers.FileNameCompleter(),
                             NullCompleter.INSTANCE),
                     // 删除别名
                     new ArgumentCompleter(
                             new StringsCompleter(removeCommands),
-                            new StringsCompleter("<alias>"),
+                            new RefreshableAliasCompleter(),
                             NullCompleter.INSTANCE),
                     // 标记别名为xxx
                     new ArgumentCompleter(
                             new StringsCompleter(noteCommands),
-                            new StringsCompleter("<alias>"),
+                           new RefreshableAliasCompleter(),
                             new StringsCompleter(allNoteCategory),
                             NullCompleter.INSTANCE),
                     // 解标记别名为xxx
                     new ArgumentCompleter(
                             new StringsCompleter(denoteCommands),
-                            new StringsCompleter("<alias>"),
+                           new RefreshableAliasCompleter(),
                             new StringsCompleter(allNoteCategory),
                             NullCompleter.INSTANCE),
                     // 重命名别名
                     new ArgumentCompleter(
                             new StringsCompleter(renameCommands),
-                            new StringsCompleter("<alias>"),
+                            new RefreshableAliasCompleter(),
                             new StringsCompleter("<new_alias>"),
                             NullCompleter.INSTANCE),
                     new ArgumentCompleter(
@@ -165,9 +168,9 @@ public class WorkCopilotApplication {
                             new StringsCompleter(clearCommands),
                             NullCompleter.INSTANCE),
                     new ArgumentCompleter(
-                            new StringsCompleter(concatCommands),
+                            new StringsCompleter(containCommands),
                             new StringsCompleter(allNoteCategory),
-                            new StringsCompleter("<alias>"),
+                            new RefreshableAliasCompleter(),
                             NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(performanceCommands),
@@ -184,7 +187,8 @@ public class WorkCopilotApplication {
                             NullCompleter.INSTANCE),
                     new ArgumentCompleter(
                             new StringsCompleter(changeCommands),
-                            new StringsCompleter(allListCommandParts),
+                            new ConfigCompleter(),
+                            new ConfigItemCompleter(),
                             new StringsCompleter("<new_value>"),
                             NullCompleter.INSTANCE));
 
