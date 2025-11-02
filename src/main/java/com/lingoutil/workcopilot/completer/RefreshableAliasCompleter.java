@@ -21,7 +21,7 @@ public class RefreshableAliasCompleter implements Completer {
             Map<String, String> aliases = YamlConfig.getPropertiesMap(category);
             if (aliases != null) {
                 for (String alias : aliases.keySet()) {
-                    candidates.add(new Candidate(alias));
+                    candidates.add(new Candidate(alias, alias, category, null, null, null, true));
                 }
             }
         }

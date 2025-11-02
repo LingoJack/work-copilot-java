@@ -20,6 +20,7 @@ import org.jline.widget.AutosuggestionWidgets;
 import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.LinkOption;
 import java.util.List;
 import java.util.Scanner;
 
@@ -199,6 +200,7 @@ public class WorkCopilotApplication {
                     .history(new DefaultHistory())
                     .completer(completer)
                     .option(LineReader.Option.DISABLE_EVENT_EXPANSION, true)
+                    .option(LineReader.Option.MENU_COMPLETE, true)
                     .build();
 
             // 自动建议
