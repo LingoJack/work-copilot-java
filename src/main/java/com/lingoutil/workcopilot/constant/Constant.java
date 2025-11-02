@@ -11,72 +11,72 @@ public class Constant {
     /**
      * 退出
      */
-    public static final List<String> exitCommands = List.of("exit", "-q", "quit", "-quit", "-exit");
+    public static final List<String> exitCommands = List.of("exit", "q", "quit");
 
     /**
      * 添加别名
      */
-    public static final List<String> addCommands = List.of("set", "-set", "s");
+    public static final List<String> addCommands = List.of("set", "s");
 
     /**
      * 列出
      */
-    public static final List<String> listCommands = List.of("ls", "list", "-list");
+    public static final List<String> listCommands = List.of("ls", "list");
 
     /**
      * 版本
      */
-    public static final List<String> versionCommands = List.of("-version", "version", "v");
+    public static final List<String> versionCommands = List.of("version", "v");
 
     /**
      * 修改别名对应的路径
      */
-    public static final List<String> modifyCommands = List.of("mf", "-modify", "modify");
+    public static final List<String> modifyCommands = List.of("mf", "modify");
 
     /**
      * 删除别名
      */
-    public static final List<String> removeCommands = List.of("rm", "-remove", "remove");
+    public static final List<String> removeCommands = List.of("rm", "remove");
 
     /**
      * 标记别名为xxx
      */
-    public static final List<String> noteCommands = List.of("nt", "-note", "note");
+    public static final List<String> noteCommands = List.of("nt", "note");
 
     /**
      * 解除别名标记
      */
-    public static final List<String> denoteCommands = List.of("dnt", "denote", "-denote");
+    public static final List<String> denoteCommands = List.of("dnt", "denote");
 
     /**
      * 重命名别名
      */
-    public static final List<String> renameCommands = List.of("rename", "-rename", "rn");
+    public static final List<String> renameCommands = List.of("rename", "rn");
 
     /**
      * 帮助
      */
-    public static final List<String> helpCommands = List.of("help", "-help", "-h");
+    public static final List<String> helpCommands = List.of("help", "h");
 
     /**
      * 上报日报
      */
-    public static final List<String> reportCommands = List.of("-r", "report", "-report", "r");
+    public static final List<String> reportCommands = List.of("report", "r");
 
     /**
      * 查看日志
      */
-    public static final List<String> checkCommands = List.of("-c", "check", "-check", "c");
+    public static final List<String> checkCommands = List.of("check", "c");
 
     /**
      * 日志设置
      */
-    public static final List<String> logCommands = List.of("log", "-log");
+    public static final List<String> logCommands = List.of("log");
 
     /**
      * 自定义脚本
      */
-    public static final List<String> concatCommands = List.of("concat", "-concat");
+    public static final List<String> concatCommands = List.of("concat");
 
     /**
      * 清屏
@@ -86,12 +86,12 @@ public class Constant {
     /**
      * 在xxx下查找别名
      */
-    public static final List<String> containCommands = List.of("contain", "-contain", "find", "-find");
+    public static final List<String> containCommands = List.of("contain", "find");
 
     /**
      * 查看系统信息
      */
-    public static final List<String> performanceCommands = List.of("system", "ps", "-ps");
+    public static final List<String> performanceCommands = List.of("system", "ps");
 
     /**
      * 计时
@@ -101,13 +101,21 @@ public class Constant {
     /**
      * 在日报中查看某些文字
      */
-    public static final List<String> searchCommands = List.of("search", "-search", "select", "look", "sch");
+    public static final List<String> searchCommands = List.of("search", "select", "look", "sch");
 
     /**
      * 直接修改某个系统设置
      */
-    public static final List<String> changeCommands = List.of("change", "-change", "cg");
+    public static final List<String> changeCommands = List.of("change", "chg");
 
+    /**
+     * AI 相关
+     */
+    public static final List<String> agentCommands = List.of("agent");
+
+    /**
+     * 所有命令
+     */
     public static final List<String> allCommands = Stream.of(
             exitCommands,
             addCommands,
@@ -128,7 +136,8 @@ public class Constant {
             performanceCommands,
             timeCommands,
             searchCommands,
-            changeCommands
+            changeCommands,
+            agentCommands
     ).flatMap(List::stream).collect(Collectors.toList());
 
     public static final String PATH = "path";
@@ -171,4 +180,38 @@ public class Constant {
     public final static String BAIDU = "baidu";
 
     public final static String TIME_COUNTDOWN = "countdown";
+
+    public final static String ALL = "all";
+
+    public final static String DEFAULT = "";
+
+    /**
+     * list 命令的支持的所有 part
+     */
+    public static final List<String> allListCommandParts = List.of("",
+            ALL,
+            DEFAULT,
+            EDITOR,
+            BROWSER,
+            VPN,
+            SCRIPT,
+            INNER_URL,
+            OUTER_URL,
+            VERSION,
+            PATH,
+            SETTING,
+            REPORT,
+            LOG
+    );
+
+    /**
+     * 支持标记的 category
+     */
+    public static final List<String> allNoteCategory = List.of(
+            CATEGORY_BROWSER,
+            CATEGORY_EDITOR,
+            CATEGORY_VPN,
+            CATEGORY_OUTER_URL,
+            SCRIPT
+    );
 }

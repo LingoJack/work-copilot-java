@@ -28,7 +28,7 @@ public class VersionCommandHandler extends CommandHandler {
             }
             LogUtil.info("%s: %s", key, value);
         }
-        String version = "9.0.0";
+        String version = "10.0.0";
         LogUtil.info("kernel version: %s", version);
         LogUtil.info("os: %s", CommandRunner.getOsType());
         LogUtil.info("author: lingojack | LingoJack | 达不溜勾勾");

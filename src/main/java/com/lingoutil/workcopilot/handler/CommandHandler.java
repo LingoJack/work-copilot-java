@@ -15,10 +15,16 @@ public abstract class CommandHandler {
 
     private static final HashMap<String, CommandHandler> commandHandlerMap = new HashMap<>();
 
+    /**
+     * 执行命令
+     * @param command 命令，即 argv[1]
+     * @param argv,例如：j report "report content"
+     */
     public static void execute(String command, String[] argv) {
         if (commandHandlerMap.isEmpty()) {
             CommandHandlerScanner.scanAndRegisterHandlers("com.lingoutil.workcopilot.handler");
         }
+
         // 如果找到了对应的命令处理器，就交给处理器处理（内置命令）
         CommandHandler handler = commandHandlerMap.get(command);
         if (handler != null) {

@@ -47,22 +47,41 @@ public class CommandRunner {
             return;
         }
 
+        // 如果是浏览器
         if (YamlConfig.containProperty(BROWSER, alias)) {
             openBrowser(argv, length, alias, script);
-        } else if (YamlConfig.containProperty(EDITOR, alias)) {
-            openEditor(argv, length, alias);
-        } else if (YamlConfig.containProperty(VPN, alias)) {
-            openVPN(alias);
-        } else if (YamlConfig.containProperty(SCRIPT, alias)) {
-            runScript(argv);
-        } else {
-            // path是应用路径，如何打开
-            open(alias);
+            return;
         }
+
+        // 如果是编辑器
+        if (YamlConfig.containProperty(EDITOR, alias)) {
+            openEditor(argv, length, alias);
+            return;
+        }
+
+        // 如果是VPN
+        if (YamlConfig.containProperty(VPN, alias)) {
+            openVPN(alias);
+            return;
+        }
+
+        // 如果是自定义脚本
+        if (YamlConfig.containProperty(SCRIPT, alias)) {
+            runScript(argv);
+            return;
+        }
+
+        // 如果不是以上任何一种，尝试作为路径打开
+        open(alias);
     }
 
+    /**
+     * 运行脚本
+     * @param argv
+     */
     private static void runScript(String[] argv) {
         String alias = argv[1];
+        // 获取脚本路径
         String path = YamlConfig.getProperty(SCRIPT, alias);
         // 打印调试信息
         LogUtil.info("⚙️ 即将执行脚本，路径: %s", path);
@@ -146,7 +165,11 @@ public class CommandRunner {
     private static boolean isAliasExist(String alias) {
         return YamlConfig.containProperty(PATH, alias)
                 || YamlConfig.containProperty(INNER_URL, alias)
-                || YamlConfig.containProperty(OUTER_URL, alias);
+                || YamlConfig.containProperty(OUTER_URL, alias)
+                || YamlConfig.containProperty(SCRIPT, alias)
+                || YamlConfig.containProperty(BROWSER, alias)
+                || YamlConfig.containProperty(EDITOR, alias)
+                || YamlConfig.containProperty(VPN, alias);
     }
 
     private static void openBrowserWithUrlAliasOrSearchedContent(String[] argv, int length, String script, String alias) {
