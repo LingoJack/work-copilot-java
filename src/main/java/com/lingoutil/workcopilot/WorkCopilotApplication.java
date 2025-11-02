@@ -2,6 +2,7 @@ package com.lingoutil.workcopilot;
 
 import com.lingoutil.workcopilot.completer.ConfigCompleter;
 import com.lingoutil.workcopilot.completer.ConfigItemCompleter;
+import com.lingoutil.workcopilot.completer.PlaceholderCompleter;
 import com.lingoutil.workcopilot.completer.RefreshableAliasCompleter;
 import com.lingoutil.workcopilot.handler.CommandHandler;
 import com.lingoutil.workcopilot.runner.CommandRunner;
@@ -92,6 +93,21 @@ public class WorkCopilotApplication {
             // 创建 JLine 终端和读取器
             Terminal terminal = TerminalBuilder.builder().system(true).build();
 
+            ArgumentCompleter addArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(addCommands),
+                    new PlaceholderCompleter("<alias>", "设置的别名"),
+                    new Completers.FileNameCompleter(),
+                    NullCompleter.INSTANCE);
+            addArgumentCompleter.setStrict(false);
+
+            ArgumentCompleter changeArgumentCompleter = new ArgumentCompleter(
+                    new StringsCompleter(changeCommands),
+                    new ConfigCompleter(),
+                    new ConfigItemCompleter(),
+                    new StringsCompleter("<new_value>"),
+                    NullCompleter.INSTANCE);
+            changeArgumentCompleter.setStrict(false);
+
             // 补全器
             Completer completer = new AggregateCompleter(
                     // 退出
@@ -99,11 +115,7 @@ public class WorkCopilotApplication {
                             new StringsCompleter(exitCommands),
                             NullCompleter.INSTANCE),
                     // 添加别名
-                    new ArgumentCompleter(
-                            new StringsCompleter(addCommands),
-                            new StringsCompleter("<alias>"),
-                            new Completers.FileNameCompleter(),
-                            NullCompleter.INSTANCE),
+                    addArgumentCompleter,
                     new ArgumentCompleter(
                             new StringsCompleter(listCommands),
                             new StringsCompleter(allListCommandParts),
@@ -187,12 +199,7 @@ public class WorkCopilotApplication {
                             new StringsCompleter("all", "100", "50", "10"),
                             new StringsCompleter("<keyword>"),
                             NullCompleter.INSTANCE),
-                    new ArgumentCompleter(
-                            new StringsCompleter(changeCommands),
-                            new ConfigCompleter(),
-                            new ConfigItemCompleter(),
-                            new StringsCompleter("<new_value>"),
-                            NullCompleter.INSTANCE));
+                    changeArgumentCompleter);
 
             // 行阅读器
             LineReader reader = LineReaderBuilder.builder()
