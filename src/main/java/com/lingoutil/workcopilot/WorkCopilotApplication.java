@@ -93,7 +93,6 @@ public class WorkCopilotApplication {
             // 创建 JLine 终端和读取器
             Terminal terminal = TerminalBuilder.builder().system(true).build();
 
-            // ========== 参数补全器 ==========
             ArgumentCompleter exitArgumentCompleter = new ArgumentCompleter(
                     new StringsCompleter(exitCommands),
                     NullCompleter.INSTANCE);
