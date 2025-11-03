@@ -77,6 +77,7 @@ public class CommandRunner {
 
     /**
      * 运行脚本
+     * 
      * @param argv
      */
     private static void runScript(String[] argv) {
@@ -122,7 +123,7 @@ public class CommandRunner {
 
             // 捕获输出
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                 BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
+                    BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -139,7 +140,6 @@ public class CommandRunner {
             LogUtil.error("💥 执行脚本失败: %s", e.getMessage());
         }
     }
-
 
     private static void openVPN(String alias) {
         open(alias);
@@ -172,7 +172,8 @@ public class CommandRunner {
                 || YamlConfig.containProperty(VPN, alias);
     }
 
-    private static void openBrowserWithUrlAliasOrSearchedContent(String[] argv, int length, String script, String alias) {
+    private static void openBrowserWithUrlAliasOrSearchedContent(String[] argv, int length, String script,
+            String alias) {
         String urlAlias = argv[2];
         String url = null;
         if (YamlConfig.getProperty(INNER_URL, urlAlias) != null) {
@@ -223,6 +224,10 @@ public class CommandRunner {
                 return false;
             }
 
+            // 清理路径：去除引号和转义符
+            path = cleanPath(path);
+            filePath = cleanPath(filePath);
+
             // 根据操作系统类型选择命令
             String command = "";
             if (WINDOWS.equals(osType)) {
@@ -230,9 +235,10 @@ public class CommandRunner {
                 LogUtil.log("command: %s", command);
                 Runtime.getRuntime().exec(command);
             } else if (MAC.equals(osType)) {
-                command = String.format("open -a %s %s", path, filePath);
-                LogUtil.log("command: %s", command);
-                Runtime.getRuntime().exec(command);
+                // macOS 使用数组方式，不需要转义
+                String[] commands = { "open", "-a", path, filePath };
+                LogUtil.log("command: open -a %s %s", path, filePath);
+                Runtime.getRuntime().exec(commands);
             } else {
                 LogUtil.error("💥 当前操作系统不支持此功能: %s", osType);
                 return false;
@@ -255,12 +261,16 @@ public class CommandRunner {
                 return false;
             }
 
+            // 清理路径：去除引号和转义符
+            path = cleanPath(path);
+
             // 根据操作系统类型选择命令
             if (WINDOWS.equals(osType)) {
                 String command = String.format("cmd /c start \"\" \"%s\"", path);
                 Runtime.getRuntime().exec(command);
             } else if (MAC.equals(osType)) {
-                String[] commands = {"open", path};
+                // macOS 使用数组方式，不需要转义
+                String[] commands = { "open", path };
                 Runtime.getRuntime().exec(commands);
             } else {
                 LogUtil.error("💥 当前操作系统不支持此功能: %s", osType);
@@ -274,6 +284,29 @@ public class CommandRunner {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * 清理路径：去除引号和转义符
+     */
+    private static String cleanPath(String path) {
+        if (path == null) {
+            return null;
+        }
+
+        // 去除两端的引号
+        path = path.trim();
+        if (path.startsWith("'") && path.endsWith("'")) {
+            path = path.substring(1, path.length() - 1);
+        }
+        if (path.startsWith("\"") && path.endsWith("\"")) {
+            path = path.substring(1, path.length() - 1);
+        }
+
+        // 去除转义的反斜杠（将 "\ " 替换为 " "）
+        path = path.replace("\\ ", " ");
+
+        return path;
     }
 
     private static String getPathByAlias(String alias) {

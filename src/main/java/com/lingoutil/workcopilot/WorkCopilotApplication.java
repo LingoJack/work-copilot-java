@@ -332,7 +332,7 @@ public class WorkCopilotApplication {
         int len = args.length;
         LogUtil.log("command line argument length: %s", len);
         LogUtil.log("command: %s", String.join(" ", args));
-        if (len != 2 && len != 3 && len != 4 && len != 5) {
+        if (len != 2 && len != 3 && len != 4 && len != 5 && len < 6) {
             LogUtil.error("Invalid number of arguments, arguments len: %s\n", len);
             return true;
         }

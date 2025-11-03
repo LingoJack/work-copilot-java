@@ -17,7 +17,29 @@ public class ModifyCommandHandler extends CommandHandler {
     @Override
     protected void process(String[] argv) {
         String alias = argv[2];
-        String path = argv[3];
+
+        // 处理路径中包含空格的情况
+        String path;
+        if (argv.length > 4) {
+            // 路径包含空格，需要拼接（不转义，直接用空格连接）
+            StringBuilder pathBuilder = new StringBuilder();
+            for (int i = 3; i < argv.length; i++) {
+                pathBuilder.append(argv[i]);
+                if (i < argv.length - 1) {
+                    pathBuilder.append(" "); // 普通空格，不转义
+                }
+            }
+            path = pathBuilder.toString();
+        } else {
+            path = argv[3];
+        }
+
+        // 去除路径两端的引号（单引号或双引号）
+        path = removeQuotes(path);
+
+        // 去除路径中的转义反斜杠（将 "\ " 替换为 " "）
+        path = path.replace("\\ ", " ");
+
         Map<String, String> pathMap = YamlConfig.getPropertiesMap(PATH);
         Map<String, String> innerUrlMap = YamlConfig.getPropertiesMap(INNER_URL);
         Map<String, String> outerUrlMap = YamlConfig.getPropertiesMap(OUTER_URL);
@@ -60,6 +82,27 @@ public class ModifyCommandHandler extends CommandHandler {
         if (!hasModified) {
             LogUtil.error("Alias %s does not exist. Please use command");
         }
+    }
+
+    /**
+     * 去除字符串两端的引号（单引号或双引号）
+     */
+    private String removeQuotes(String str) {
+        if (str == null || str.length() < 2) {
+            return str;
+        }
+
+        // 检查是否被单引号包围
+        if (str.startsWith("'") && str.endsWith("'")) {
+            return str.substring(1, str.length() - 1);
+        }
+
+        // 检查是否被双引号包围
+        if (str.startsWith("\"") && str.endsWith("\"")) {
+            return str.substring(1, str.length() - 1);
+        }
+
+        return str;
     }
 
     @Override
