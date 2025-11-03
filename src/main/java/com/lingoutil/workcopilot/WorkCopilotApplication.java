@@ -15,6 +15,7 @@ import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import org.jline.widget.AutopairWidgets;
 import org.jline.widget.AutosuggestionWidgets;
 
 import java.io.File;
@@ -26,6 +27,7 @@ import java.util.Scanner;
 import static com.lingoutil.workcopilot.constant.Constant.*;
 import static com.lingoutil.workcopilot.util.LogUtil.RESET;
 import static com.lingoutil.workcopilot.util.LogUtil.YELLOW;
+import static com.lingoutil.workcopilot.util.LogUtil.info;
 
 public class WorkCopilotApplication {
 
@@ -236,6 +238,10 @@ public class WorkCopilotApplication {
             // 自动建议
             AutosuggestionWidgets autosuggestionWidgets = new AutosuggestionWidgets(reader);
             autosuggestionWidgets.enable();
+
+            // 自动配对
+            AutopairWidgets autopairWidgets = new AutopairWidgets(reader, true);
+            autopairWidgets.enable();
 
             LogUtil.info("Welcome to use work copilot \uD83D\uDE80 ~");
             String prompt = YELLOW + "copilot > " + RESET;
