@@ -18,7 +18,6 @@ import java.util.List;
 import static com.lingoutil.workcopilot.constant.Constant.*;
 
 public class ReportCommandHandler extends CommandHandler {
-    private static final String NEW_WEEK_CONFIG_UPDATE = "new";
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
     private static final DateTimeFormatter SIMPLE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
@@ -31,6 +30,12 @@ public class ReportCommandHandler extends CommandHandler {
         return LocalDate.parse(dateStr, DATE_FORMATTER);
     }
 
+    /**
+     * 更新配置文件(程序的yaml和日报的json)
+     * @param weekNum
+     * @param nextLastDayOfWeek
+     * @param configPath
+     */
     private void updateConfigFiles(int weekNum, LocalDate nextLastDayOfWeek, Path configPath) {
         String nextLastDayOfWeekStr = nextLastDayOfWeek.format(DATE_FORMATTER);
 
@@ -70,17 +75,32 @@ public class ReportCommandHandler extends CommandHandler {
 
         switch (content) {
             case "" -> {
-                LogUtil.error("⚠️ 内容为空，无法写入 ");
+                LogUtil.error("⚠️ 内容为空，无法写入");
                 return;
             }
-            case NEW_WEEK_CONFIG_UPDATE -> {
+            case "new" -> {
+                if (!argv[1].equals("r-meta")) {
+                    LogUtil.error("元数据操作请使用 r-meta");
+                    return;
+                }
                 // 处理更新周数操作
                 handleWeekUpdate(argv);
                 return;
             }
             case "sync" -> {
+                if (!argv[1].equals("r-meta")) {
+                    LogUtil.error("元数据操作请使用 r-meta");
+                    return;
+                }
                 sync(argv);
                 return;
+            }
+        }
+
+        if (argv.length > 3) {
+            // 说明有空格，合并后续的内容写入
+            for (int i = 3; i < argv.length; i++) {
+                content += (" " + argv[i]);
             }
         }
 
@@ -88,13 +108,17 @@ public class ReportCommandHandler extends CommandHandler {
         handleDailyReport(content);
     }
 
+    /**
+     * 同步周数和周结束日期，以 json 配置为准
+     * @param argv
+     */
     private void sync(String[] argv) {
         // 获取JSON配置文件路径
         String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
         Path reportFilePath = Path.of(reportPath);
         Path configPath = reportFilePath.getParent().resolve("settings.json");
 
-        loadConfigFromJson(configPath);
+        loadConfigFromJsonAndSync(configPath);
 
         int currentWeekNum = Integer.parseInt(YamlConfig.getProperty(REPORT, WEEK_NUM));
         String lastDayOfWeekStr = YamlConfig.getProperty(REPORT, LAST_DAY_OF_WEEK);
@@ -109,6 +133,13 @@ public class ReportCommandHandler extends CommandHandler {
         }
     }
 
+    /**
+     * 更新周数和周结束日期，以 json 配置为准，
+     * 取new的后一个字符串为日期字符串，如果没有则取json配置的周结束日期
+     * 然后以此开启新的一周的计算
+     * 并更新到 yaml 和 json 配置文件中
+     * @param argv
+     */
     private void handleWeekUpdate(String[] argv) {
         // 获取JSON配置文件路径
         String reportPath = YamlConfig.getProperty(REPORT, WEEK_REPORT);
@@ -144,7 +175,7 @@ public class ReportCommandHandler extends CommandHandler {
         Path configPath = workDir.resolve("settings.json");
         LogUtil.log("日报所在路径：%s, 配置文件：%s", workDir, configPath);
 
-        loadConfigFromJson(configPath);
+        loadConfigFromJsonAndSync(configPath);
 
         LocalDate now = LocalDate.now();
         try {
@@ -167,7 +198,12 @@ public class ReportCommandHandler extends CommandHandler {
         }
     }
 
-    private void loadConfigFromJson(Path configPath) {
+    /**
+     * 从JSON配置文件中读取周数和周结束日期
+     * 更新到 yaml 和 json 配置文件中
+     * @param configPath
+     */
+    private void loadConfigFromJsonAndSync(Path configPath) {
         if (!Files.exists(configPath)) {
             LogUtil.error("❌ 日报配置文件不存在：%s", configPath);
             return;
@@ -179,7 +215,6 @@ public class ReportCommandHandler extends CommandHandler {
             String lastDayOfWeekStr = jsonObject.get("last_day").getAsString();
             int weekNum = jsonObject.get("week_num").getAsInt();
             LogUtil.info("✅ 从日报配置文件中读取到：last_day = %s, week_num = %d", lastDayOfWeekStr, weekNum);
-
             LocalDate lastDayOfWeek = parseDate(lastDayOfWeekStr);
             updateConfigFiles(weekNum, lastDayOfWeek, configPath);
         } catch (Exception e) {
@@ -193,7 +228,11 @@ public class ReportCommandHandler extends CommandHandler {
 
     @Override
     protected boolean checkArgs(String[] argv) {
-        return checkArgs(argv, this::hint, 3, 4);
+        if (argv.length < 3) {
+            hint(argv);
+            return false;
+        }
+        return true;
     }
 
     @Override

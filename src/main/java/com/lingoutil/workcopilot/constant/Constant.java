@@ -61,7 +61,7 @@ public class Constant {
     /**
      * 上报日报
      */
-    public static final List<String> reportCommands = List.of("report", "r");
+    public static final List<String> reportCommands = List.of("report", "r", "r-meta");
 
     /**
      * 查看日志
