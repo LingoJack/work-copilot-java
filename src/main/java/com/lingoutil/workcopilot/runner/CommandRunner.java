@@ -287,7 +287,7 @@ public class CommandRunner {
     }
 
     /**
-     * 清理路径：去除引号和转义符
+     * 清理路径：去除引号和转义符，展开 ~ 符号
      */
     private static String cleanPath(String path) {
         if (path == null) {
@@ -305,6 +305,16 @@ public class CommandRunner {
 
         // 去除转义的反斜杠（将 "\ " 替换为 " "）
         path = path.replace("\\ ", " ");
+
+        // 展开 ~ 符号为用户主目录
+        if (path.startsWith("~")) {
+            String userHome = System.getProperty("user.home");
+            if (path.equals("~")) {
+                path = userHome;
+            } else if (path.startsWith("~/")) {
+                path = userHome + path.substring(1);
+            }
+        }
 
         return path;
     }
