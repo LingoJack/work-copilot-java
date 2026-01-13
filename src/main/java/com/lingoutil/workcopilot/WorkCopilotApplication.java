@@ -90,8 +90,17 @@ public class WorkCopilotApplication {
 
     private static void runWithMultiModeOnUnix() {
         try {
-            // 创建 JLine 终端和读取器
-            Terminal terminal = TerminalBuilder.builder().system(true).build();
+            // 设置 JVM 默认编码为 UTF-8
+            System.setProperty("file.encoding", "UTF-8");
+            System.setProperty("sun.jnu.encoding", "UTF-8");
+            
+            // 创建 JLine 终端和读取器，显式指定 UTF-8 编码
+            Terminal terminal = TerminalBuilder.builder()
+                    .system(true)
+                    .encoding(StandardCharsets.UTF_8)
+                    .jna(true)
+                    .jansi(true)
+                    .build();
 
             ArgumentCompleter exitArgumentCompleter = new ArgumentCompleter(
                     new StringsCompleter(exitCommands),
@@ -232,6 +241,7 @@ public class WorkCopilotApplication {
                     .completer(completer)
                     .option(LineReader.Option.DISABLE_EVENT_EXPANSION, true)
                     .option(LineReader.Option.MENU_COMPLETE, true)
+                    .option(LineReader.Option.BRACKETED_PASTE, true)
                     .build();
 
             // 自动建议
