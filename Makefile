@@ -1,6 +1,10 @@
 SHELL := /bin/bash
 
 .PHONY: \
+	current_dir \
+	push \
+	pull \
+	build
 
 current_dir:
 	@echo -----------------------------
@@ -15,3 +19,5 @@ push: current_dir
 pull: current_dir
 	@git pull origin main
 
+build: current_dir
+	mvn package
