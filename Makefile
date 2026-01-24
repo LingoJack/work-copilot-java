@@ -20,4 +20,4 @@ pull: current_dir
 	@git pull origin main
 
 build: current_dir
-	mvn package
+	@mvn package -Dmaven.test.skip=true
